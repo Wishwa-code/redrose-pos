@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../pages/admin_page.dart';
 import '../pages/guest_page.dart';
+import '../pages/hello_world_page.dart';
 import '../pages/home_page.dart';
 import '../pages/login_page.dart';
 import '../pages/splash_page.dart';
@@ -15,11 +16,85 @@ import '../state/permissions.dart';
 
 part 'routes.g.dart';
 
+final GlobalKey<NavigatorState> shellNavigatorKey = GlobalKey<NavigatorState>();
+
+@TypedShellRoute<MyShellRouteData>(
+  routes: <TypedRoute<RouteData>>[
+    TypedGoRoute<UserRoute>(
+      path: '/users',
+    ),
+    TypedGoRoute<HelloWorldRoute>(
+      path: '/hello',
+    ),
+  ],
+)
+class MyShellRouteData extends ShellRouteData {
+  const MyShellRouteData();
+
+  static final GlobalKey<NavigatorState> $navigatorKey = shellNavigatorKey;
+
+  @override
+  Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
+    return MyShellRouteScreen(child: navigator);
+  }
+}
+
+class MyShellRouteScreen extends StatelessWidget {
+  const MyShellRouteScreen({required this.child, super.key});
+
+  final Widget child;
+
+  int getCurrentIndex(BuildContext context) {
+    final location = GoRouterState.of(context).uri.path;
+    if (location.startsWith('/users')) {
+      return 1;
+    }
+    if (location.startsWith('/hello')) {
+      return 0;
+    }
+    return 0;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final selectedIndex = getCurrentIndex(context);
+
+    return Scaffold(
+      body: Row(
+        children: <Widget>[
+          NavigationRail(
+            destinations: const <NavigationRailDestination>[
+              NavigationRailDestination(
+                icon: Icon(Icons.home),
+                label: Text('Home'),
+              ),
+              NavigationRailDestination(
+                icon: Icon(Icons.group),
+                label: Text('Users'),
+              ),
+            ],
+            selectedIndex: selectedIndex,
+            onDestinationSelected: (int index) {
+              switch (index) {
+                case 0:
+                  const HelloWorldRoute().go(context);
+                case 1:
+                  const UserRoute().go(context);
+              }
+            },
+          ),
+          const VerticalDivider(thickness: 1, width: 1),
+          Expanded(child: child),
+        ],
+      ),
+    );
+  }
+}
+
 @TypedGoRoute<HomeRoute>(
   path: '/',
   routes: [
     TypedGoRoute<AdminRoute>(path: 'admin'),
-    TypedGoRoute<UserRoute>(path: 'user'),
     TypedGoRoute<GuestRoute>(path: 'guest'),
   ],
 )
@@ -110,5 +185,15 @@ class DetailsRoute extends GoRouteData {
       id,
       isNuclearCode: isNuke,
     );
+  }
+}
+
+@TypedGoRoute<HelloWorldRoute>(path: '/hello')
+class HelloWorldRoute extends GoRouteData {
+  const HelloWorldRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const HelloWorldPage();
   }
 }

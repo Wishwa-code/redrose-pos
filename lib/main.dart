@@ -4,6 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'router/router.dart';
 import 'utils/state_logger.dart';
 
+
+
 void main() {
   runApp(
     const ProviderScope(
