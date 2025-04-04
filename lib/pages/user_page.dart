@@ -40,7 +40,10 @@ class UserPage extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 40),
-                const LogoutButton(),
+                const SizedBox(
+                  width: 20,
+                  child: LogoutButton(),
+                ),
               ],
             ),
           ),

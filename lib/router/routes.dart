@@ -12,9 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-
 import '../entities/navigation_destinations.dart';
-
 import '../pages/admin_page.dart';
 import '../pages/cashier_page.dart';
 import '../pages/guest_page.dart';
@@ -23,12 +21,29 @@ import '../pages/home_page.dart';
 import '../pages/login_page.dart';
 import '../pages/splash_page.dart';
 import '../pages/user_page.dart';
-
 import '../state/permissions.dart';
+import '../widgets/logout_button.dart';
+import '../widgets/logout_button_nolabel.dart';
 
 part 'routes.g.dart';
 
 final GlobalKey<NavigatorState> shellNavigatorKey = GlobalKey<NavigatorState>();
+
+const List<Destination> destinations = <Destination>[
+  Destination('Home', Icon(Icons.home_outlined), Icon(Icons.home)),
+  Destination(
+    'Orders',
+    Icon(Icons.shopping_cart_checkout_outlined),
+    Icon(Icons.shopping_cart, fill: 1, weight: 700),
+  ),
+  Destination('Customers', Icon(Icons.three_p_outlined), Icon(Icons.three_p)),
+  Destination('Products', Icon(Icons.inventory_2_outlined), Icon(Icons.inventory_2)),
+  Destination('Analytics', Icon(Icons.multiline_chart_outlined), Icon(Icons.multiline_chart)),
+  Destination('Register', Icon(Icons.app_registration_outlined), Icon(Icons.settings)),
+  Destination('Staff', Icon(Icons.admin_panel_settings_outlined), Icon(Icons.admin_panel_settings)),
+  Destination('Settings', Icon(Icons.settings_outlined), Icon(Icons.settings)),
+  Destination('support', Icon(Icons.support_agent_outlined), Icon(Icons.support_agent)),
+];
 
 @TypedGoRoute<SplashRoute>(path: '/splash')
 class SplashRoute extends GoRouteData {
@@ -108,12 +123,6 @@ class MyShellRouteData extends ShellRouteData {
   }
 }
 
-const List<Destination> destinations = <Destination>[
-  Destination('Messages', Icon(Icons.widgets_outlined), Icon(Icons.widgets)),
-  Destination('Profile', Icon(Icons.format_paint_outlined), Icon(Icons.format_paint)),
-  Destination('Settings', Icon(Icons.settings_outlined), Icon(Icons.settings)),
-];
-
 class MyShellRouteScreen extends StatefulWidget {
   const MyShellRouteScreen({required this.child, super.key});
 
@@ -159,28 +168,56 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
       key: scaffoldKey,
       body: Row(
         children: <Widget>[
-          NavigationRail(
-            minWidth: 100,
-            destinations: destinations
-                .map(
-                  (destination) => NavigationRailDestination(
-                    icon: destination.icon,
-                    selectedIcon: destination.selectedIcon,
-                    label: Text(destination.label),
+          SizedBox(
+            width: 80,
+            child: Column(
+              children: [
+                Expanded(
+                  child: NavigationRail(
+                    minWidth: 80,
+                    leading: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: Image.asset(
+                        'assets/icon.jpg',
+                        width: 48,
+                        height: 48,
+                      ),
+                    ),
+                    destinations: destinations
+                        .map(
+                          (destination) => NavigationRailDestination(
+                            icon: IconTheme(
+                              data: const IconThemeData(size: 26), // Increase size here
+                              child: destination.icon,
+                            ),
+                            selectedIcon: IconTheme(
+                              data: const IconThemeData(size: 26), // Same size for selected state
+                              child: destination.selectedIcon,
+                            ),
+                            label: Text(destination.label),
+                            padding: const EdgeInsets.all(5),
+                          ),
+                        )
+                        .toList(),
+                    selectedIndex: selectedIndex,
+                    onDestinationSelected: (index) => handleNavigation(context, index),
                   ),
-                )
-                .toList(),
-            selectedIndex: selectedIndex,
-            onDestinationSelected: (index) => handleNavigation(context, index),
+                ),
+                IconButton(
+                  onPressed: () => scaffoldKey.currentState!.openDrawer(),
+                  icon: const Icon(Icons.arrow_right_alt_sharp),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(8),
+                  child: NormalLogoutButton(),
+                ),
+              ],
+            ),
           ),
           const VerticalDivider(thickness: 1, width: 1),
           Expanded(
             child: Column(
               children: [
-                ElevatedButton(
-                  onPressed: () => scaffoldKey.currentState!.openDrawer(),
-                  child: const Text('Open Drawer'),
-                ),
                 Expanded(child: widget.child),
               ],
             ),
@@ -192,8 +229,12 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
         selectedIndex: selectedIndex,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.fromLTRB(28, 16, 16, 10),
-            child: Text('Header', style: Theme.of(context).textTheme.titleSmall),
+            padding: const EdgeInsets.all(16),
+            child: Image.asset(
+              'assets/icon.jpg',
+              width: 38,
+              height: 38,
+            ),
           ),
           ...destinations.map((Destination destination) {
             return NavigationDrawerDestination(
@@ -202,7 +243,20 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
               selectedIcon: destination.selectedIcon,
             );
           }),
-          const Padding(padding: EdgeInsets.fromLTRB(28, 16, 28, 10), child: Divider()),
+          const Padding(padding: EdgeInsets.fromLTRB(28, 6, 28, 0), child: Divider()),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 40),
+            child: SizedBox(
+              width: 200,
+              child: LogoutButton(),
+            ),
+          ),
+          IconButton(
+            onPressed: () => scaffoldKey.currentState!.closeDrawer(),
+            icon: const Icon(
+              Icons.subdirectory_arrow_left_sharp,
+            ),
+          ),
         ],
       ),
     );
