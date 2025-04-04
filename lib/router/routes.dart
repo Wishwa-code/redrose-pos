@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../pages/admin_page.dart';
+import '../pages/cashier_page.dart';
 import '../pages/guest_page.dart';
 import '../pages/hello_world_page.dart';
 import '../pages/home_page.dart';
@@ -25,6 +26,9 @@ final GlobalKey<NavigatorState> shellNavigatorKey = GlobalKey<NavigatorState>();
     ),
     TypedGoRoute<HelloWorldRoute>(
       path: '/hello',
+    ),
+    TypedGoRoute<CashierRoute>(
+      path: '/cashier',
     ),
   ],
 )
@@ -46,12 +50,16 @@ class MyShellRouteScreen extends StatelessWidget {
 
   int getCurrentIndex(BuildContext context) {
     final location = GoRouterState.of(context).uri.path;
-    if (location.startsWith('/users')) {
-      return 1;
-    }
     if (location.startsWith('/hello')) {
       return 0;
     }
+    if (location.startsWith('/users')) {
+      return 1;
+    }
+    if (location.startsWith('/cashier')) {
+      return 2;
+    }
+
     return 0;
   }
 
@@ -72,6 +80,10 @@ class MyShellRouteScreen extends StatelessWidget {
                 icon: Icon(Icons.group),
                 label: Text('Users'),
               ),
+              NavigationRailDestination(
+                icon: Icon(Icons.group),
+                label: Text('Users'),
+              ),
             ],
             selectedIndex: selectedIndex,
             onDestinationSelected: (int index) {
@@ -80,6 +92,8 @@ class MyShellRouteScreen extends StatelessWidget {
                   const HelloWorldRoute().go(context);
                 case 1:
                   const UserRoute().go(context);
+                case 2:
+                  const CashierRoute().go(context);
               }
             },
           ),
@@ -195,5 +209,15 @@ class HelloWorldRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const HelloWorldPage();
+  }
+}
+
+@TypedGoRoute<CashierRoute>(path: '/cashier')
+class CashierRoute extends GoRouteData {
+  const CashierRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const CashierPage();
   }
 }
