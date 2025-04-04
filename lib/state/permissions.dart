@@ -28,6 +28,7 @@ Future<UserRole> permissions(PermissionsRef ref) async {
 /// Gives a random [UserRole] based on a dice roll.
 UserRole _requestMock() {
   // mock
+  return UserRole.user();
   final random = Random().nextDouble();
 
   if (random < 0.25) {
