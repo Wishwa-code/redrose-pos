@@ -14,11 +14,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../entities/navigation_destinations.dart';
 import '../pages/admin_page.dart';
-import '../pages/cashier_page.dart';
+import '../pages/customers_page.dart';
 import '../pages/guest_page.dart';
-import '../pages/hello_world_page.dart';
 import '../pages/home_page.dart';
 import '../pages/login_page.dart';
+import '../pages/main_page.dart';
+import '../pages/orders_page.dart';
+import '../pages/products/products_page.dart';
 import '../pages/splash_page.dart';
 import '../pages/user_page.dart';
 import '../state/permissions.dart';
@@ -87,7 +89,7 @@ class HomeRoute extends GoRouteData {
 
     return userRole.map(
       admin: (_) => const AdminRoute().location,
-      user: (_) => const UserRoute().location,
+      user: (_) => const MainRoute().location,
       guest: (_) => const GuestRoute().location,
       none: (_) => null,
     );
@@ -101,14 +103,23 @@ class HomeRoute extends GoRouteData {
 
 @TypedShellRoute<MyShellRouteData>(
   routes: <TypedRoute<RouteData>>[
+    TypedGoRoute<MainRoute>(
+      path: '/hello',
+    ),
+    TypedGoRoute<OrdersRoute>(
+      path: '/orders',
+    ),
+    TypedGoRoute<CustomersRoute>(
+      path: '/customers',
+    ),
+    TypedGoRoute<ProductsRoute>(
+      path: '/products',
+    ),
     TypedGoRoute<UserRoute>(
       path: '/users',
     ),
-    TypedGoRoute<HelloWorldRoute>(
-      path: '/hello',
-    ),
-    TypedGoRoute<CashierRoute>(
-      path: '/cashier',
+    TypedGoRoute<SupportRoute>(
+      path: '/support',
     ),
   ],
 )
@@ -140,11 +151,17 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
     if (location.startsWith('/hello')) {
       return 0;
     }
-    if (location.startsWith('/users')) {
+    if (location.startsWith('/orders')) {
       return 1;
     }
-    if (location.startsWith('/cashier')) {
+    if (location.startsWith('/customers')) {
       return 2;
+    }
+    if (location.startsWith('/products')) {
+      return 3;
+    }
+    if (location.startsWith('/support')) {
+      return 8;
     }
     return 0;
   }
@@ -152,11 +169,15 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
   void handleNavigation(BuildContext context, int index) {
     switch (index) {
       case 0:
-        const HelloWorldRoute().go(context);
+        const MainRoute().go(context);
       case 1:
-        const UserRoute().go(context);
+        const OrdersRoute().go(context);
       case 2:
-        const CashierRoute().go(context);
+        const CustomersRoute().go(context);
+      case 3:
+        const ProductsRoute().go(context);
+      case 8:
+        const SupportRoute().go(context);
     }
   }
 
@@ -306,9 +327,9 @@ class DetailsRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<HelloWorldRoute>(path: '/hello')
-class HelloWorldRoute extends GoRouteData {
-  const HelloWorldRoute();
+@TypedGoRoute<MainRoute>(path: '/hello')
+class MainRoute extends GoRouteData {
+  const MainRoute();
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
@@ -316,12 +337,42 @@ class HelloWorldRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<CashierRoute>(path: '/cashier')
-class CashierRoute extends GoRouteData {
-  const CashierRoute();
+@TypedGoRoute<CustomersRoute>(path: '/customers')
+class CustomersRoute extends GoRouteData {
+  const CustomersRoute();
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const CashierPage();
+    return const CustomersPage();
+  }
+}
+
+@TypedGoRoute<SupportRoute>(path: '/support')
+class SupportRoute extends GoRouteData {
+  const SupportRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const UserPage();
+  }
+}
+
+@TypedGoRoute<OrdersRoute>(path: '/orders')
+class OrdersRoute extends GoRouteData {
+  const OrdersRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const InventoryPage();
+  }
+}
+
+@TypedGoRoute<ProductsRoute>(path: '/products')
+class ProductsRoute extends GoRouteData {
+  const ProductsRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const ProductsPage();
   }
 }
