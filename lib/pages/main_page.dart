@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../state/product_search_provider.dart';
 import '../widgets/home_button.dart';
 
-class HelloWorldPage extends StatelessWidget {
+class HelloWorldPage extends ConsumerWidget {
   const HelloWorldPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final productsAsyncValue = ref.watch(questionsProvider);
+
     return Scaffold(
       backgroundColor: const Color(0xFF0d0d0d),
       body: Row(
@@ -67,48 +71,34 @@ class HelloWorldPage extends StatelessWidget {
               padding: const EdgeInsets.all(32),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          alignment: Alignment.center,
-                          child: const Text(
-                            'Clear cart',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 24,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          alignment: Alignment.center,
-                          child: const Text(
-                            'More actions',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                  TextField(
+                    onChanged: (value) => ref.read(searchFieldProvider.notifier).state = value,
+                  ),
+                  Expanded(
+                    child: productsAsyncValue.when(
+                      data: (products) {
+                        return ListView.builder(
+                          itemCount: products.length,
+                          itemBuilder: (context, index) {
+                            final product = products[index];
+
+                            return ListTile(
+                              title: Text(product['title'].toString()),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Description: ${product['description']}'),
+                                  Text('Tags: ${product['tag_one']}, ${product['tag_two']}'),
+                                  Image.network(product['imageurl'] as String),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      loading: () => const Center(child: CircularProgressIndicator()),
+                      error: (error, stackTrace) => Center(child: Text('Error: $error')),
+                    ),
                   ),
                 ],
               ),

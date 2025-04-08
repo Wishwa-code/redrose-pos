@@ -9,7 +9,7 @@ class InventoryPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final questions = ref.watch(questionsProvider);
+    final productsAsyncValue = ref.watch(questionsProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Questions')),
@@ -19,22 +19,30 @@ class InventoryPage extends ConsumerWidget {
             onChanged: (value) => ref.read(searchFieldProvider.notifier).state = value,
           ),
           Expanded(
-            child: switch (questions) {
-              AsyncData(:final value) => ListView.builder(
-                  itemCount: value.length,
+            child: productsAsyncValue.when(
+              data: (products) {
+                return ListView.builder(
+                  itemCount: products.length,
                   itemBuilder: (context, index) {
-                    final question = value[index];
+                    final product = products[index];
 
                     return ListTile(
-                      title: Text(
-                        question.toString(),
+                      title: Text(product['title'].toString()),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Description: ${product['description']}'),
+                          Text('Tags: ${product['tag_one']}, ${product['tag_two']}'),
+                          Image.network(product['imageurl'] as String),
+                        ],
                       ),
                     );
                   },
-                ),
-              AsyncError(:final error) => Center(child: Text('Error $error')),
-              _ => const Center(child: CircularProgressIndicator()),
-            },
+                );
+              },
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, stackTrace) => Center(child: Text('Error: $error')),
+            ),
           ),
         ],
       ),

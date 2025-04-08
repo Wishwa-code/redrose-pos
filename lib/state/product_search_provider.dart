@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
 final searchFieldProvider = StateProvider<String>((ref) => '');
-final questionsProvider = FutureProvider<List<String>>((ref) async {
+final questionsProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async {
   final client = http.Client();
   ref.onDispose(client.close);
 
@@ -35,6 +35,7 @@ final questionsProvider = FutureProvider<List<String>>((ref) async {
   }
 
   final data = jsonDecode(response.body);
+  print(data);
 
   final products = data['products'];
   if (products == null || products is! List) {
@@ -44,10 +45,7 @@ final questionsProvider = FutureProvider<List<String>>((ref) async {
 
   print(products);
 
-  return products
-      .map((product) => product['title'] as String?)
-      .whereType<String>() // filters out any nulls
-      .toList();
+  return products.cast<Map<String, dynamic>>();
 });
 
 // void main() => runApp(const ProviderScope(child: MyApp()));
