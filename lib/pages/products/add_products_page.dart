@@ -81,6 +81,12 @@ class _AddProductsPageState extends State<AddProductsPage> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     // TODO: Implement save functionality
+                    print([
+                      _formKey.currentState,
+                      _nameController.text,
+                      _priceController,
+                      _descriptionController,
+                    ]);
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing Data')),
                     );

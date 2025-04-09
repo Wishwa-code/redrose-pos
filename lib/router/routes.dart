@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../entities/navigation_destinations.dart';
+import '../features/navigation/models/navigation_destinations.dart';
 import '../pages/admin_page.dart';
 import '../pages/customers_page.dart';
 import '../pages/guest_page.dart';

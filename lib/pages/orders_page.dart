@@ -11,7 +11,7 @@ class InventoryPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final productsAsyncValue = ref.watch(questionsProvider);
 
-    return Scaffold(
+    return Scaffold(  
       appBar: AppBar(title: const Text('Questions')),
       body: Column(
         children: [
