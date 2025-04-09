@@ -6,7 +6,7 @@ part 'product.g.dart'; // <- needed for JSON (de)serialization
 @freezed
 class Product with _$Product {
   factory Product({
-    int? id, // optional for inserts
+    @JsonKey(fromJson: _idFromJson) int? id, // optional for inserts
     required String title,
     required String description,
     @JsonKey(name: 'tag_one') required String tagOne,
@@ -20,6 +20,12 @@ class Product with _$Product {
   }) = _Product;
 
   factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
+}
+
+int? _idFromJson(dynamic id) {
+  if (id is int) return id;
+  if (id is String) return int.tryParse(id);
+  return null;
 }
 // import 'package:freezed_annotation/freezed_annotation.dart';
 
