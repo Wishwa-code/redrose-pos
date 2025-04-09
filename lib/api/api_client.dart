@@ -60,6 +60,20 @@ class ApiClient {
     return Product.fromJson(productData);
   }
 
+  Future<Product> addProduct(Product product) async {
+    final response = await _httpClient.post(
+      '/products',
+      data: product.toJson(), // Assuming your Product model has a `toJson()` method
+    );
+
+    print('Response: $response');
+
+    // Parse the response JSON
+    final productData = response.data['product'] as Map<String, dynamic>;
+
+    return Product.fromJson(productData);
+  }
+
   Future<Product> fetchProduct(int id) async {
     final response = await _httpClient.get('/products/$id');
 

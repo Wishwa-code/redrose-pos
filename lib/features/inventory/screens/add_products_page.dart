@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../models/product.dart';
 import '../providers/last_entered_product_notifier.dart';
 
 class AddProductsPage extends ConsumerStatefulWidget {
@@ -36,79 +37,94 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
         //   onPressed: () => Navigator.pop(context),
         // ),
       ),
-      body: Column(
+      body: Row(
         children: [
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Product Name',
-                      border: OutlineInputBorder(),
+          Expanded(
+            flex: 2,
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(
+                        labelText: 'Product Name',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter product name';
+                        }
+                        return null;
+                      },
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter product name';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _priceController,
-                    decoration: const InputDecoration(
-                      labelText: 'Price',
-                      border: OutlineInputBorder(),
-                      prefixText: r'$',
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _priceController,
+                      decoration: const InputDecoration(
+                        labelText: 'Price',
+                        border: OutlineInputBorder(),
+                        prefixText: r'$',
+                      ),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter price';
+                        }
+                        return null;
+                      },
                     ),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter price';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _descriptionController,
-                    decoration: const InputDecoration(
-                      labelText: 'Description',
-                      border: OutlineInputBorder(),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _descriptionController,
+                      decoration: const InputDecoration(
+                        labelText: 'Description',
+                        border: OutlineInputBorder(),
+                      ),
+                      maxLines: 3,
                     ),
-                    maxLines: 3,
-                  ),
-                  const SizedBox(height: 24),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        // TODO: Implement save functionality
-                        print([
-                          _formKey.currentState,
-                          _nameController.text,
-                          _priceController,
-                          _descriptionController,
-                        ]);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Processing Data')),
-                        );
-                      }
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Text('Save Product'),
+                    const SizedBox(height: 24),
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          // Create dummy product
+                          final newProduct = Product(
+                            title: _nameController.text,
+                            description: _descriptionController.text,
+                            tagOne: 'tagone1',
+                            tagTwo: 'tagtwo1',
+                            imageUrl: 'https://example.com/dummy.png',
+                            supplier: 'default',
+                            brand: 'default',
+                            department: 'mainBuilding',
+                            mainCategory: 'cement',
+                            subCategory: 'portlandCement',
+                          );
+
+                          // Call the notifier to add product
+                          await ref.read(lastProductProvider.notifier).addProduct(newProduct);
+
+                          // Show feedback
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Product submitted!')),
+                          );
+                        }
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(16),
+                        child: Text('Save Product'),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
           Expanded(
+            flex: 2,
             child: Center(
               // Handle the different states of the AsyncValue (loading, error, or data)
               child: switch (product) {

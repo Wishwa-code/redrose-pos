@@ -28,7 +28,23 @@ class LastProduct extends _$LastProduct {
     final apiService = await ref.watch(apiServiceProvider.future);
 
     final response = await apiService.fetchLastProduct();
+    print(response);
 
     return response;
   }
+
+  Future<void> addProduct(Product product) async {
+    final apiService = await ref.watch(apiServiceProvider.future);
+
+    final newProduct = await apiService.addProduct(product);
+
+    print(newProduct);
+
+    // Update the state
+    state = AsyncData(newProduct);
+  }
+
+  // Future<void> addProdcut(Product product) async {
+  //   final apiService = await.ref.watch(apiServiceProvider.)
+  // }
 }
