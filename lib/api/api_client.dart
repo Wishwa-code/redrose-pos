@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../entities/product.dart';
+import '../features/inventory/models/product.dart';
 
 typedef ApiClientException = DioException;
 typedef ApiClientResponse<T> = Response<T>;
@@ -46,6 +46,18 @@ class ApiClient {
     final response = await _httpClient.get('/products');
 
     return (response.data['products'] as List).cast<_ResponseData>().map(Product.fromJson).toList();
+  }
+
+  Future<Product> fetchLastProduct() async {
+    final response = await _httpClient.get('/last-product');
+
+    print(response);
+
+    // Assuming the API response contains a 'product' key with a single product object
+    final productData = response.data['product'] as Map<String, dynamic>;
+
+    // Return the product parsed using Product.fromJson
+    return Product.fromJson(productData);
   }
 
   Future<Product> fetchProduct(int id) async {

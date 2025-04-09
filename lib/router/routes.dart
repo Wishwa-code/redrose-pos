@@ -7,23 +7,23 @@
 
 import 'dart:async';
 
-import 'package:example/pages/details_page.dart';
+import 'package:example/features/cute_rabbit/screens/details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../features/auth/providers/permissions.dart';
+import '../features/auth/screens/admin_page.dart';
+import '../features/auth/screens/guest_page.dart';
+import '../features/auth/screens/home_page.dart';
+import '../features/auth/screens/login_page.dart';
+import '../features/auth/screens/user_page.dart';
+import '../features/customers/screens/customers_page.dart';
+import '../features/inventory/screens/products_page.dart';
+import '../features/main/screens/main_page.dart';
 import '../features/navigation/models/navigation_destinations.dart';
-import '../pages/admin_page.dart';
-import '../pages/customers_page.dart';
-import '../pages/guest_page.dart';
-import '../pages/home_page.dart';
-import '../pages/login_page.dart';
-import '../pages/main_page.dart';
-import '../pages/orders_page.dart';
-import '../pages/products/products_page.dart';
-import '../pages/splash_page.dart';
-import '../pages/user_page.dart';
-import '../state/permissions.dart';
+import '../features/orders/screens/orders_page.dart';
+import '../features/splash_screen/screens/splash_page.dart';
 import '../widgets/logout_button.dart';
 import '../widgets/logout_button_nolabel.dart';
 

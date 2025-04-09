@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../state/product_search_provider.dart';
+import '../../inventory/providers/product_search_provider.dart';
 
 /// The homepage of our application
 class InventoryPage extends ConsumerWidget {

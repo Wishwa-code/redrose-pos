@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../state/auth_controller.dart';
-import '../widgets/action_button.dart';
+import '../providers/auth_controller.dart';
+import '../../../widgets/action_button.dart';
 
 class LoginPage extends HookConsumerWidget {
   const LoginPage({super.key});

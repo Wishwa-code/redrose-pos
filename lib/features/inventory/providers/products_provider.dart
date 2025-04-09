@@ -16,11 +16,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../api/api_client_service.dart';
-import '../entities/product.dart';
+import '/api/api_client_service.dart';
+import '../models/product.dart';
 
 // Necessary for code-generation to work
-part 'product_provider.g.dart';
+part 'products_provider.g.dart';
 
 /// This will create a provider named `activityProvider`
 /// which will cache the result of this function.
@@ -29,9 +29,9 @@ Future<List<Product>> product(Ref ref) async {
   //http: //localhost:8080/products
   // Fetch the list of products from the API.
 
-  final response = await ref.watch(apiServiceProvider.future);
+  final apiService = await ref.watch(apiServiceProvider.future);
 
-  final result = response.fetchProducts();
+  final result = apiService.fetchProducts();
   //print(response.body);
 
   // Decode the JSON payload into a Map data structure.

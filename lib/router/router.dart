@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../state/auth_controller.dart';
+import '../features/auth/providers/auth_controller.dart';
 import 'routes.dart';
 
 part 'router.g.dart';

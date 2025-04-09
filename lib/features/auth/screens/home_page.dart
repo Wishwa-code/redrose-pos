@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../widgets/logout_button.dart';
+import '../../../widgets/logout_button.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});

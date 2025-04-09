@@ -2,10 +2,10 @@ import 'package:example/widgets/logout_button.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../state/cute_rabbits.dart';
-import '../state/nuclear_codes.dart';
-import '../widgets/my_sliver_list.dart';
-import '../widgets/user_title.dart';
+import '/features/cute_rabbit/providers/cute_rabbits.dart';
+import '/features/cute_rabbit/providers/nuclear_codes.dart';
+import '../../../widgets/my_sliver_list.dart';
+import '../../../widgets/user_title.dart';
 
 class AdminPage extends ConsumerWidget {
   const AdminPage({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../state/product_search_provider.dart';
-import '../widgets/home_button.dart';
+import '../../inventory/providers/product_search_provider.dart';
+import '../../../widgets/home_button.dart';
 
 class HelloWorldPage extends ConsumerWidget {
   const HelloWorldPage({super.key});
