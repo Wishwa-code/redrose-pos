@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '/api/api_client_service.dart';
@@ -33,10 +35,10 @@ class LastProduct extends _$LastProduct {
     return response;
   }
 
-  Future<void> addProduct(Product product) async {
+  Future<void> addProduct(Product product, File imageFile) async {
     final apiService = await ref.watch(apiServiceProvider.future);
 
-    final newProduct = await apiService.addProduct(product);
+    final newProduct = await apiService.addProduct(product, imageFile);
 
     print(newProduct);
 

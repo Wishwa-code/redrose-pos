@@ -1,6 +1,27 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 
 import '../features/inventory/models/product.dart';
+
+class SupabaseUploadResponse {
+  SupabaseUploadResponse({
+    required this.path,
+    required this.id,
+    required this.fullPath,
+  });
+
+  factory SupabaseUploadResponse.fromJson(Map<String, dynamic> json) {
+    return SupabaseUploadResponse(
+      path: json['path'] as String,
+      id: json['id'] as String,
+      fullPath: json['fullPath'] as String,
+    );
+  }
+  final String path;
+  final String id;
+  final String fullPath;
+}
 
 typedef ApiClientException = DioException;
 typedef ApiClientResponse<T> = Response<T>;
@@ -60,7 +81,37 @@ class ApiClient {
     return Product.fromJson(productData);
   }
 
-  Future<Product> addProduct(Product product) async {
+  // Future<SupabaseUploadResponse> uploadImage(File imageFile) async {
+
+    
+
+  //   final data = response.data['data'] as Map<String, dynamic>;
+  //   return SupabaseUploadResponse.fromJson(data);
+  // }
+
+  Future<Product> addProduct(Product product, File imageFile) async {
+    final fileName = imageFile.path.split('/').last;
+
+
+    final formData = FormData.fromMap({
+      'file': await MultipartFile.fromFile(
+        imageFile.path,
+        filename: fileName,
+      ),
+    });
+
+    final imgresponse = await _httpClient.post(
+      'https://yqewezudxihyadvmfovd.supabase.co/functions/v1/storage-upload',
+      data: formData,
+      options: Options(
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      ),
+    );
+
+    print('Upload Response: $imgresponse');
+
     final response = await _httpClient.post(
       '/products',
       data: product.toJson(), // Assuming your Product model has a `toJson()` method
