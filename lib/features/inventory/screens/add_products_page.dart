@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../widgets/action_button.dart';
 import '../models/product.dart';
+import '../providers/add_product_drop_down_value_provider.dart';
 import '../providers/last_entered_product_notifier.dart';
 
 class AddProductsPage extends ConsumerStatefulWidget {
@@ -16,6 +18,8 @@ class AddProductsPage extends ConsumerStatefulWidget {
 }
 
 class _AddProductsPageState extends ConsumerState<AddProductsPage> {
+  final _departmentKey = GlobalKey<FormBuilderFieldState>();
+
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -65,7 +69,7 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
         description: _descriptionController.text,
         tagOne: _tagOneController.text,
         tagTwo: _tagTwoController.text,
-        imageUrl: 'will be updated in after image response',
+        imageUrl: 'will be updated after uploding image to cloud storage',
         supplier: _supplierController.text,
         brand: _brandController.text,
         department: _departmentController.text,
@@ -86,6 +90,7 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
   @override
   Widget build(BuildContext context) {
     final product = ref.watch(lastProductProvider);
+    final departments = ref.watch(departmentProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -147,7 +152,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                       maxLines: 3,
                     ),
                     const SizedBox(height: 16),
-                    const SizedBox(height: 16),
                     TextFormField(
                       controller: _supplierController,
                       decoration: const InputDecoration(
@@ -156,6 +160,7 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                       ),
                       maxLines: 3,
                     ),
+                    const SizedBox(height: 16),
                     TextFormField(
                       controller: _brandController,
                       decoration: const InputDecoration(
@@ -164,6 +169,23 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                       ),
                       maxLines: 3,
                     ),
+                    const SizedBox(height: 16),
+                    FormBuilderDropdown(
+                      key: _departmentKey,
+                      name: 'service',
+                      onChanged: (value) => setState(() {
+                        _departmentController.text = value!.name;
+                      }),
+                      decoration: const InputDecoration(labelText: 'Service'),
+                      items: [
+                        for (final department in departments)
+                          DropdownMenuItem(value: department, child: Text(department.name)),
+                      ],
+                      // validator: FormBuilderValidators.compose([
+                      //   FormBuilderValidators.required(),
+                      // ]),
+                    ),
+
                     const SizedBox(height: 16),
                     TextFormField(
                       controller: _departmentController,
