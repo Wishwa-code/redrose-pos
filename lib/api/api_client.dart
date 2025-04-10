@@ -108,12 +108,22 @@ class ApiClient {
         },
       ),
     );
+    final imgData = imgresponse.data['data'];
+    final rawPath = imgData['path'] as String;
+    final encodedPath = Uri.encodeComponent(rawPath); // encodes spaces + other special chars
 
-    print('Upload Response: $imgresponse');
+    final publicUrl =
+        'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/public/product_images/$encodedPath';
+
+    print('🖼️ Public Image URL: $publicUrl');
+
+    final updatedProduct = product.copyWith(imageUrl: publicUrl);
+
+    print('updated prodcut: $updatedProduct ');
 
     final response = await _httpClient.post(
       '/products',
-      data: product.toJson(), // Assuming your Product model has a `toJson()` method
+      data: updatedProduct.toJson(), // Assuming your Product model has a `toJson()` method
     );
 
     print('Response: $response');
