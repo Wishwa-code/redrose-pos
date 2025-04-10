@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,12 +20,14 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
   final _descriptionController = TextEditingController();
   final _tagOneController = TextEditingController();
   final _tagTwoController = TextEditingController();
-  final _imageUrlController = TextEditingController();
   final _supplierController = TextEditingController();
   final _brandController = TextEditingController();
   final _departmentController = TextEditingController();
   final _mainCategoryController = TextEditingController();
   final _subCategoryController = TextEditingController();
+
+  File? _selectedImage;
+  String? _selectedImageName;
 
   @override
   void dispose() {
@@ -32,7 +35,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
     _descriptionController.dispose();
     _tagOneController.dispose();
     _tagTwoController.dispose();
-    _imageUrlController.dispose();
     _supplierController.dispose();
     _brandController.dispose();
     _departmentController.dispose();
@@ -105,14 +107,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                       maxLines: 3,
                     ),
                     const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _imageUrlController,
-                      decoration: const InputDecoration(
-                        labelText: 'Image (https://example.com/dummy.png)',
-                        border: OutlineInputBorder(),
-                      ),
-                      maxLines: 3,
-                    ),
                     const SizedBox(height: 16),
                     TextFormField(
                       controller: _supplierController,
@@ -158,11 +152,39 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                       maxLines: 3,
                     ),
                     const SizedBox(height: 24),
+                    ElevatedButton.icon(
+                      icon: const Icon(Icons.upload_file),
+                      label: const Text('Choose Image'),
+                      onPressed: () async {
+                        final result = await FilePicker.platform.pickFiles(
+                          type: FileType.image,
+                        );
+
+                        if (result != null && result.files.single.path != null) {
+                          setState(() {
+                            _selectedImage = File(result.files.single.path!);
+                            _selectedImageName = result.files.single.name;
+                          });
+                        }
+                      },
+                    ),
+                    if (_selectedImageName != null) ...[
+                      const SizedBox(height: 8),
+                      Text('Selected image: $_selectedImageName'),
+                    ],
                     ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          final imageFile = File('C:/1wishmi/cw1/dev/v3/assets/freeDelivery.jpg');
+                          final imageFile = File('C:/1wishmi/cw1/dev/v3/assets/rebel.jpg');
+                          print('manual image path ${imageFile.path} ');
+                          print('attached image path ${_selectedImage!.path}');
 
+                          if (_selectedImage == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Please select an image.')),
+                            );
+                            return;
+                          }
                           // final uploadResponse =
                           //     await ref.read(lastProductProvider.notifier).uploadImage(imageFile);
 
@@ -172,7 +194,7 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                             description: _descriptionController.text,
                             tagOne: _tagOneController.text,
                             tagTwo: _tagTwoController.text,
-                            imageUrl: _imageUrlController.text,
+                            imageUrl: 'will be updated in after image response',
                             supplier: _supplierController.text,
                             brand: _brandController.text,
                             department: _departmentController.text,
@@ -183,7 +205,7 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                           // Call the notifier to add product
                           await ref
                               .read(lastProductProvider.notifier)
-                              .addProduct(newProduct, imageFile);
+                              .addProduct(newProduct, _selectedImage!);
 
                           // Show feedback
                           ScaffoldMessenger.of(context).showSnackBar(

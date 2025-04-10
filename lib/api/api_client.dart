@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 
 import '../features/inventory/models/product.dart';
 
@@ -83,20 +84,18 @@ class ApiClient {
 
   // Future<SupabaseUploadResponse> uploadImage(File imageFile) async {
 
-    
-
   //   final data = response.data['data'] as Map<String, dynamic>;
   //   return SupabaseUploadResponse.fromJson(data);
   // }
 
   Future<Product> addProduct(Product product, File imageFile) async {
-    final fileName = imageFile.path.split('/').last;
-
+    final fileName = imageFile.path.split(r'\').last;
 
     final formData = FormData.fromMap({
       'file': await MultipartFile.fromFile(
         imageFile.path,
         filename: fileName,
+        contentType: MediaType('image', 'jpeg'),
       ),
     });
 
