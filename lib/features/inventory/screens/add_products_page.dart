@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../widgets/action_button.dart';
 import '../models/product.dart';
 import '../providers/last_entered_product_notifier.dart';
 
@@ -41,6 +42,45 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
     _mainCategoryController.dispose();
     _subCategoryController.dispose();
     super.dispose();
+  }
+
+  Future<void> addProduct() async {
+    if (_formKey.currentState!.validate()) {
+      final imageFile = File('C:/1wishmi/cw1/dev/v3/assets/rebel.jpg');
+      print('manual image path ${imageFile.path} ');
+      print('attached image path ${_selectedImage!.path}');
+
+      if (_selectedImage == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please select an image.')),
+        );
+        return;
+      }
+      // final uploadResponse =
+      //     await ref.read(lastProductProvider.notifier).uploadImage(imageFile);
+
+      // Create dummy product
+      final newProduct = Product(
+        title: _titleController.text,
+        description: _descriptionController.text,
+        tagOne: _tagOneController.text,
+        tagTwo: _tagTwoController.text,
+        imageUrl: 'will be updated in after image response',
+        supplier: _supplierController.text,
+        brand: _brandController.text,
+        department: _departmentController.text,
+        mainCategory: _mainCategoryController.text,
+        subCategory: _subCategoryController.text,
+      );
+
+      // Call the notifier to add product
+      await ref.read(lastProductProvider.notifier).addProduct(newProduct, _selectedImage!);
+
+      // Show feedback
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Product submitted!')),
+      );
+    }
   }
 
   @override
@@ -172,52 +212,18 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                       const SizedBox(height: 8),
                       Text('Selected image: $_selectedImageName'),
                     ],
-                    ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          final imageFile = File('C:/1wishmi/cw1/dev/v3/assets/rebel.jpg');
-                          print('manual image path ${imageFile.path} ');
-                          print('attached image path ${_selectedImage!.path}');
-
-                          if (_selectedImage == null) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Please select an image.')),
-                            );
-                            return;
-                          }
-                          // final uploadResponse =
-                          //     await ref.read(lastProductProvider.notifier).uploadImage(imageFile);
-
-                          // Create dummy product
-                          final newProduct = Product(
-                            title: _titleController.text,
-                            description: _descriptionController.text,
-                            tagOne: _tagOneController.text,
-                            tagTwo: _tagTwoController.text,
-                            imageUrl: 'will be updated in after image response',
-                            supplier: _supplierController.text,
-                            brand: _brandController.text,
-                            department: _departmentController.text,
-                            mainCategory: _mainCategoryController.text,
-                            subCategory: _subCategoryController.text,
-                          );
-
-                          // Call the notifier to add product
-                          await ref
-                              .read(lastProductProvider.notifier)
-                              .addProduct(newProduct, _selectedImage!);
-
-                          // Show feedback
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Product submitted!')),
-                          );
-                        }
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(16),
-                        child: Text('Save Product'),
-                      ),
+                    ActionButton(
+                      onPressed: addProduct,
+                      icon: const SizedBox.shrink(),
+                      label: const Text('Save Product'),
                     ),
+                    // ElevatedButton(
+                    //   onPressed: ,
+                    //   child: const Padding(
+                    //     padding: EdgeInsets.all(16),
+                    //     child: Text('Save Product'),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
