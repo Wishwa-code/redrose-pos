@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'features/inventory/providers/enums_provider.dart';
 import 'features/inventory/providers/products_provider.dart';
 import 'router/router.dart';
 import 'utils/state_logger.dart';
@@ -42,6 +43,7 @@ class _EagerInitialization extends ConsumerWidget {
     // Eagerly initialize providers by watching them.
     // By using "watch", the provider will stay alive and not be disposed.
     ref.watch(productProvider);
+    ref.watch(enumsProvider);
     return child;
   }
 }

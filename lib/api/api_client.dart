@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 
+import '../features/inventory/models/enum_item.dart';
 import '../features/inventory/models/product.dart';
 
 class SupabaseUploadResponse {
@@ -33,7 +34,7 @@ extension ApiClientExceptionX on ApiClientException {
   String? get responseMessage => response?.data?['message'] as String?;
 }
 
-/// An API client that makes network requests.
+///? An API client that makes network requests.
 ///
 /// This class is meant to be seen as a representation of the common API contract
 /// or API list (such as Swagger or Postman) given by the backend.
@@ -82,12 +83,6 @@ class ApiClient {
     return Product.fromJson(productData);
   }
 
-  // Future<SupabaseUploadResponse> uploadImage(File imageFile) async {
-
-  //   final data = response.data['data'] as Map<String, dynamic>;
-  //   return SupabaseUploadResponse.fromJson(data);
-  // }
-
   Future<Product> addProduct(Product product, File imageFile) async {
     final fileName = imageFile.path.split(r'\').last;
 
@@ -134,11 +129,26 @@ class ApiClient {
     return Product.fromJson(productData);
   }
 
-  Future<Product> fetchProduct(int id) async {
-    final response = await _httpClient.get('/products/$id');
+  Future<Map<String, List<EnumItem>>> getEnums() async {
+    final response = await _httpClient.get('/enums');
 
-    return Product.fromJson(response.data as _ResponseData);
+    final data = response.data['enums'] as List<dynamic>;
+    final List<EnumItem> enums =
+        data.map((item) => EnumItem.fromJson(item as Map<String, dynamic>)).toList();
+
+    final Map<String, List<EnumItem>> groupedEnums = {};
+    for (final enumItem in enums) {
+      groupedEnums.putIfAbsent(enumItem.enumName, () => []) .add(enumItem);
+    }
+    return groupedEnums;
   }
+
+  //? below method is not working yet
+  // Future<Product> fetchProduct(int id) async {
+  //   final response = await _httpClient.get('/products/$id');
+
+  //   return Product.fromJson(response.data as _ResponseData);
+  // }
 }
 
 /// Attempts to login with the login [data], returns the token if success.

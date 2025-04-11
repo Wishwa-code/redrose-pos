@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../widgets/action_button.dart';
 import '../models/product.dart';
-import '../providers/add_product_drop_down_value_provider.dart';
+import '../providers/enums_provider.dart';
 import '../providers/last_entered_product_notifier.dart';
 
 class AddProductsPage extends ConsumerStatefulWidget {
@@ -90,7 +90,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
   @override
   Widget build(BuildContext context) {
     final product = ref.watch(lastProductProvider);
-    final departments = ref.watch(departmentProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -170,20 +169,15 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                       maxLines: 3,
                     ),
                     const SizedBox(height: 16),
-                    FormBuilderDropdown(
-                      key: _departmentKey,
-                      name: 'service',
-                      onChanged: (value) => setState(() {
-                        _departmentController.text = value!.name;
-                      }),
-                      decoration: const InputDecoration(labelText: 'Service'),
-                      items: [
-                        for (final department in departments)
-                          DropdownMenuItem(value: department, child: Text(department.name)),
-                      ],
-                      // validator: FormBuilderValidators.compose([
-                      //   FormBuilderValidators.required(),
-                      // ]),
+                    EnumDropdownField(
+                      name: 'department',
+                      label: 'Department',
+                      onChanged: (value) => _departmentController.text = value ?? '',
+                    ),
+                    EnumDropdownField(
+                      name: 'main_categorie',
+                      label: 'Main Category',
+                      onChanged: (value) => _mainCategoryController.text = value ?? '',
                     ),
 
                     const SizedBox(height: 16),
@@ -293,6 +287,49 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class EnumDropdownField extends ConsumerWidget {
+  const EnumDropdownField({
+    super.key,
+    required this.name,
+    required this.label,
+    this.onChanged,
+  });
+  final String name;
+  final String label;
+  final void Function(String?)? onChanged;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final enumsAsync = ref.watch(enumsProvider);
+
+    return enumsAsync.when(
+      data: (groupedEnums) {
+        final items = groupedEnums[name] ?? [];
+
+        if (items.isEmpty) {
+          return Text('No values for "$name"');
+        }
+
+        return FormBuilderDropdown<String>(
+          name: name,
+          onChanged: onChanged,
+          decoration: InputDecoration(labelText: label),
+          items: items
+              .map(
+                (e) => DropdownMenuItem(
+                  value: e.enumValue,
+                  child: Text(e.enumValue),
+                ),
+              )
+              .toList(),
+        );
+      },
+      loading: () => const CircularProgressIndicator(),
+      error: (e, _) => Text('Error loading $name values: $e'),
     );
   }
 }

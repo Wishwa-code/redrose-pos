@@ -1,4 +1,11 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+//!beter refactor this code might be actually unnessary because fetching these values from db is just enough
+
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import './enums_provider.dart';
+
+part 'add_product_drop_down_value_provider.g.dart';
 
 class Department {
   Department(this.name);
@@ -23,9 +30,20 @@ final List<Categories> _categories = [
   Categories('cement'),
 ];
 
-final departmentProvider = Provider.autoDispose<List<Department>>((_) {
-  return _departments;
-});
+// final departmentProvider = Provider.autoDispose<List<Department>>((_) {
+//   return _departments;
+// });
+
+@riverpod
+Future<List<Department>> department(Ref ref) async {
+  final groupedEnums = await ref.watch(enumsProvider.future);
+
+  // Filter and map the department values
+  final departments =
+      groupedEnums['department']?.map((e) => Department(e.enumValue)).toList() ?? [];
+
+  return departments;
+}
 
 // const int currentUserId = 1;
 
