@@ -7,8 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../widgets/action_button.dart';
 import '../models/product.dart';
-import '../providers/enums_provider.dart';
 import '../providers/last_entered_product_notifier.dart';
+import '../screens/widgets/enum_drop_down.dart';
 
 class AddProductsPage extends ConsumerStatefulWidget {
   const AddProductsPage({super.key});
@@ -133,32 +133,9 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                       maxLines: 3,
                     ),
                     const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _tagOneController,
-                      decoration: const InputDecoration(
-                        labelText: 'default: tagone1',
-                        border: OutlineInputBorder(),
-                      ),
-                      maxLines: 3,
-                    ),
+
                     const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _tagTwoController,
-                      decoration: const InputDecoration(
-                        labelText: 'deafault: tagtwo1',
-                        border: OutlineInputBorder(),
-                      ),
-                      maxLines: 3,
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _supplierController,
-                      decoration: const InputDecoration(
-                        labelText: 'supplier(default)',
-                        border: OutlineInputBorder(),
-                      ),
-                      maxLines: 3,
-                    ),
+
                     const SizedBox(height: 16),
                     TextFormField(
                       controller: _brandController,
@@ -169,11 +146,57 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                       maxLines: 3,
                     ),
                     const SizedBox(height: 16),
+                    //                     TextFormField(
+                    //   controller: _tagTwoController,
+                    //   decoration: const InputDecoration(
+                    //     labelText: 'deafault: tagtwo1',
+                    //     border: OutlineInputBorder(),
+                    //   ),
+                    //   maxLines: 3,
+                    // ),
+                    TextFormField(
+                      controller: _supplierController,
+                      decoration: const InputDecoration(
+                        labelText: 'supplier(default)',
+                        border: OutlineInputBorder(),
+                      ),
+                      maxLines: 3,
+                    ),
+                    EnumDropdownField(
+                      name: 'supplier',
+                      label: 'Supplier',
+                      onChanged: (value) => _supplierController.text = value ?? '',
+                    ),
+                    const SizedBox(height: 16),
+
+                    EnumDropdownField(
+                      name: 'tag_two',
+                      label: 'Tag Two',
+                      onChanged: (value) => _tagTwoController.text = value ?? '',
+                    ),
+                    const SizedBox(height: 16),
+
+                    // TextFormField(
+                    //   controller: _tagOneController,
+                    //   decoration: const InputDecoration(
+                    //     labelText: 'default: tagone1',
+                    //     border: OutlineInputBorder(),
+                    //   ),
+                    //   maxLines: 3,
+                    // ),
+                    EnumDropdownField(
+                      name: 'tag_one',
+                      label: 'Tag One',
+                      onChanged: (value) => _tagOneController.text = value ?? '',
+                    ),
+                    const SizedBox(height: 16),
                     EnumDropdownField(
                       name: 'department',
                       label: 'Department',
                       onChanged: (value) => _departmentController.text = value ?? '',
                     ),
+                    const SizedBox(height: 16),
+
                     EnumDropdownField(
                       name: 'main_categorie',
                       label: 'Main Category',
@@ -181,31 +204,18 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                     ),
 
                     const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _departmentController,
-                      decoration: const InputDecoration(
-                        labelText: 'department(mainBuilding)',
-                        border: OutlineInputBorder(),
-                      ),
-                      maxLines: 3,
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _mainCategoryController,
-                      decoration: const InputDecoration(
-                        labelText: 'mainCategory(cement)',
-                        border: OutlineInputBorder(),
-                      ),
-                      maxLines: 3,
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _subCategoryController,
-                      decoration: const InputDecoration(
-                        labelText: 'subCategory(portlandCement)',
-                        border: OutlineInputBorder(),
-                      ),
-                      maxLines: 3,
+                    // TextFormField(
+                    //   controller: _subCategoryController,
+                    //   decoration: const InputDecoration(
+                    //     labelText: 'subCategory(portlandCement)',
+                    //     border: OutlineInputBorder(),
+                    //   ),
+                    //   maxLines: 3,
+                    // ),
+                    EnumDropdownField(
+                      name: 'sub_categorie',
+                      label: 'Sub Category',
+                      onChanged: (value) => _subCategoryController.text = value ?? '',
                     ),
                     const SizedBox(height: 24),
                     ElevatedButton.icon(
@@ -287,49 +297,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class EnumDropdownField extends ConsumerWidget {
-  const EnumDropdownField({
-    super.key,
-    required this.name,
-    required this.label,
-    this.onChanged,
-  });
-  final String name;
-  final String label;
-  final void Function(String?)? onChanged;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final enumsAsync = ref.watch(enumsProvider);
-
-    return enumsAsync.when(
-      data: (groupedEnums) {
-        final items = groupedEnums[name] ?? [];
-
-        if (items.isEmpty) {
-          return Text('No values for "$name"');
-        }
-
-        return FormBuilderDropdown<String>(
-          name: name,
-          onChanged: onChanged,
-          decoration: InputDecoration(labelText: label),
-          items: items
-              .map(
-                (e) => DropdownMenuItem(
-                  value: e.enumValue,
-                  child: Text(e.enumValue),
-                ),
-              )
-              .toList(),
-        );
-      },
-      loading: () => const CircularProgressIndicator(),
-      error: (e, _) => Text('Error loading $name values: $e'),
     );
   }
 }
