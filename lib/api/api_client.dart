@@ -5,6 +5,7 @@ import 'package:http_parser/http_parser.dart';
 
 import '../features/inventory/models/enum_item.dart';
 import '../features/inventory/models/product.dart';
+import './product_tree.dart';
 
 class SupabaseUploadResponse {
   SupabaseUploadResponse({
@@ -59,6 +60,7 @@ class ApiClient {
   );
 
   final Dio _httpClient;
+  final Map<String, TreeNode> treeData = items;
 
   @override
   String toString() {
@@ -130,17 +132,53 @@ class ApiClient {
   }
 
   Future<Map<String, List<EnumItem>>> getEnums() async {
-    final response = await _httpClient.get('/enums');
+    try {
+      final response = await _httpClient.get('/enums');
 
-    final data = response.data['enums'] as List<dynamic>;
-    final List<EnumItem> enums =
-        data.map((item) => EnumItem.fromJson(item as Map<String, dynamic>)).toList();
+      final data = response.data['enums'] as List<dynamic>;
+      final enums = data.map((item) => EnumItem.fromJson(item as Map<String, dynamic>)).toList();
 
-    final Map<String, List<EnumItem>> groupedEnums = {};
-    for (final enumItem in enums) {
-      groupedEnums.putIfAbsent(enumItem.enumName, () => []) .add(enumItem);
+      final parentLookup = _generateParentLookup(treeData, enums);
+
+      final groupedEnums = <String, List<EnumItem>>{};
+      for (final enumItem in enums) {
+        final parentIdx = parentLookup[enumItem.enumName];
+
+        final itemWithParent = enumItem.copyWith(parentIndex: parentIdx);
+
+        groupedEnums.putIfAbsent(itemWithParent.enumName, () => []).add(itemWithParent);
+      }
+
+      return groupedEnums;
+    } catch (e) {
+      // Log the error or handle it as needed
+      print('Error fetching or processing enums: $e');
+      // Rethrow or return an empty map/default value depending on requirements
+      rethrow;
+      // Or return {};
     }
-    return groupedEnums;
+  }
+
+  Map<String, String?> _generateParentLookup(Map<String, TreeNode> tree, List<EnumItem> enumItems) {
+    final parentLookup = <String, String?>{};
+
+    // Iterate through your enum items
+    for (final enumItem in enumItems) {
+      String? foundParent;
+
+      // Iterate through all the tree nodes
+      tree.forEach((nodeKey, nodeValue) {
+        // Check if value from current enum is in children list for TreeNode
+        if (nodeValue.children.contains(enumItem.enumValue)) {
+          foundParent = nodeKey; // if enumValue is in the children store the TreeNodeKey
+        }
+      });
+
+      parentLookup[enumItem.enumName] =
+          foundParent; // Store found parent, or null if no parent was found
+    }
+
+    return parentLookup;
   }
 
   //? below method is not working yet

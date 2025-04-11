@@ -130,11 +130,8 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                         labelText: 'Description',
                         border: OutlineInputBorder(),
                       ),
-                      maxLines: 3,
+                      maxLines: 2,
                     ),
-                    const SizedBox(height: 16),
-
-                    const SizedBox(height: 16),
 
                     const SizedBox(height: 16),
                     TextFormField(
@@ -143,7 +140,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                         labelText: 'brand(default)',
                         border: OutlineInputBorder(),
                       ),
-                      maxLines: 3,
                     ),
                     const SizedBox(height: 16),
                     //                     TextFormField(
@@ -160,19 +156,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                         labelText: 'supplier(default)',
                         border: OutlineInputBorder(),
                       ),
-                      maxLines: 3,
-                    ),
-                    EnumDropdownField(
-                      name: 'supplier',
-                      label: 'Supplier',
-                      onChanged: (value) => _supplierController.text = value ?? '',
-                    ),
-                    const SizedBox(height: 16),
-
-                    EnumDropdownField(
-                      name: 'tag_two',
-                      label: 'Tag Two',
-                      onChanged: (value) => _tagTwoController.text = value ?? '',
                     ),
                     const SizedBox(height: 16),
 
@@ -184,11 +167,7 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                     //   ),
                     //   maxLines: 3,
                     // ),
-                    EnumDropdownField(
-                      name: 'tag_one',
-                      label: 'Tag One',
-                      onChanged: (value) => _tagOneController.text = value ?? '',
-                    ),
+
                     const SizedBox(height: 16),
                     EnumDropdownField(
                       name: 'department',
@@ -216,6 +195,19 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                       name: 'sub_categorie',
                       label: 'Sub Category',
                       onChanged: (value) => _subCategoryController.text = value ?? '',
+                    ),
+                    const SizedBox(height: 16),
+                    EnumDropdownField(
+                      name: 'tag_one',
+                      label: 'Tag One',
+                      onChanged: (value) => _tagOneController.text = value ?? '',
+                    ),
+                    const SizedBox(height: 16),
+
+                    EnumDropdownField(
+                      name: 'tag_two',
+                      label: 'Tag Two',
+                      onChanged: (value) => _tagTwoController.text = value ?? '',
                     ),
                     const SizedBox(height: 24),
                     ElevatedButton.icon(
