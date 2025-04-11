@@ -30,6 +30,7 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
   final _departmentController = TextEditingController();
   final _mainCategoryController = TextEditingController();
   final _subCategoryController = TextEditingController();
+  final _rootController = TextEditingController();
 
   File? _selectedImage;
   String? _selectedImageName;
@@ -87,9 +88,15 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
     }
   }
 
+  void _stateRebuild() {
+    // Create one method to setState
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final product = ref.watch(lastProductProvider);
+    _rootController.text = 'root';
 
     return Scaffold(
       appBar: AppBar(
@@ -172,15 +179,21 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                     EnumDropdownField(
                       name: 'department',
                       label: 'Department',
-                      onChanged: (value) => _departmentController.text = value ?? '',
+                      controller: _departmentController, // Pass controller
+                      parentController: _rootController,
+                      onParentStateChanged: _stateRebuild, // There is not parent
                     ),
                     const SizedBox(height: 16),
 
                     EnumDropdownField(
                       name: 'main_categorie',
                       label: 'Main Category',
-                      onChanged: (value) => _mainCategoryController.text = value ?? '',
+                      controller: _mainCategoryController,
+                      parentController: _departmentController,
+                      onParentStateChanged: _stateRebuild, // main_categorie use department
                     ),
+
+                    const SizedBox(height: 16),
 
                     const SizedBox(height: 16),
                     // TextFormField(
@@ -191,24 +204,24 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                     //   ),
                     //   maxLines: 3,
                     // ),
-                    EnumDropdownField(
-                      name: 'sub_categorie',
-                      label: 'Sub Category',
-                      onChanged: (value) => _subCategoryController.text = value ?? '',
-                    ),
-                    const SizedBox(height: 16),
-                    EnumDropdownField(
-                      name: 'tag_one',
-                      label: 'Tag One',
-                      onChanged: (value) => _tagOneController.text = value ?? '',
-                    ),
-                    const SizedBox(height: 16),
+                    // EnumDropdownField(
+                    //   name: 'sub_categorie',
+                    //   label: 'Sub Category',
+                    //   onChanged: (value) => _subCategoryController.text = value ?? '',
+                    // ),
+                    // const SizedBox(height: 16),
+                    // EnumDropdownField(
+                    //   name: 'tag_one',
+                    //   label: 'Tag One',
+                    //   onChanged: (value) => _tagOneController.text = value ?? '',
+                    // ),
+                    // const SizedBox(height: 16),
 
-                    EnumDropdownField(
-                      name: 'tag_two',
-                      label: 'Tag Two',
-                      onChanged: (value) => _tagTwoController.text = value ?? '',
-                    ),
+                    // EnumDropdownField(
+                    //   name: 'tag_two',
+                    //   label: 'Tag Two',
+                    //   onChanged: (value) => _tagTwoController.text = value ?? '',
+                    // ),
                     const SizedBox(height: 24),
                     ElevatedButton.icon(
                       icon: const Icon(Icons.upload_file),
