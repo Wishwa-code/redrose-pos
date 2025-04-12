@@ -97,6 +97,7 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
   Widget build(BuildContext context) {
     final product = ref.watch(lastProductProvider);
     _rootController.text = 'root';
+    _subCategoryController.text = 'N/A';
 
     return Scaffold(
       appBar: AppBar(
@@ -182,6 +183,8 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                       controller: _departmentController, // Pass controller
                       parentController: _rootController,
                       onParentStateChanged: _stateRebuild, // There is not parent
+                      isattached: true,
+                      level: 1,
                     ),
                     const SizedBox(height: 16),
 
@@ -190,7 +193,9 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                       label: 'Main Category',
                       controller: _mainCategoryController,
                       parentController: _departmentController,
-                      onParentStateChanged: _stateRebuild, // main_categorie use department
+                      onParentStateChanged: _stateRebuild,
+                      isattached: true, // main_categorie use department
+                      level: 2,
                     ),
 
                     const SizedBox(height: 16),
@@ -204,19 +209,45 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                     //   ),
                     //   maxLines: 3,
                     // ),
+                    EnumDropdownField(
+                      name: 'sub_categorie',
+                      label: 'Sub Category',
+                      controller: _subCategoryController,
+                      parentController: _mainCategoryController,
+                      onParentStateChanged: _stateRebuild, // main_categorie use department
+                      isattached: true,
+                      level: 3,
+                    ),
                     // EnumDropdownField(
                     //   name: 'sub_categorie',
                     //   label: 'Sub Category',
                     //   onChanged: (value) => _subCategoryController.text = value ?? '',
                     // ),
                     // const SizedBox(height: 16),
+                    EnumDropdownField(
+                      name: 'tag_one',
+                      label: 'Tag one',
+                      controller: _tagOneController,
+                      parentController: _tagOneController,
+                      onParentStateChanged: _stateRebuild, // main_categorie use department
+                      isattached: false,
+                      level: -1,
+                    ),
                     // EnumDropdownField(
                     //   name: 'tag_one',
                     //   label: 'Tag One',
                     //   onChanged: (value) => _tagOneController.text = value ?? '',
                     // ),
                     // const SizedBox(height: 16),
-
+                    EnumDropdownField(
+                      name: 'tag_two',
+                      label: 'Tag two',
+                      controller: _tagTwoController,
+                      parentController: _tagTwoController,
+                      onParentStateChanged: _stateRebuild, // main_categorie use department
+                      isattached: false,
+                      level: -2,
+                    ),
                     // EnumDropdownField(
                     //   name: 'tag_two',
                     //   label: 'Tag Two',

@@ -131,54 +131,91 @@ class ApiClient {
     return Product.fromJson(productData);
   }
 
-  Future<Map<String, List<EnumItem>>> getEnums() async {
+  // Future<Map<String, List<EnumItem>>> getEnums() async {
+  //   try {
+  //     final response = await _httpClient.get('/enums');
+
+  //     final data = response.data['enums'] as List<dynamic>;
+  //     final enums = data.map((item) => EnumItem.fromJson(item as Map<String, dynamic>)).toList();
+
+  //     final parentLookup = _generateParentLookup(treeData, enums);
+
+  //     print('parent lookup ------------------------------------->>>>>>$parentLookup');
+
+  //     final groupedEnums = <String, List<EnumItem>>{};
+  //     for (final enumItem in enums) {
+  //       final parentIdx = parentLookup[enumItem.enumName];
+
+  //       // print('parentIdx-------->>>> $parentIdx enum item ---------->$enumItem ');
+
+  //       final itemWithParent = enumItem.copyWith(parentIndex: parentIdx);
+
+  //       groupedEnums.putIfAbsent(itemWithParent.enumName, () => []).add(itemWithParent);
+  //     }
+
+  //     return groupedEnums;
+  //   } catch (e) {
+  //     // Log the error or handle it as needed
+  //     print('Error fetching or processing enums: $e');
+  //     // Rethrow or return an empty map/default value depending on requirements
+  //     rethrow;
+  //     // Or return {};
+  //   }
+  // }
+
+  Future<Map<String, TreeNode>> fetchEnumsAndBuildTree() async {
     try {
       final response = await _httpClient.get('/enums');
 
       final data = response.data['enums'] as List<dynamic>;
       final enums = data.map((item) => EnumItem.fromJson(item as Map<String, dynamic>)).toList();
 
-      final parentLookup = _generateParentLookup(treeData, enums);
+      // You can use enums if needed for any tree data enrichment, or skip this if tree is static.
 
-      final groupedEnums = <String, List<EnumItem>>{};
-      for (final enumItem in enums) {
-        final parentIdx = parentLookup[enumItem.enumName];
+      // Assuming you already have the raw tree defined (like `items`)
+      final updatedTree = updateTreeLevels(items);
 
-        final itemWithParent = enumItem.copyWith(parentIndex: parentIdx);
+      print('🌳 Updated tree with levels:');
+      updatedTree.forEach((key, node) {
+        print('Node: $key -> Level: ${node.level}');
+      });
 
-        groupedEnums.putIfAbsent(itemWithParent.enumName, () => []).add(itemWithParent);
-      }
-
-      return groupedEnums;
+      return updatedTree;
     } catch (e) {
-      // Log the error or handle it as needed
-      print('Error fetching or processing enums: $e');
-      // Rethrow or return an empty map/default value depending on requirements
+      print('❌ Error fetching enums or building tree: $e');
       rethrow;
-      // Or return {};
     }
   }
 
-  Map<String, String?> _generateParentLookup(Map<String, TreeNode> tree, List<EnumItem> enumItems) {
-    final parentLookup = <String, String?>{};
+  Map<String, TreeNode> updateTreeLevels(Map<String, TreeNode> originalTree) {
+    final updatedTree = <String, TreeNode>{};
 
-    // Iterate through your enum items
-    for (final enumItem in enumItems) {
-      String? foundParent;
+    void traverse(String nodeId, int currentLevel) {
+      final node = originalTree[nodeId];
+      if (node == null) return;
 
-      // Iterate through all the tree nodes
-      tree.forEach((nodeKey, nodeValue) {
-        // Check if value from current enum is in children list for TreeNode
-        if (nodeValue.children.contains(enumItem.enumValue)) {
-          foundParent = nodeKey; // if enumValue is in the children store the TreeNodeKey
-        }
-      });
+      // Create a new node with the updated level
+      final updatedNode = TreeNode(
+        index: node.index,
+        available: node.available,
+        isFolder: node.isFolder,
+        children: node.children,
+        data: node.data,
+        level: currentLevel,
+        image: node.image,
+      );
 
-      parentLookup[enumItem.enumName] =
-          foundParent; // Store found parent, or null if no parent was found
+      updatedTree[nodeId] = updatedNode;
+
+      for (final childId in node.children) {
+        traverse(childId, currentLevel + 1);
+      }
     }
 
-    return parentLookup;
+    // Start from root with level 0
+    traverse('root', 0);
+
+    return updatedTree;
   }
 
   //? below method is not working yet

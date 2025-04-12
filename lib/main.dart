@@ -43,7 +43,7 @@ class _EagerInitialization extends ConsumerWidget {
     // Eagerly initialize providers by watching them.
     // By using "watch", the provider will stay alive and not be disposed.
     ref.watch(productProvider);
-    ref.watch(enumsProvider);
+    ref.watch(rrenumsProvider);
     return child;
   }
 }

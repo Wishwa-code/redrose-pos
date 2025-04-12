@@ -1,17 +1,17 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '/api/api_client_service.dart';
-import '../models/enum_item.dart';
+import '/api/product_tree.dart';
 
 part 'enums_provider.g.dart';
 
 @riverpod
-class Enums extends _$Enums {
+class Rrenums extends _$Rrenums {
   @override
-  Future<Map<String, List<EnumItem>>> build() async {
+  Future<Map<String, TreeNode>> build() async {
     final apiService = await ref.watch(apiServiceProvider.future);
 
-    final groupedEnums = await apiService.getEnums();
+    final groupedEnums = await apiService.fetchEnumsAndBuildTree();
 
     print('grouped ennums $groupedEnums');
 
