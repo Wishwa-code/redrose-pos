@@ -8,15 +8,42 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
 final searchFieldProvider = StateProvider<String>((ref) => '');
+final departmentFilterProvider = StateProvider<List<String>>((ref) => []);
+final categoryFilterProvider = StateProvider<List<String>>((ref) => []);
+
 final questionsProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async {
   final client = http.Client();
   ref.onDispose(client.close);
 
   final search = ref.watch(searchFieldProvider);
 
+  final selectedDepartments = ref.watch(departmentFilterProvider);
+
+  final selectedCategories = ref.watch(categoryFilterProvider);
+  print('selectedCategories $selectedCategories');
+
   Uri uri;
 
-  if (search.isEmpty) {
+  if (selectedDepartments.isNotEmpty && selectedCategories.isNotEmpty && search.isEmpty) {
+    final departmentQuery = selectedDepartments.join(',');
+    final categoryquery = selectedCategories.join(',');
+
+    uri = Uri.parse(
+      'http://localhost:8080/products/search?department=$departmentQuery&main_catogory=$categoryquery',
+    );
+  } else if (selectedDepartments.isNotEmpty && search.isEmpty) {
+    final departmentQuery = selectedDepartments.join(',');
+    uri = Uri.parse(
+      'http://localhost:8080/products/search?department=$departmentQuery',
+    );
+  } else if (selectedDepartments.isNotEmpty) {
+    final encodedQuery = Uri.encodeComponent(search);
+    final departmentQuery = selectedDepartments.join(',');
+
+    uri = Uri.parse(
+      'http://localhost:8080/products/search?title=$encodedQuery&department=$departmentQuery',
+    );
+  } else if (search.isEmpty) {
     uri = Uri.parse(
       'http://localhost:8080/products/search?title=cement',
     );
@@ -24,7 +51,7 @@ final questionsProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async
     final encodedQuery = Uri.encodeComponent(search);
     print(encodedQuery);
     uri = Uri.parse(
-      'http://localhost:8080/products/search?title=$encodedQuery&',
+      'http://localhost:8080/products/search?title=$encodedQuery&department=mainplumbing',
     );
   }
 
