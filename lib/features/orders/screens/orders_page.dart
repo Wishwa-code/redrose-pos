@@ -1,74 +1,99 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../features/inventory/screens/widgets/filter_chips.dart';
-import '../../inventory/providers/product_search_provider.dart';
+import '../../inventory/providers/products_provider.dart';
 
-/// The homepage of our application
-class InventoryPage extends ConsumerWidget {
+class InventoryPage extends ConsumerStatefulWidget {
   const InventoryPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final productsAsyncValue = ref.watch(questionsProvider);
+  ConsumerState<ConsumerStatefulWidget> createState() => _InventoryPageState();
+}
+
+class _InventoryPageState extends ConsumerState<InventoryPage> {
+  final _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final product = ref.watch(productProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Questions')),
+      backgroundColor: const Color(0xFF0d0d0d),
       body: Row(
         children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const Text('Filters'),
-                  FilterChipsBox(
-                    name: 'Department',
-                    provider: departmentFilterProvider,
-                    level: 1,
-                  ),
-                  FilterChipsBox(
-                    name: 'Category',
-                    provider: categoryFilterProvider,
-                    level: 2,
-                  ),
-                ],
+          // Left side - Scrollable list of cards with fixed width
+          ColoredBox(
+            color: Colors.white,
+            child: SizedBox(
+              width: 350,
+              child: Expanded(
+                child: Center(
+                  /// Since network-requests are asynchronous and can fail, we need to
+                  /// handle both error and loading states. We can use pattern matching for this.
+                  /// We could alternatively use `if (activity.isLoading) { ... } else if (...)`
+                  child: switch (product) {
+                    AsyncData(:final value) => SingleChildScrollView(
+                        child: ListBody(
+                          children: value
+                              .map(
+                                (product) => Column(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text('Product: ${product.title}'),
+                                        Text('ID: ${product.id}'),
+                                        Text('Description: ${product.description}'),
+                                        Text('Tags: ${product.tagOne}, ${product.tagTwo}'),
+                                        Text('Supplier: ${product.supplier}'),
+                                        Text('Brand: ${product.brand}'),
+                                        Text('Department: ${product.department}'),
+                                        Text('Main Category: ${product.mainCategory}'),
+                                        Text('Sub Category: ${product.subCategory}'),
+                                        Image.network(product.imageUrl),
+                                      ],
+                                    ),
+                                    const Divider(
+                                      thickness: 20,
+                                    ), // To separate each activity visually
+                                  ],
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ),
+                    AsyncError() => const Text('Oops, something unexpected happened'),
+                    _ => const CircularProgressIndicator(),
+                  },
+                ),
               ),
             ),
           ),
           Expanded(
-            flex: 3,
-            child: Column(
-              children: [
-                TextField(
-                  onChanged: (value) => ref.read(searchFieldProvider.notifier).state = value,
-                ),
-                Expanded(
-                  child: productsAsyncValue.when(
-                    data: (products) {
-                      return ListView.builder(
-                        itemCount: products.length,
-                        itemBuilder: (context, index) {
-                          final product = products[index];
-
-                          return ListTile(
-                            title: Text(product['title'].toString()),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Description: ${product['description']}'),
-                                Text('Tags: ${product['tag_one']}, ${product['tag_two']}'),
-                                Image.network(product['imageurl'] as String),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    },
-                    loading: () => const Center(child: CircularProgressIndicator()),
-                    error: (error, stackTrace) => Center(child: Text('Error: $error')),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      hintText: 'Search products...',
+                      prefixIcon: const Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey.shade800,
+                    ),
                   ),
-                ),
-              ],
+                  // Rest of the right side content can go here
+                ],
+              ),
             ),
           ),
         ],
@@ -76,56 +101,3 @@ class InventoryPage extends ConsumerWidget {
     );
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:go_router/go_router.dart';
-// import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-// import '../entities/product.dart';
-// import '../state/product_provider.dart';
-
-// /// A screen showing a product with the specific [id].
-// class InventoryPage extends ConsumerWidget {
-//   const InventoryPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     final products = ref.watch(productProvider);
-
-//     Future<void> onRefresh() => ref.refresh(productProvider.future);
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Products'),
-//       ),
-//       body: RefreshIndicator(
-//         onRefresh: onRefresh,
-//         child: products.when(
-//           loading: () => const Center(child: CircularProgressIndicator()),
-//           error: (_, __) => const Center(child: Text('An error occurred')),
-//           data: (products) => ListView.builder(
-//             itemCount: products.length,
-//             itemBuilder: (_, index) => _ProductListTile(products[index]),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class _ProductListTile extends StatelessWidget {
-//   const _ProductListTile(this.product);
-
-//   final Product product;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     void onTap() => context.go('/products/${product.id}');
-
-//     return ListTile(
-//       onTap: onTap,
-//       title: Text(product.title),
-//       subtitle: product.brand != null ? Text(product.brand) : null,
-//     );
-//   }
-// }

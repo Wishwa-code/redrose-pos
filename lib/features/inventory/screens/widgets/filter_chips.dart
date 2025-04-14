@@ -57,23 +57,47 @@ class FilterChipsBox extends ConsumerWidget {
     required this.name,
     required this.level,
     required this.provider,
+    required this.parentProvider,
   });
 
   final String name;
   final int level;
   final StateProvider<List<String>> provider;
+  final StateProvider<List<String>> parentProvider;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedValues = ref.watch(provider);
+    final selectedParentValues = ref.watch(parentProvider);
     final treeAsync = ref.watch(rrenumsProvider);
 
     // Get all TreeNode indexes at the given level
 
     return treeAsync.when(
       data: (tree) {
-        final levelNodes =
-            tree.values.where((node) => node.level == level).map((node) => node.index).toList();
+        final childToParent = <String, String>{};
+        for (final entry in tree.entries) {
+          final parentIndex = entry.key;
+          for (final childIndex in entry.value.children) {
+            childToParent[childIndex] = parentIndex;
+          }
+        }
+
+        // final levelNodes =
+        //     tree.values.where((node) => node.level == level).map((node) => node.index).toList();
+        final levelNodes = tree.values
+            .where((node) {
+              final parentIndex = childToParent[node.index];
+              final parentNode = tree[parentIndex];
+              return node.level == level &&
+                  (selectedParentValues.isEmpty ||
+                      (parentNode != null &&
+                          parentNode.level == level - 1 &&
+                          selectedParentValues.contains(parentNode.index)));
+            })
+            .map((node) => node.index)
+            .toList();
+
         // print('level nodes$levelNodes');
 
         return Column(

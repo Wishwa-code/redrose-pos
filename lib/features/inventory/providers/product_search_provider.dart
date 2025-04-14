@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
+final rootProvider = StateProvider<List<String>>((ref) => ['root', 'root']);
 final searchFieldProvider = StateProvider<String>((ref) => '');
 final departmentFilterProvider = StateProvider<List<String>>((ref) => []);
 final categoryFilterProvider = StateProvider<List<String>>((ref) => []);
