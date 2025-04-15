@@ -49,7 +49,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/api/product_tree.dart';
-import '../../providers/enums_provider.dart'; // Assuming this has your enumTreeProvider
+import '../../providers/menu_tree_provider.dart'; // Assuming this has your enumTreeProvider
 
 class FilterChipsBox extends ConsumerWidget {
   const FilterChipsBox({
@@ -69,7 +69,7 @@ class FilterChipsBox extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedValues = ref.watch(provider);
     final selectedParentValues = ref.watch(parentProvider);
-    final treeAsync = ref.watch(rrenumsProvider);
+    final treeAsync = ref.watch(menutreeProvider);
 
     // Get all TreeNode indexes at the given level
 

@@ -87,7 +87,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/api/product_tree.dart';
 // import '../../models/tree_node.dart'; // If TreeNode is defined in a separate file
-import '../../providers/enums_provider.dart'; // Assuming this has your enumTreeProvider
+import '../../providers/menu_tree_provider.dart'; // Assuming this has your enumTreeProvider
 
 class EnumDropdownField extends ConsumerWidget {
   const EnumDropdownField({
@@ -111,7 +111,7 @@ class EnumDropdownField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final treeAsync = ref.watch(rrenumsProvider);
+    final treeAsync = ref.watch(menutreeProvider);
 
     return treeAsync.when(
       data: (tree) {

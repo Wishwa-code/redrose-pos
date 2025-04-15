@@ -1,12 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logging/logging.dart';
 
-import 'features/inventory/providers/enums_provider.dart';
-import 'features/inventory/providers/products_provider.dart';
 import 'router/router.dart';
 import 'utils/state_logger.dart';
 
+final log = Logger('ExampleLogger');
+int fibonacci(int n) {
+  if (n <= 2) {
+    if (n < 0) log.shout('Unexpected negative n: $n');
+    return 1;
+  } else {
+    log.info('recursion: n = $n');
+    return fibonacci(n - 2) + fibonacci(n - 1);
+  }
+}
+
 void main() {
+  Logger.root.level = Level.ALL; // defaults to Level.INFO
+  Logger.root.onRecord.listen((record) {
+    print('${record.level.name}: ${record.time}: ${record.message}');
+  });
+
+  print('Fibonacci(4) is: ${fibonacci(4)}');
+
+  Logger.root.level = Level.SEVERE; // skip logs less then severe.
+  print('Fibonacci(5) is: ${fibonacci(5)}');
+
+  print('Fibonacci(-42) is: ${fibonacci(-42)}');
   runApp(
     const ProviderScope(
       observers: [StateLogger()],
@@ -26,7 +47,7 @@ class MyAwesomeApp extends ConsumerWidget {
 
     return MaterialApp.router(
       routerConfig: router,
-      title: 'hooks_riverpod + go_router Demo',
+      title: 'Redrose POS',
       theme: ThemeData(
         primarySwatch: Colors.cyan,
       ),
@@ -42,8 +63,8 @@ class _EagerInitialization extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Eagerly initialize providers by watching them.
     // By using "watch", the provider will stay alive and not be disposed.
-    ref.watch(productProvider);
-    ref.watch(rrenumsProvider);
+    // ref.watch(productProvider);
+    // ref.watch(menutreeProvider);
     return child;
   }
 }

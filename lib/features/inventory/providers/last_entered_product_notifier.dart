@@ -30,7 +30,7 @@ class LastProduct extends _$LastProduct {
     final apiService = await ref.watch(apiServiceProvider.future);
 
     final response = await apiService.fetchLastProduct();
-    print(response);
+    // print(response);
 
     return response;
   }

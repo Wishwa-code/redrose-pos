@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../inventory/providers/products_provider.dart';
+import '../../inventory/screens/widgets/product_list.dart';
 
-class InventoryPage extends ConsumerStatefulWidget {
-  const InventoryPage({super.key});
+class AllProductsPage extends ConsumerStatefulWidget {
+  const AllProductsPage({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _InventoryPageState();
 }
 
-class _InventoryPageState extends ConsumerState<InventoryPage> {
+class _InventoryPageState extends ConsumerState<AllProductsPage> {
   final _searchController = TextEditingController();
 
   @override
@@ -21,14 +22,15 @@ class _InventoryPageState extends ConsumerState<InventoryPage> {
 
   @override
   Widget build(BuildContext context) {
+    final product = ref.watch(productProvider);
 
     return const Scaffold(
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      body: Center(
-        child: Text(
-          'Orders page!',
-          style: TextStyle(fontSize: 24),
-        ),
+      body: Row(
+        children: [
+          // Left side - Scrollable list of cards with fixed width
+          Expanded(child: ProductList()),
+        ],
       ),
     );
   }

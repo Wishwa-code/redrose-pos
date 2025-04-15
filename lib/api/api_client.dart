@@ -175,10 +175,10 @@ class ApiClient {
       // Assuming you already have the raw tree defined (like `items`)
       final updatedTree = updateTreeLevels(items);
 
-      print('🌳 Updated tree with levels:');
-      updatedTree.forEach((key, node) {
-        print('Node: $key -> Level: ${node.level}');
-      });
+      // print('🌳 Updated tree with levels:');
+      // updatedTree.forEach((key, node) {
+      //   print('Node: $key -> Level: ${node.level}');
+      // });
 
       return updatedTree;
     } catch (e) {

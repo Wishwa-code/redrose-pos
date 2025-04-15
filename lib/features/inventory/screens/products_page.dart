@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'add_products_page.dart';
-import 'inventory_page.dart';
+import 'all_products_page.dart';
+import 'filter_products_page.dart';
 
 class ProductsPage extends StatefulWidget {
   const ProductsPage({super.key});
@@ -39,24 +40,24 @@ class _ProductsPageState extends State<ProductsPage> {
                 children: [
                   _buildNavigationButton(
                     context,
-                    'Inventory',
+                    'All products',
+                    Icons.collections,
+                    () => _updateContent(
+                      'Collections',
+                      const AllProductsPage(),
+                    ),
+                  ),
+                  _buildNavigationButton(
+                    context,
+                    'Filter Products',
                     Icons.inventory,
-                    () => _updateContent('Inventory', const InventoryPage()),
+                    () => _updateContent('Inventory', const FilterProductsPage()),
                   ),
                   _buildNavigationButton(
                     context,
                     'Add Products',
                     Icons.add_box,
                     () => _updateContent('Add Products', const AddProductsPage()),
-                  ),
-                  _buildNavigationButton(
-                    context,
-                    'Collections',
-                    Icons.collections,
-                    () => _updateContent(
-                      'Collections',
-                      const Center(child: Text('Collections Content')),
-                    ),
                   ),
                   _buildNavigationButton(
                     context,

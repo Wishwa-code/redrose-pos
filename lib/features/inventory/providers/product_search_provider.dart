@@ -21,7 +21,7 @@ final questionsProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async
   final selectedDepartments = ref.watch(departmentFilterProvider);
 
   final selectedCategories = ref.watch(categoryFilterProvider);
-  print('selectedCategories $selectedCategories');
+  // print('selectedCategories $selectedCategories');
 
   Uri uri;
 
@@ -63,7 +63,7 @@ final questionsProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async
   }
 
   final data = jsonDecode(response.body);
-  print(data);
+  // print(data);
 
   final products = data['products'];
   if (products == null || products is! List) {
@@ -71,57 +71,7 @@ final questionsProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async
     return [];
   }
 
-  print(products);
+  // print(products);
 
   return products.cast<Map<String, dynamic>>();
 });
-
-// void main() => runApp(const ProviderScope(child: MyApp()));
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const MaterialApp(home: MyHomePage());
-//   }
-// }
-
-// class MyHomePage extends ConsumerWidget {
-//   const MyHomePage({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     final questions = ref.watch(questionsProvider);
-
-//     return Scaffold(
-//       appBar: AppBar(title: const Text('Questions')),
-//       body: Column(
-//         children: [
-//           TextField(
-//             onChanged: (value) =>
-//                 ref.read(searchFieldProvider.notifier).state = value,
-//           ),
-//           Expanded(
-//             child: switch (questions) {
-//               AsyncData(:final value) => ListView.builder(
-//                   itemCount: value.length,
-//                   itemBuilder: (context, index) {
-//                     final question = value[index];
-
-//                     return ListTile(
-//                       title: Text(
-//                         question.toString(),
-//                       ),
-//                     );
-//                   },
-//                 );,
-//               AsyncError(:final error) => Center(child: Text('Error $error')),
-//               _ => const Center(child: CircularProgressIndicator()),
-//             },
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
