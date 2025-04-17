@@ -2,10 +2,16 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:logger/logger.dart';
 
 import '../features/inventory/models/enum_item.dart';
 import '../features/inventory/models/product.dart';
+import '../features/inventory/models/variance.dart';
 import './product_tree.dart';
+
+Logger logger = Logger(
+  printer: PrettyPrinter(),
+);
 
 class SupabaseUploadResponse {
   SupabaseUploadResponse({
@@ -68,15 +74,23 @@ class ApiClient {
   }
 
   Future<List<Product>> fetchProducts() async {
-    final response = await _httpClient.get('/products');
+    final response = await _httpClient.get<Map<String, dynamic>>('/products');
 
-    return (response.data['products'] as List).cast<_ResponseData>().map(Product.fromJson).toList();
+    final data = response.data;
+
+    if (data == null || data['products'] == null) {
+      logger.d('got a null value for fetch prodcuts: $data');
+
+      return []; // or handle the null case however you'd like
+    }
+
+    return (data['products'] as List).cast<_ResponseData>().map(Product.fromJson).toList();
   }
 
   Future<Product> fetchLastProduct() async {
     final response = await _httpClient.get('/last-product');
 
-    print(response);
+    logger.d('Last added product: $response');
 
     // Assuming the API response contains a 'product' key with a single product object
     final productData = response.data['product'] as Map<String, dynamic>;
@@ -112,56 +126,20 @@ class ApiClient {
     final publicUrl =
         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/public/product_images/$encodedPath';
 
-    print('🖼️ Public Image URL: $publicUrl');
-
     final updatedProduct = product.copyWith(imageUrl: publicUrl);
 
-    print('updated prodcut: $updatedProduct ');
-
     final response = await _httpClient.post(
-      '/products',
+      '/products/insert',
       data: updatedProduct.toJson(), // Assuming your Product model has a `toJson()` method
     );
 
-    print('Response: $response');
+    logger.d('add product response: $response');
 
     // Parse the response JSON
     final productData = response.data['product'] as Map<String, dynamic>;
 
     return Product.fromJson(productData);
   }
-
-  // Future<Map<String, List<EnumItem>>> getEnums() async {
-  //   try {
-  //     final response = await _httpClient.get('/enums');
-
-  //     final data = response.data['enums'] as List<dynamic>;
-  //     final enums = data.map((item) => EnumItem.fromJson(item as Map<String, dynamic>)).toList();
-
-  //     final parentLookup = _generateParentLookup(treeData, enums);
-
-  //     print('parent lookup ------------------------------------->>>>>>$parentLookup');
-
-  //     final groupedEnums = <String, List<EnumItem>>{};
-  //     for (final enumItem in enums) {
-  //       final parentIdx = parentLookup[enumItem.enumName];
-
-  //       // print('parentIdx-------->>>> $parentIdx enum item ---------->$enumItem ');
-
-  //       final itemWithParent = enumItem.copyWith(parentIndex: parentIdx);
-
-  //       groupedEnums.putIfAbsent(itemWithParent.enumName, () => []).add(itemWithParent);
-  //     }
-
-  //     return groupedEnums;
-  //   } catch (e) {
-  //     // Log the error or handle it as needed
-  //     print('Error fetching or processing enums: $e');
-  //     // Rethrow or return an empty map/default value depending on requirements
-  //     rethrow;
-  //     // Or return {};
-  //   }
-  // }
 
   Future<Map<String, TreeNode>> fetchEnumsAndBuildTree() async {
     try {
@@ -170,19 +148,11 @@ class ApiClient {
       final data = response.data['enums'] as List<dynamic>;
       final enums = data.map((item) => EnumItem.fromJson(item as Map<String, dynamic>)).toList();
 
-      // You can use enums if needed for any tree data enrichment, or skip this if tree is static.
-
-      // Assuming you already have the raw tree defined (like `items`)
       final updatedTree = updateTreeLevels(items);
-
-      // print('🌳 Updated tree with levels:');
-      // updatedTree.forEach((key, node) {
-      //   print('Node: $key -> Level: ${node.level}');
-      // });
 
       return updatedTree;
     } catch (e) {
-      print('❌ Error fetching enums or building tree: $e');
+      logger.f('building tree failed: $e');
       rethrow;
     }
   }
@@ -218,6 +188,65 @@ class ApiClient {
     return updatedTree;
   }
 
+  Future<Variance> fetchLastVariance() async {
+    final response = await _httpClient.get('/variance/last');
+
+    logger.d('Last added variance: $response');
+
+    final varianceData = response.data['variance'] as Map<String, dynamic>;
+
+    return Variance.fromJson(varianceData);
+  }
+
+  Future<Variance> addVariance(Variance product, File imageFile) async {
+    try {
+      final fileName = imageFile.path.split(r'\').last;
+
+      final formData = FormData.fromMap({
+        'file': await MultipartFile.fromFile(
+          imageFile.path,
+          filename: fileName,
+          contentType: MediaType('image', 'jpeg'),
+        ),
+      });
+
+      final imgresponse = await _httpClient.post(
+        'https://yqewezudxihyadvmfovd.supabase.co/functions/v1/storage-upload',
+        data: formData,
+        options: Options(
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        ),
+      );
+      final imgData = imgresponse.data['data'];
+      final rawPath = imgData['path'] as String;
+      final encodedPath = Uri.encodeComponent(rawPath); // encodes spaces + other special chars
+
+      final publicUrl =
+          'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/public/product_images/$encodedPath';
+
+      final updatedProduct = product.copyWith(imageUrl: publicUrl);
+
+      final response = await _httpClient.post(
+        '/variance/upsert',
+        data: updatedProduct.toJson(), // Assuming your Product model has a `toJson()` method
+      );
+
+      logger.d('add variance response[pipe level:api client]: $response');
+
+      // ✅ Extract the nested `product` map
+      final responseMap = response.data as Map<String, dynamic>;
+      final varianceMap = responseMap['product'] as Map<String, dynamic>;
+
+// ✅ Convert to Variance model
+      return Variance.fromJson(varianceMap);
+    } catch (e) {
+      logger.f('adding variance failed: $e');
+      rethrow;
+    }
+  }
+
   //? below method is not working yet
   // Future<Product> fetchProduct(int id) async {
   //   final response = await _httpClient.get('/products/$id');
@@ -225,22 +254,3 @@ class ApiClient {
   //   return Product.fromJson(response.data as _ResponseData);
   // }
 }
-
-/// Attempts to login with the login [data], returns the token if success.
-// Future<String> login(Login data) async {
-//   final response = await _httpClient.post(
-//     '/auth/login',
-//     data: {
-//       ...data.toJson(),
-//       'expiresInMins': 43200,
-//     },
-//   );
-
-//   return response.data['accessToken'] as String;
-// }
-
-// Future<Profile> fetchProfile() async {
-//   final response = await _httpClient.get('/user/me');
-
-//   return Profile.fromJson(response.data as _ResponseData);
-// }

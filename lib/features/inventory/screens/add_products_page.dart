@@ -25,8 +25,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
   final _descriptionController = TextEditingController();
   final _tagOneController = TextEditingController();
   final _tagTwoController = TextEditingController();
-  final _supplierController = TextEditingController();
-  final _brandController = TextEditingController();
   final _departmentController = TextEditingController();
   final _mainCategoryController = TextEditingController();
   final _subCategoryController = TextEditingController();
@@ -41,8 +39,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
     _descriptionController.dispose();
     _tagOneController.dispose();
     _tagTwoController.dispose();
-    _supplierController.dispose();
-    _brandController.dispose();
     _departmentController.dispose();
     _mainCategoryController.dispose();
     _subCategoryController.dispose();
@@ -71,8 +67,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
         tagOne: _tagOneController.text,
         tagTwo: _tagTwoController.text,
         imageUrl: 'will be updated after uploding image to cloud storage',
-        supplier: _supplierController.text,
-        brand: _brandController.text,
         department: _departmentController.text,
         mainCategory: _mainCategoryController.text,
         subCategory: _subCategoryController.text,
@@ -142,29 +136,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                     ),
 
                     const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _brandController,
-                      decoration: const InputDecoration(
-                        labelText: 'brand(default)',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    //                     TextFormField(
-                    //   controller: _tagTwoController,
-                    //   decoration: const InputDecoration(
-                    //     labelText: 'deafault: tagtwo1',
-                    //     border: OutlineInputBorder(),
-                    //   ),
-                    //   maxLines: 3,
-                    // ),
-                    TextFormField(
-                      controller: _supplierController,
-                      decoration: const InputDecoration(
-                        labelText: 'supplier(default)',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
                     const SizedBox(height: 16),
 
                     // TextFormField(
@@ -313,8 +284,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                             Text('ID: ${value.id}'),
                             Text('Description: ${value.description}'),
                             Text('Tags: ${value.tagOne}, ${value.tagTwo}'),
-                            Text('Supplier: ${value.supplier}'),
-                            Text('Brand: ${value.brand}'),
                             Text('Department: ${value.department}'),
                             Text('Main Category: ${value.mainCategory}'),
                             Text('Sub Category: ${value.subCategory}'),

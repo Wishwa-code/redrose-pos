@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'add_products_page.dart';
+import 'add_variances_page.dart';
 import 'all_products_page.dart';
 import 'filter_products_page.dart';
 
@@ -40,6 +41,18 @@ class _ProductsPageState extends State<ProductsPage> {
                 children: [
                   _buildNavigationButton(
                     context,
+                    'Add Variances',
+                    Icons.add,
+                    () => _updateContent('Add Variances', const AddVariancesPage()),
+                  ),
+                  _buildNavigationButton(
+                    context,
+                    'Add Products',
+                    Icons.add_box,
+                    () => _updateContent('Add Products', const AddProductsPage()),
+                  ),
+                  _buildNavigationButton(
+                    context,
                     'All products',
                     Icons.collections,
                     () => _updateContent(
@@ -52,12 +65,6 @@ class _ProductsPageState extends State<ProductsPage> {
                     'Filter Products',
                     Icons.inventory,
                     () => _updateContent('Inventory', const FilterProductsPage()),
-                  ),
-                  _buildNavigationButton(
-                    context,
-                    'Add Products',
-                    Icons.add_box,
-                    () => _updateContent('Add Products', const AddProductsPage()),
                   ),
                   _buildNavigationButton(
                     context,

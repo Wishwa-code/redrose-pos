@@ -19,7 +19,7 @@ import '../features/auth/screens/home_page.dart';
 import '../features/auth/screens/login_page.dart';
 import '../features/auth/screens/user_page.dart';
 import '../features/customers/screens/customers_page.dart';
-import '../features/inventory/screens/products_page.dart';
+import '../features/inventory/screens/main_inventory_page.dart';
 import '../features/main/screens/main_page.dart';
 import '../features/navigation/models/navigation_destinations.dart';
 import '../features/orders/screens/orders_page.dart';
@@ -41,11 +41,15 @@ const List<Destination> destinations = <Destination>[
   Destination('Customers', Icon(Icons.three_p_outlined), Icon(Icons.three_p)),
   Destination('Products', Icon(Icons.inventory_2_outlined), Icon(Icons.inventory_2)),
   Destination('Analytics', Icon(Icons.multiline_chart_outlined), Icon(Icons.multiline_chart)),
-  Destination('Register', Icon(Icons.app_registration_outlined), Icon(Icons.settings)),
+  // Destination('Register', Icon(Icons.app_registration_outlined), Icon(Icons.settings)),
   Destination('Staff', Icon(Icons.admin_panel_settings_outlined), Icon(Icons.admin_panel_settings)),
   Destination('Settings', Icon(Icons.settings_outlined), Icon(Icons.settings)),
   Destination('support', Icon(Icons.support_agent_outlined), Icon(Icons.support_agent)),
 ];
+
+// ────────────────────────────────
+// 📱 Splash / Auth Routes
+// ────────────────────────────────
 
 @TypedGoRoute<SplashRoute>(path: '/splash')
 class SplashRoute extends GoRouteData {
@@ -66,6 +70,10 @@ class LoginRoute extends GoRouteData {
     return const LoginPage();
   }
 }
+
+// ────────────────────────────────
+// 🏠 Home Route with Redirect Logic
+// ────────────────────────────────
 
 @TypedGoRoute<HomeRoute>(
   path: '/',
@@ -191,48 +199,50 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
         children: <Widget>[
           SizedBox(
             width: 80,
-            child: Column(
-              children: [
-                Expanded(
-                  child: NavigationRail(
-                    minWidth: 80,
-                    leading: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: Image.asset(
-                        'assets/icon.jpg',
-                        width: 48,
-                        height: 48,
+            child: ClipRect(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: NavigationRail(
+                      minWidth: 80,
+                      leading: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: Image.asset(
+                          'assets/icon.jpg',
+                          width: 48,
+                          height: 48,
+                        ),
                       ),
+                      destinations: destinations
+                          .map(
+                            (destination) => NavigationRailDestination(
+                              icon: IconTheme(
+                                data: const IconThemeData(size: 26), // Increase size here
+                                child: destination.icon,
+                              ),
+                              selectedIcon: IconTheme(
+                                data: const IconThemeData(size: 26), // Same size for selected state
+                                child: destination.selectedIcon,
+                              ),
+                              label: Text(destination.label),
+                              padding: const EdgeInsets.all(5),
+                            ),
+                          )
+                          .toList(),
+                      selectedIndex: selectedIndex,
+                      onDestinationSelected: (index) => handleNavigation(context, index),
                     ),
-                    destinations: destinations
-                        .map(
-                          (destination) => NavigationRailDestination(
-                            icon: IconTheme(
-                              data: const IconThemeData(size: 26), // Increase size here
-                              child: destination.icon,
-                            ),
-                            selectedIcon: IconTheme(
-                              data: const IconThemeData(size: 26), // Same size for selected state
-                              child: destination.selectedIcon,
-                            ),
-                            label: Text(destination.label),
-                            padding: const EdgeInsets.all(5),
-                          ),
-                        )
-                        .toList(),
-                    selectedIndex: selectedIndex,
-                    onDestinationSelected: (index) => handleNavigation(context, index),
                   ),
-                ),
-                IconButton(
-                  onPressed: () => scaffoldKey.currentState!.openDrawer(),
-                  icon: const Icon(Icons.arrow_right_alt_sharp),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(8),
-                  child: NormalLogoutButton(),
-                ),
-              ],
+                  IconButton(
+                    onPressed: () => scaffoldKey.currentState!.openDrawer(),
+                    icon: const Icon(Icons.arrow_right_alt_sharp),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(8),
+                    child: NormalLogoutButton(),
+                  ),
+                ],
+              ),
             ),
           ),
           const VerticalDivider(thickness: 1, width: 1),
@@ -284,6 +294,10 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
   }
 }
 
+// ────────────────────────────────
+// 👤 User Roles
+// ────────────────────────────────
+
 class AdminRoute extends GoRouteData {
   const AdminRoute();
 
@@ -311,6 +325,10 @@ class GuestRoute extends GoRouteData {
   }
 }
 
+// ────────────────────────────────
+// 📄 Dynamic Page (with param)
+// ────────────────────────────────
+
 /// This route shows how to parametrize a simple page and how to pass a simple query parameter.
 @TypedGoRoute<DetailsRoute>(path: '/details/:id')
 class DetailsRoute extends GoRouteData {
@@ -326,6 +344,10 @@ class DetailsRoute extends GoRouteData {
     );
   }
 }
+
+// ────────────────────────────────
+// 🧭 Main Shell Navigation Routes
+// ────────────────────────────────
 
 @TypedGoRoute<MainRoute>(path: '/hello')
 class MainRoute extends GoRouteData {

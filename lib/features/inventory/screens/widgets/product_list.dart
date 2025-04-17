@@ -11,7 +11,6 @@ class ProductList extends ConsumerStatefulWidget {
 }
 
 class _ProductListState extends ConsumerState<ProductList> {
-
   @override
   Widget build(BuildContext context) {
     final product = ref.watch(productProvider);
@@ -33,8 +32,6 @@ class _ProductListState extends ConsumerState<ProductList> {
                             Text('ID: ${product.id}'),
                             Text('Description: ${product.description}'),
                             Text('Tags: ${product.tagOne}, ${product.tagTwo}'),
-                            Text('Supplier: ${product.supplier}'),
-                            Text('Brand: ${product.brand}'),
                             Text('Department: ${product.department}'),
                             Text('Main Category: ${product.mainCategory}'),
                             Text('Sub Category: ${product.subCategory}'),

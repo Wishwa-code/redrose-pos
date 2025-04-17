@@ -1,33 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:logging/logging.dart';
+import 'package:logger/logger.dart';
 
 import 'router/router.dart';
 import 'utils/state_logger.dart';
 
-final log = Logger('ExampleLogger');
-int fibonacci(int n) {
-  if (n <= 2) {
-    if (n < 0) log.shout('Unexpected negative n: $n');
-    return 1;
-  } else {
-    log.info('recursion: n = $n');
-    return fibonacci(n - 2) + fibonacci(n - 1);
-  }
-}
+Logger logger = Logger(
+  printer: PrettyPrinter(
+      // methodCount: 2, // Number of method calls to be displayed
+      // errorMethodCount: 8, // Number of method calls if stacktrace is provided
+      // lineLength: 120, // Width of the output
+      // colors: true, // Colorful log messages
+      // printEmojis: true, // Print an emoji for each log message
+      // Should each log print contain a timestamp
+      //dateTimeFormat: DateTimeFormat.onlyTimeAndSinceStart,
+      ),
+);
 
 void main() {
-  Logger.root.level = Level.ALL; // defaults to Level.INFO
-  Logger.root.onRecord.listen((record) {
-    print('${record.level.name}: ${record.time}: ${record.message}');
-  });
+  //Logger.level = Level.warning;
 
-  print('Fibonacci(4) is: ${fibonacci(4)}');
+  // logger.t('Trace log');
 
-  Logger.root.level = Level.SEVERE; // skip logs less then severe.
-  print('Fibonacci(5) is: ${fibonacci(5)}');
+  // logger.d('Debug log');
 
-  print('Fibonacci(-42) is: ${fibonacci(-42)}');
+  // logger.i('Info log');
+
+  // logger.w('Warning log');
+
+  // logger.e('Error log', error: 'Test Error');
+
+  // logger.f(
+  //   'What a fatal log',
+  // );
+
   runApp(
     const ProviderScope(
       observers: [StateLogger()],
