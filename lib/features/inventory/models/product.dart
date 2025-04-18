@@ -25,6 +25,10 @@ int? _idFromJson(dynamic id) {
   if (id is String) return int.tryParse(id);
   return null;
 }
+
+
+
+
 // import 'package:freezed_annotation/freezed_annotation.dart';
 
 // part 'product.freezed.dart';

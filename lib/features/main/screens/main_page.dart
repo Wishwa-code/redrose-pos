@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../inventory/providers/product_search_provider.dart';
 import '../../../widgets/home_button.dart';
+import '../../inventory/providers/filter_prodcut_state_providers.dart';
+import '../../inventory/providers/product_search_provider.dart';
 
 class HelloWorldPage extends ConsumerWidget {
   const HelloWorldPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final productsAsyncValue = ref.watch(questionsProvider);
+    final productsAsyncValue = ref.watch(productSearchProvider);
 
     return Scaffold(
       backgroundColor: const Color(0xFF0d0d0d),

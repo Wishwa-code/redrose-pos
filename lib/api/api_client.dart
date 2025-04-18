@@ -6,6 +6,8 @@ import 'package:logger/logger.dart';
 
 import '../features/inventory/models/enum_item.dart';
 import '../features/inventory/models/product.dart';
+import '../features/inventory/models/supplier.dart';
+import '../features/inventory/models/brand.dart';
 import '../features/inventory/models/variance.dart';
 import './product_tree.dart';
 
@@ -72,6 +74,12 @@ class ApiClient {
   String toString() {
     return "ApiClient(_httpClient.options.headers['Authorization']: ${_httpClient.options.headers['Authorization']})";
   }
+
+  ///
+  ///
+  ///! This is the section for inventory page related api calls
+  ///
+  ///
 
   Future<List<Product>> fetchProducts() async {
     final response = await _httpClient.get<Map<String, dynamic>>('/products');
@@ -141,6 +149,12 @@ class ApiClient {
     return Product.fromJson(productData);
   }
 
+  ///
+  ///
+  ///! This is the section for menu tree related api calls
+  ///
+  ///
+
   Future<Map<String, TreeNode>> fetchEnumsAndBuildTree() async {
     try {
       final response = await _httpClient.get('/enums');
@@ -187,6 +201,12 @@ class ApiClient {
 
     return updatedTree;
   }
+
+  ///
+  ///
+  ///! This is the section for inventory page/variance operation related api calls
+  ///
+  ///
 
   Future<Variance> fetchLastVariance() async {
     final response = await _httpClient.get('/variance/last');
@@ -246,6 +266,44 @@ class ApiClient {
       rethrow;
     }
   }
+
+
+
+//! ============================================================================ //
+//? ================= ✈️ SUPPLIER RELATED API calls ✈️ ===================== //
+//! ============================================================================ //
+
+
+    Future<List<Supplier>> fetchSuppliers() async {
+    try {
+      final response = await _httpClient.get('/supplier/getAll'); // or whatever your route is
+
+      final suppliersJson = response.data['suppliers'] as List<dynamic>;
+
+      return suppliersJson.map((json) => Supplier.fromJson(json as Map<String, dynamic>)).toList();
+    } catch (e) {
+      logger.f('Fetching all suppliers failed with this error: $e');
+      rethrow;
+    }
+  }
+
+//! ============================================================================ //
+//? ================= ✈️ BRAND RELATED API calls ✈️ ===================== //
+//! ============================================================================ //
+
+  Future<List<Brand>> fetchBrands() async {
+    try {
+      final response = await _httpClient.get('/brand/getAll'); // or whatever your route is
+
+      final brandJson = response.data['brands'] as List<dynamic>;
+
+      return brandJson.map((json) => Brand.fromJson(json as Map<String, dynamic>)).toList();
+    } catch (e) {
+      logger.f('Fetching all brands failed with this error: $e');
+      rethrow;
+    }
+  }
+
 
   //? below method is not working yet
   // Future<Product> fetchProduct(int id) async {

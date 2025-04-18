@@ -4,6 +4,7 @@ Desktop application
 
 *improve filter widget
 *improve UI design of the product management division to set the ground rules for future UI/UX
+*make supplier and brand down use values from a provider which takes values from db tables
 
 
 E-commerce application

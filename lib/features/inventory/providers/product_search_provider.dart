@@ -1,80 +1,110 @@
-// Copyright (c) 2019, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'dart:convert';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final rootProvider = StateProvider<List<String>>((ref) => ['root', 'root']);
-final searchFieldProvider = StateProvider<String>((ref) => '');
-final departmentFilterProvider = StateProvider<List<String>>((ref) => []);
-final categoryFilterProvider = StateProvider<List<String>>((ref) => []);
+import './filter_prodcut_state_providers.dart';
 
-final questionsProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async {
+part 'product_search_provider.g.dart'; // <-- Make sure this matches your file
+
+@riverpod
+Future<List<Map<String, dynamic>>> productSearch(ProductSearchRef ref) async {
   final client = http.Client();
   ref.onDispose(client.close);
 
-  final search = ref.watch(searchFieldProvider);
-
+  final search = ref.watch(searchFieldProvider).trim();
   final selectedDepartments = ref.watch(departmentFilterProvider);
-
   final selectedCategories = ref.watch(categoryFilterProvider);
-  // print('selectedCategories $selectedCategories');
 
-  Uri uri;
+  final queryParams = <String, String>{
+    'sort': 'title',
+    'order': 'asc',
+    'page': '1',
+    'pagesize': '10',
+  };
 
-  if (selectedDepartments.isNotEmpty && selectedCategories.isNotEmpty && search.isEmpty) {
-    final departmentQuery = selectedDepartments.join(',');
-    final categoryquery = selectedCategories.join(',');
-
-    uri = Uri.parse(
-      'http://localhost:8080/products/search?department=$departmentQuery&main_catogory=$categoryquery',
-    );
-  } else if (selectedDepartments.isNotEmpty && search.isEmpty) {
-    final departmentQuery = selectedDepartments.join(',');
-    uri = Uri.parse(
-      'http://localhost:8080/products/search?department=$departmentQuery',
-    );
-  } else if (selectedDepartments.isNotEmpty) {
-    final encodedQuery = Uri.encodeComponent(search);
-    final departmentQuery = selectedDepartments.join(',');
-
-    uri = Uri.parse(
-      'http://localhost:8080/products/search?title=$encodedQuery&department=$departmentQuery',
-    );
-  } else if (search.isEmpty) {
-    uri = Uri.parse(
-      'http://localhost:8080/products/search?title=cement',
-    );
-  } else {
-    final encodedQuery = Uri.encodeComponent(search);
-    print(encodedQuery);
-    uri = Uri.parse(
-      'http://localhost:8080/products/search?title=$encodedQuery&department=mainplumbing',
-    );
+  if (search.isNotEmpty) {
+    queryParams['title'] = search;
   }
 
-  final response = await client.get(uri);
+  if (selectedDepartments.isNotEmpty) {
+    queryParams['department'] = selectedDepartments.join(',');
+  }
 
+  if (selectedCategories.isNotEmpty) {
+    queryParams['main_catogory'] = selectedCategories.join(',');
+  }
+
+  final uri = Uri.http('localhost:8080', '/products/search', queryParams);
+
+  final response = await client.get(uri);
   if (response.statusCode != 200) {
     throw Exception('Failed to fetch data: ${response.statusCode}');
   }
 
   final data = jsonDecode(response.body);
-  // print(data);
-
   final products = data['products'];
   if (products == null || products is! List) {
     print('❗ Unexpected or missing "products" key: $data');
     return [];
   }
 
-  // print(products);
-
   return products.cast<Map<String, dynamic>>();
-});
+}
 
+// // Copyright (c) 2019, the Dart project authors.  Please see the AUTHORS file
+// // for details. All rights reserved. Use of this source code is governed by a
+// // BSD-style license that can be found in the LICENSE file.
 
+// import 'dart:convert';
 
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:http/http.dart' as http;
+
+// import './filter_prodcut_state_providers.dart';
+
+// final questionsProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async {
+//   final client = http.Client();
+//   ref.onDispose(client.close);
+
+//   final search = ref.watch(searchFieldProvider).trim();
+//   final selectedDepartments = ref.watch(departmentFilterProvider);
+//   final selectedCategories = ref.watch(categoryFilterProvider);
+
+//   final queryParams = <String, String>{
+//     'sort': 'title',
+//     'order': 'asc',
+//     'page': '1',
+//     'pagesize': '10',
+//   };
+
+//   if (search.isNotEmpty) {
+//     queryParams['title'] = search;
+//   }
+
+//   if (selectedDepartments.isNotEmpty) {
+//     queryParams['department'] = selectedDepartments.join(',');
+//   }
+
+//   if (selectedCategories.isNotEmpty) {
+//     queryParams['main_catogory'] = selectedCategories.join(',');
+//   }
+
+//   final uri = Uri.http('localhost:8080', '/products/search', queryParams);
+
+//   final response = await client.get(uri);
+
+//   if (response.statusCode != 200) {
+//     throw Exception('Failed to fetch data: ${response.statusCode}');
+//   }
+
+//   final data = jsonDecode(response.body);
+
+//   final products = data['products'];
+//   if (products == null || products is! List) {
+//     print('❗ Unexpected or missing "products" key: $data');
+//     return [];
+//   }
+
+//   return products.cast<Map<String, dynamic>>();
+// });

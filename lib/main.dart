@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 
+import 'features/inventory/providers/brand_provider.dart';
 import 'router/router.dart';
 import 'utils/state_logger.dart';
 
@@ -71,6 +72,7 @@ class _EagerInitialization extends ConsumerWidget {
     // By using "watch", the provider will stay alive and not be disposed.
     // ref.watch(productProvider);
     // ref.watch(menutreeProvider);
+    ref.watch(brandNotifierProvider);
     return child;
   }
 }
