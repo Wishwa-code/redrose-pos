@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../utils/print_logger.dart';
 import './filter_prodcut_state_providers.dart';
 
 part 'product_search_provider.g.dart'; // <-- Make sure this matches your file
@@ -45,7 +46,7 @@ Future<List<Map<String, dynamic>>> productSearch(ProductSearchRef ref) async {
   final data = jsonDecode(response.body);
   final products = data['products'];
   if (products == null || products is! List) {
-    print('❗ Unexpected or missing "products" key: $data');
+    logger.d('❗ Unexpected or missing "products" key: $data');
     return [];
   }
 

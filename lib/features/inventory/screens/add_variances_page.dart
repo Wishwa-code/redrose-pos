@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:logger/logger.dart';
 
 import '../../../widgets/action_button.dart';
 import '../models/variance.dart';
@@ -11,9 +10,8 @@ import '../providers/last_entered_variance_notifier.dart';
 import '../screens/widgets/price_field.dart';
 import '../screens/widgets/product_filter.dart';
 
-Logger logger = Logger(
-  printer: PrettyPrinter(),
-);
+
+
 
 class AddVariancesPage extends ConsumerStatefulWidget {
   const AddVariancesPage({super.key});

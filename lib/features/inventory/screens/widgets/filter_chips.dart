@@ -38,6 +38,20 @@ class FilterChipsBox extends ConsumerWidget {
           }
         }
 
+        if (parentProvider != null) {
+          final updatedSelected = selectedValues.where((index) {
+            final parent = childToParent[index];
+            return parent == null || parentValues.contains(parent);
+          }).toList();
+
+          if (updatedSelected.length != selectedValues.length) {
+            // Update state only if any were removed
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              ref.read(provider.notifier).state = updatedSelected;
+            });
+          }
+        }
+
         // Filter relevant nodes based on level and parent selections
         final levelNodes = tree.values
             .where((node) {

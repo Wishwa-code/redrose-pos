@@ -1,7 +1,9 @@
+import 'package:example/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../features/inventory/screens/widgets/filter_chips.dart';
+import '../../../../utils/print_logger.dart';
 import '../../../inventory/providers/product_search_provider.dart';
 import '../../models/product.dart';
 import './../../providers/filter_prodcut_state_providers.dart';
@@ -69,20 +71,20 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
                   level: 2,
                   onChanged: () => ref.read(currentPageProvider.notifier).state = 1,
                 ),
-                FilterChipsBox(
-                  name: 'Brand',
-                  provider: brandFilterProvider,
-                  level: 0,
-                  chipOrDropdown: false, // 👈 Dropdown
-                  onChanged: () => ref.read(currentPageProvider.notifier).state = 1,
-                ),
-                FilterChipsBox(
-                  name: 'Supplier',
-                  provider: supplierFilterProvider,
-                  level: 0,
-                  chipOrDropdown: false, // 👈 Dropdown
-                  onChanged: () => ref.read(currentPageProvider.notifier).state = 1,
-                ),
+                // FilterChipsBox(
+                //   name: 'Brand',
+                //   provider: brandFilterProvider,
+                //   level: 0,
+                //   chipOrDropdown: false, // 👈 Dropdown
+                //   onChanged: () => ref.read(currentPageProvider.notifier).state = 1,
+                // ),
+                // FilterChipsBox(
+                //   name: 'Supplier',
+                //   provider: supplierFilterProvider,
+                //   level: 0,
+                //   chipOrDropdown: false, // 👈 Dropdown
+                //   onChanged: () => ref.read(currentPageProvider.notifier).state = 1,
+                // ),
               ],
             ),
           ),
@@ -90,7 +92,7 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
 
         /// Search + Results Column
         Expanded(
-          flex: 3,
+          flex: 2,
           child: Column(
             children: [
               const SizedBox(height: 8),
@@ -149,10 +151,13 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
                                 shape:
                                     RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                 child: InkWell(
-                                  onTap: () {
+                                  onTap: () async {
                                     _controller.text = product.title;
+                                    logger.d('product.id--> $product');
                                     _idController.text = product.id?.toString() ?? '';
                                     ref.read(searchFieldProvider.notifier).state = product.title;
+                                    final loadVariances = await ProductVariancesRoute(product.id!)
+                                        .push<bool>(context);
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(16),
@@ -197,6 +202,7 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
                                                   _buildtag('Sub Category', product.subCategory),
                                                   _buildtag('Tag 1', product.tagOne),
                                                   _buildtag('Tag 2', product.tagTwo),
+                                                  _buildtag('id', product.id.toString()),
                                                 ],
                                               ),
                                             ],

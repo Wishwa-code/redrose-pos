@@ -20,6 +20,8 @@ import '../features/auth/screens/login_page.dart';
 import '../features/auth/screens/user_page.dart';
 import '../features/customers/screens/customers_page.dart';
 import '../features/inventory/screens/main_inventory_page.dart';
+import '../features/inventory/screens/product_variances_page.dart';
+
 import '../features/main/screens/main_page.dart';
 import '../features/navigation/models/navigation_destinations.dart';
 import '../features/orders/screens/orders_page.dart';
@@ -41,7 +43,7 @@ const List<Destination> destinations = <Destination>[
   Destination('Customers', Icon(Icons.three_p_outlined), Icon(Icons.three_p)),
   Destination('Products', Icon(Icons.inventory_2_outlined), Icon(Icons.inventory_2)),
   Destination('Analytics', Icon(Icons.multiline_chart_outlined), Icon(Icons.multiline_chart)),
-  // Destination('Register', Icon(Icons.app_registration_outlined), Icon(Icons.settings)),
+  Destination('Register', Icon(Icons.app_registration_outlined), Icon(Icons.settings)),
   Destination('Staff', Icon(Icons.admin_panel_settings_outlined), Icon(Icons.admin_panel_settings)),
   Destination('Settings', Icon(Icons.settings_outlined), Icon(Icons.settings)),
   Destination('support', Icon(Icons.support_agent_outlined), Icon(Icons.support_agent)),
@@ -345,6 +347,27 @@ class DetailsRoute extends GoRouteData {
   }
 }
 
+@TypedGoRoute<ProductVariancesRoute>(path: '/product/:id/variances')
+class ProductVariancesRoute extends GoRouteData {
+  const ProductVariancesRoute(this.id);
+  final String id;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return VarianceListPage(
+      productId: id,
+    );
+  }
+}
+
+// GoRoute(
+//   path: '/product/:id/variances',
+//   builder: (context, state) {
+//     final productId = state.pathParameters['id']!;
+//     return VarianceListPage(productId: productId);
+//   },
+// ),
+
 // ────────────────────────────────
 // 🧭 Main Shell Navigation Routes
 // ────────────────────────────────
@@ -398,3 +421,5 @@ class ProductsRoute extends GoRouteData {
     return const ProductsPage();
   }
 }
+
+

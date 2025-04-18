@@ -202,11 +202,11 @@ class ApiClient {
     return updatedTree;
   }
 
-  ///
-  ///
-  ///! This is the section for inventory page/variance operation related api calls
-  ///
-  ///
+//! ============================================================================ //
+//? ================= ✈️ PRODCUT VARIANCE RELATED API calls ✈️ ===================== //
+//! ============================================================================ //
+
+
 
   Future<Variance> fetchLastVariance() async {
     final response = await _httpClient.get('/variance/last');
@@ -267,6 +267,21 @@ class ApiClient {
     }
   }
 
+
+Future<List<Variance>> fetchVariancesByProductId(String productId) async {
+    try {
+      final response = await _httpClient.get('/variance/by-product/$productId');
+
+      logger.d('Fetched variances for product $productId: $response');
+
+      final data = response.data['variances'] as List<dynamic>;
+
+      return data.map((json) => Variance.fromJson(json as Map<String, dynamic>)).toList();
+    } catch (e) {
+      logger.f('Error fetching variances for product $productId: $e');
+      rethrow;
+    }
+  }
 
 
 //! ============================================================================ //
