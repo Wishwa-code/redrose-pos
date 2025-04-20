@@ -57,6 +57,7 @@ class MyAwesomeApp extends ConsumerWidget {
       title: 'Redrose POS',
       theme: ThemeData(
         primarySwatch: Colors.cyan,
+        fontFamily: 'IBM Plex Sans',
       ),
     );
   }

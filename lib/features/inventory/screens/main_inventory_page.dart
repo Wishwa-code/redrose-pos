@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'add_categories_page.dart';
 import 'add_products_page.dart';
-import 'add_variances_page.dart';
-import 'all_products_page.dart';
 import 'filter_products_page.dart';
 
 class ProductsPage extends StatefulWidget {
@@ -14,7 +13,7 @@ class ProductsPage extends StatefulWidget {
 
 class _ProductsPageState extends State<ProductsPage> {
   Widget? _selectedContent;
-  String _selectedTitle = 'Products';
+  String _selectedTitle = 'Categories & Products';
 
   @override
   Widget build(BuildContext context) {
@@ -58,34 +57,25 @@ class _ProductsPageState extends State<ProductsPage> {
                       children: [
                         _buildNavigationButton(
                           context,
-                          'Add Variances',
-                          Icons.add,
-                          () => _updateContent('Add Variances', const AddVariancesPage()),
-                        ),
-                        _buildNavigationButton(
-                          context,
                           'Add Products',
+                          Icons.add,
+                          () => _updateContent('Add Products', const AddVariancesPage()),
+                        ),
+                        _buildNavigationButton(
+                          context,
+                          'Add Categories',
                           Icons.add_box,
-                          () => _updateContent('Add Products', const AddProductsPage()),
+                          () => _updateContent('Add Categories', const AddProductsPage()),
                         ),
                         _buildNavigationButton(
                           context,
-                          'All products',
-                          Icons.collections,
-                          () => _updateContent(
-                            'Collections',
-                            const AllProductsPage(),
-                          ),
-                        ),
-                        _buildNavigationButton(
-                          context,
-                          'Filter Products',
+                          'Find',
                           Icons.inventory,
-                          () => _updateContent('Inventory', const FilterProductsPage()),
+                          () => _updateContent('Find', const FilterProductsPage()),
                         ),
                         _buildNavigationButton(
                           context,
-                          'Purchase Orders',
+                          'Manage Brands',
                           Icons.shopping_cart,
                           () => _updateContent(
                             'Purchase Orders',
@@ -94,20 +84,11 @@ class _ProductsPageState extends State<ProductsPage> {
                         ),
                         _buildNavigationButton(
                           context,
-                          'Transfers',
+                          'Manage Suppliers',
                           Icons.swap_horiz,
                           () => _updateContent(
                             'Transfers',
                             const Center(child: Text('Transfers Content')),
-                          ),
-                        ),
-                        _buildNavigationButton(
-                          context,
-                          'Gift Cards',
-                          Icons.card_giftcard,
-                          () => _updateContent(
-                            'Gift Cards',
-                            const Center(child: Text('Gift Cards Content')),
                           ),
                         ),
                       ],

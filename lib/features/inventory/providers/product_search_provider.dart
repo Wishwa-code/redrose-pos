@@ -16,11 +16,13 @@ Future<List<Map<String, dynamic>>> productSearch(ProductSearchRef ref) async {
   final search = ref.watch(searchFieldProvider).trim();
   final selectedDepartments = ref.watch(departmentFilterProvider);
   final selectedCategories = ref.watch(categoryFilterProvider);
+  final lookinDescription = ref.watch(lookinDescriptionProvider);
+  final page = ref.watch(currentPageProvider);
 
   final queryParams = <String, String>{
     'sort': 'title',
     'order': 'asc',
-    'page': '1',
+    'page': page.toString(),
     'pagesize': '10',
   };
 
@@ -34,6 +36,11 @@ Future<List<Map<String, dynamic>>> productSearch(ProductSearchRef ref) async {
 
   if (selectedCategories.isNotEmpty) {
     queryParams['main_catogory'] = selectedCategories.join(',');
+  }
+
+  if (lookinDescription) {
+    // <-- Check if lookinDescription is true
+    queryParams['lookinDescription'] = 'true';
   }
 
   final uri = Uri.http('localhost:8080', '/products/search', queryParams);

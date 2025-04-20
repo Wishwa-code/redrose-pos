@@ -48,6 +48,12 @@ class FilterChipsBox extends ConsumerWidget {
             // Update state only if any were removed
             WidgetsBinding.instance.addPostFrameCallback((_) {
               ref.read(provider.notifier).state = updatedSelected;
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Please select the related parent tag first 🫰'),
+                  duration: Duration(seconds: 2),
+                ),
+              );
             });
           }
         }
@@ -72,54 +78,74 @@ class FilterChipsBox extends ConsumerWidget {
 
         String labelFor(String index) => items[index]?.data ?? index;
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(name, style: Theme.of(context).textTheme.titleMedium),
-            const SizedBox(height: 8),
-            if (chipOrDropdown)
-              Wrap(
-                spacing: 8,
-                children: levelNodes.map((index) {
-                  final isSelected = selectedValues.contains(index);
-                  final label = labelFor(index);
-
-                  return FilterChip(
-                    label: Text(label),
-                    selected: isSelected,
-                    onSelected: (bool selected) {
-                      final updated = [...selectedValues];
-                      if (selected) {
-                        updated.add(index);
-                      } else {
-                        updated.remove(index);
-                      }
-                      ref.read(provider.notifier).state = updated;
-                      onChanged?.call();
-                    },
-                  );
-                }).toList(),
-              )
-            else
-              DropdownButtonFormField<String>(
-                value: selectedValues.isEmpty ? null : selectedValues.first,
-                hint: Text('Select $name'),
-                items: levelNodes
-                    .map(
-                      (index) => DropdownMenuItem<String>(
-                        value: index,
-                        child: Text(labelFor(index)),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) {
-                  if (value != null) {
-                    ref.read(provider.notifier).state = [value];
-                    onChanged?.call();
-                  }
-                },
+        return Padding(
+          padding: const EdgeInsets.all(14),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
               ),
-          ],
+              const SizedBox(height: 8),
+              if (chipOrDropdown)
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: levelNodes.map((index) {
+                    final isSelected = selectedValues.contains(index);
+                    final label = labelFor(index);
+
+                    return FilterChip(
+                      label: Text(
+                        label,
+                        style: const TextStyle(
+                          fontFamily: 'IBM Plex Sans',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        ),
+                      ),
+                      selected: isSelected,
+                      onSelected: (bool selected) {
+                        final updated = [...selectedValues];
+                        if (selected) {
+                          updated.add(index);
+                        } else {
+                          updated.remove(index);
+                        }
+                        ref.read(provider.notifier).state = updated;
+                        onChanged?.call();
+                      },
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 4),
+                      visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+                    );
+                  }).toList(),
+                )
+              else
+                DropdownButtonFormField<String>(
+                  value: selectedValues.isEmpty ? null : selectedValues.first,
+                  hint: Text('Select $name'),
+                  items: levelNodes
+                      .map(
+                        (index) => DropdownMenuItem<String>(
+                          value: index,
+                          child: Text(labelFor(index)),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      ref.read(provider.notifier).state = [value];
+                      onChanged?.call();
+                    }
+                  },
+                ),
+            ],
+          ),
         );
       },
       loading: () => const CircularProgressIndicator(),

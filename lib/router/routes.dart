@@ -21,7 +21,6 @@ import '../features/auth/screens/user_page.dart';
 import '../features/customers/screens/customers_page.dart';
 import '../features/inventory/screens/main_inventory_page.dart';
 import '../features/inventory/screens/product_variances_page.dart';
-
 import '../features/main/screens/main_page.dart';
 import '../features/navigation/models/navigation_destinations.dart';
 import '../features/orders/screens/orders_page.dart';
@@ -43,7 +42,7 @@ const List<Destination> destinations = <Destination>[
   Destination('Customers', Icon(Icons.three_p_outlined), Icon(Icons.three_p)),
   Destination('Products', Icon(Icons.inventory_2_outlined), Icon(Icons.inventory_2)),
   Destination('Analytics', Icon(Icons.multiline_chart_outlined), Icon(Icons.multiline_chart)),
-  Destination('Register', Icon(Icons.app_registration_outlined), Icon(Icons.settings)),
+  // Destination('Register', Icon(Icons.app_registration_outlined), Icon(Icons.settings)),
   Destination('Staff', Icon(Icons.admin_panel_settings_outlined), Icon(Icons.admin_panel_settings)),
   Destination('Settings', Icon(Icons.settings_outlined), Icon(Icons.settings)),
   Destination('support', Icon(Icons.support_agent_outlined), Icon(Icons.support_agent)),
@@ -171,7 +170,7 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
       return 3;
     }
     if (location.startsWith('/support')) {
-      return 8;
+      return 7;
     }
     return 0;
   }
@@ -186,7 +185,7 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
         const CustomersRoute().go(context);
       case 3:
         const ProductsRoute().go(context);
-      case 8:
+      case 7:
         const SupportRoute().go(context);
     }
   }
@@ -378,7 +377,7 @@ class MainRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const HelloWorldPage();
+    return const DashBoardPage();
   }
 }
 
@@ -421,5 +420,3 @@ class ProductsRoute extends GoRouteData {
     return const ProductsPage();
   }
 }
-
-

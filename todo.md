@@ -18,6 +18,8 @@ Desktop application
 
 -- need to add pagination logic to add pagination because its necessary to reduce the data bandwith and computer resources by gettin gfetchin gonnly limited amount of  data
 
+-- replace verywhere with prooduct with categories and product varianes with prodcuts to avoid clutter in user interface
+
 
 E-commerce application
 

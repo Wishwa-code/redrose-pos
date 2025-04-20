@@ -44,5 +44,14 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  fonts:
+    - family: IBM Plex Sans
+      fonts: 
+        - asset: assets/fonts/IBMPlexSans-Variable.ttf
+    
   assets:
     - assets/icon.jpg
+    - assets/images/nothing_found0.png
+    - assets/images/nothing_found.png
+

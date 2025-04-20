@@ -4,10 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:logger/logger.dart';
 
+import '../features/inventory/models/brand.dart';
 import '../features/inventory/models/enum_item.dart';
 import '../features/inventory/models/product.dart';
 import '../features/inventory/models/supplier.dart';
-import '../features/inventory/models/brand.dart';
 import '../features/inventory/models/variance.dart';
 import './product_tree.dart';
 
