@@ -18,7 +18,6 @@ class _ProductsPageState extends State<ProductsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0d0d0d),
       body: Row(
         children: [
           // Left side navigation
@@ -33,19 +32,9 @@ class _ProductsPageState extends State<ProductsPage> {
                     alignment: Alignment.center, // 👈 Vertically (and horizontally) centers child
                     child: Text(
                       _selectedTitle,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1.2,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 4,
-                            color: Colors.black45,
-                            offset: Offset(1, 1),
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimaryFixed,
                           ),
-                        ],
-                      ),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -126,7 +115,7 @@ class _ProductsPageState extends State<ProductsPage> {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.all(8),
-        backgroundColor: const Color(0xFF2E72D2),
+        backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
@@ -134,15 +123,18 @@ class _ProductsPageState extends State<ProductsPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 32, color: const Color(0xFF4db4f7)),
+          Icon(
+            icon,
+            size: 32,
+            color: Theme.of(context).colorScheme.tertiary,
+          ),
           const SizedBox(height: 4),
           Text(
             title,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Colors.white,
-            ),
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  color: Theme.of(context).colorScheme.onSecondaryFixed,
+                ),
           ),
         ],
       ),

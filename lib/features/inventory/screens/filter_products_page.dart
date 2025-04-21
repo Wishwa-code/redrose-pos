@@ -32,7 +32,10 @@ class FilterProductsPage extends ConsumerWidget {
           //   ),
           // ),
           Expanded(
-            child: ProductFilter(),
+            child: Padding(
+              padding: EdgeInsets.only(left: 8),
+              child: ProductFilter(),
+            ),
           ),
         ],
       ),

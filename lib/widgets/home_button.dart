@@ -35,15 +35,13 @@ class HomeButton extends StatelessWidget {
               child: icon,
             ),
             Positioned(
-              bottom: subtitle != null ? 30 : 10, // Shift up if subtitle is present
+              bottom: subtitle != null ? 27 : 10, // Shift up if subtitle is present
               left: 10,
               child: Text(
                 text,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18,
-                  color: Colors.white,
-                ),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: Theme.of(context).colorScheme.onSecondary,
+                    ),
               ),
             ),
             if (subtitle != null)
@@ -52,10 +50,9 @@ class HomeButton extends StatelessWidget {
                 left: 10,
                 child: Text(
                   subtitle!,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.white70,
-                  ),
+                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                      ),
                 ),
               ),
           ],

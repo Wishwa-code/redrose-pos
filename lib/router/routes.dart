@@ -24,7 +24,9 @@ import '../features/inventory/screens/product_variances_page.dart';
 import '../features/main/screens/main_page.dart';
 import '../features/navigation/models/navigation_destinations.dart';
 import '../features/orders/screens/orders_page.dart';
+import '../features/settings/screens/settings_page.dart';
 import '../features/splash_screen/screens/splash_page.dart';
+import '../widgets/logo_box.dart';
 import '../widgets/logout_button.dart';
 import '../widgets/logout_button_nolabel.dart';
 
@@ -130,6 +132,9 @@ class HomeRoute extends GoRouteData {
     TypedGoRoute<SupportRoute>(
       path: '/support',
     ),
+    TypedGoRoute<SettingsRoute>(
+      path: '/settings',
+    ),
   ],
 )
 class MyShellRouteData extends ShellRouteData {
@@ -169,6 +174,9 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
     if (location.startsWith('/products')) {
       return 3;
     }
+    if (location.startsWith('/settings')) {
+      return 6;
+    }
     if (location.startsWith('/support')) {
       return 7;
     }
@@ -185,6 +193,8 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
         const CustomersRoute().go(context);
       case 3:
         const ProductsRoute().go(context);
+      case 6:
+        const SettingsRoute().go(context);
       case 7:
         const SupportRoute().go(context);
     }
@@ -201,48 +211,49 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
           SizedBox(
             width: 80,
             child: ClipRect(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: NavigationRail(
-                      minWidth: 80,
-                      leading: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        child: Image.asset(
-                          'assets/icon.jpg',
-                          width: 48,
-                          height: 48,
+              child: ColoredBox(
+                color: Theme.of(context).colorScheme.surface,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: NavigationRail(
+                        minWidth: 80,
+                        leading: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 16),
+                          child: LogoBox(),
                         ),
+                        destinations: destinations
+                            .map(
+                              (destination) => NavigationRailDestination(
+                                icon: Icon(
+                                  (destination.icon as Icon).icon,
+                                  size: 26,
+                                  color: Theme.of(context).colorScheme.primary, // Unselected color
+                                ),
+                                selectedIcon: Icon(
+                                  (destination.selectedIcon as Icon).icon,
+                                  size: 26,
+                                  color: Theme.of(context).colorScheme.primary, // Selected color
+                                ),
+                                label: Text(destination.label),
+                                padding: const EdgeInsets.all(5),
+                              ),
+                            )
+                            .toList(),
+                        selectedIndex: selectedIndex,
+                        onDestinationSelected: (index) => handleNavigation(context, index),
                       ),
-                      destinations: destinations
-                          .map(
-                            (destination) => NavigationRailDestination(
-                              icon: IconTheme(
-                                data: const IconThemeData(size: 26), // Increase size here
-                                child: destination.icon,
-                              ),
-                              selectedIcon: IconTheme(
-                                data: const IconThemeData(size: 26), // Same size for selected state
-                                child: destination.selectedIcon,
-                              ),
-                              label: Text(destination.label),
-                              padding: const EdgeInsets.all(5),
-                            ),
-                          )
-                          .toList(),
-                      selectedIndex: selectedIndex,
-                      onDestinationSelected: (index) => handleNavigation(context, index),
                     ),
-                  ),
-                  IconButton(
-                    onPressed: () => scaffoldKey.currentState!.openDrawer(),
-                    icon: const Icon(Icons.arrow_right_alt_sharp),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: NormalLogoutButton(),
-                  ),
-                ],
+                    IconButton(
+                      onPressed: () => scaffoldKey.currentState!.openDrawer(),
+                      icon: const Icon(Icons.arrow_right_alt_sharp),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(8),
+                      child: NormalLogoutButton(),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -260,19 +271,23 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
         onDestinationSelected: (index) => handleNavigation(context, index),
         selectedIndex: selectedIndex,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Image.asset(
-              'assets/icon.jpg',
-              width: 38,
-              height: 38,
-            ),
+          const Padding(
+            padding: EdgeInsets.all(16),
+            child: LogoBox(),
           ),
           ...destinations.map((Destination destination) {
             return NavigationDrawerDestination(
               label: Text(destination.label),
-              icon: destination.icon,
-              selectedIcon: destination.selectedIcon,
+              icon: Icon(
+                (destination.icon as Icon).icon,
+                size: 26,
+                color: Theme.of(context).colorScheme.primary, // Unselected color
+              ),
+              selectedIcon: Icon(
+                (destination.selectedIcon as Icon).icon,
+                size: 26,
+                color: Theme.of(context).colorScheme.primary, // Selected color
+              ),
             );
           }),
           const Padding(padding: EdgeInsets.fromLTRB(28, 6, 28, 0), child: Divider()),
@@ -295,9 +310,9 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
   }
 }
 
-// ────────────────────────────────
-// 👤 User Roles
-// ────────────────────────────────
+//? ────────────────────────────────
+//? 👤 User Roles
+//? ────────────────────────────────
 
 class AdminRoute extends GoRouteData {
   const AdminRoute();
@@ -418,5 +433,15 @@ class ProductsRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const ProductsPage();
+  }
+}
+
+@TypedGoRoute<SettingsRoute>(path: '/settings')
+class SettingsRoute extends GoRouteData {
+  const SettingsRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const SettingsPage();
   }
 }

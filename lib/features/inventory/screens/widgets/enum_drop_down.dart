@@ -2,85 +2,6 @@
 //!which is the case only when variable are are part of current tree but tagone1 and tagtwo1 are added for future use
 //!there fore is atatched false make thos drop down listt work freely
 
-// import 'package:flutter/material.dart';
-// import 'package:flutter_form_builder/flutter_form_builder.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-// import '../../providers/enums_provider.dart';
-
-// class EnumDropdownField extends ConsumerWidget {
-//   const EnumDropdownField({
-//     super.key,
-//     required this.name,
-//     required this.label,
-//     required this.controller,
-//     required this.parentController, // Add parentController parameter
-//     required this.onParentStateChanged, // New required parameter
-//     required this.isattached,
-//   });
-
-//   final String name;
-//   final String label;
-//   final TextEditingController controller;
-//   final TextEditingController parentController; // parentControllers
-//   final void Function() onParentStateChanged; // Callback function
-//   final bool isattached;
-
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     final enumsAsync = ref.watch(rrenumsProvider);
-
-//     return enumsAsync.when(
-//       data: (groupedEnums) {
-//         final items = groupedEnums[name] ?? [];
-
-//         // print(
-//         //   'name: $name items ----------------------------------------->> $items in this $groupedEnums',
-//         // );
-
-//         // Filter items based on parentIndex
-//         // final filteredItems = isattached // Use boolean first, it is more readable way.
-//         //     ? items
-//         //         .where(
-//         //           (item) => item.parentIndex == null || item.parentIndex == parentController.text,
-//         //         )
-//         //         .toList() // If `isattached` is true to the tree, it filters by conditions
-//         //     : items; //  Or use item that is passed as a parent
-
-//         final filteredItems =
-//             items.where((item) => item.parentIndex == parentController.text).toList();
-
-//         // print('parentController $parentController');
-
-//         if (filteredItems.isEmpty) {
-//           return Text('No values for "${parentController.text}" based on selection.');
-//         }
-
-//         return FormBuilderDropdown<String>(
-//           name: name,
-//           decoration: InputDecoration(labelText: label),
-//           onChanged: (value) {
-//             // This makes a bit confused please fix it and try to improve the code
-//             controller.text = value ?? '';
-//             if (isattached) {
-//               onParentStateChanged();
-//             }
-//           },
-//           items: filteredItems
-//               .map(
-//                 (e) => DropdownMenuItem(
-//                   value: e.enumValue,
-//                   child: Text(e.enumValue),
-//                 ),
-//               )
-//               .toList(),
-//         );
-//       },
-//       loading: () => const CircularProgressIndicator(),
-//       error: (e, _) => Text('Error loading $name values: $e'),
-//     );
-//   }
-// }
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -208,12 +129,34 @@ class EnumDropdownField extends ConsumerWidget {
         //         .toList(); //  Or use item that is passed as a parent
 
         if (filteredNodes.isEmpty) {
-          return Text('No items found at level $level.');
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            child: Text(
+              'No $label found.',
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimaryFixed,
+                  ),
+            ),
+          );
         }
 
         return FormBuilderDropdown<String>(
           name: name,
-          decoration: InputDecoration(labelText: label),
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: Theme.of(context).colorScheme.onPrimaryFixed,
+              ),
+          decoration: InputDecoration(
+            labelText: label,
+            labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.onPrimaryFixed,
+                ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.outline,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
           onChanged: (value) {
             controller.text = value ?? '';
             if (isattached) {

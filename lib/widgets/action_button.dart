@@ -44,6 +44,19 @@ class ActionButton extends HookWidget {
           _ => icon,
         },
         label: label,
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Theme.of(context).colorScheme.onPrimaryFixed, // Text and icon color
+          backgroundColor: Theme.of(context).colorScheme.primary, // Button background
+          textStyle: Theme.of(context).textTheme.titleMedium, // Font style
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: BorderSide(
+              color: Theme.of(context).colorScheme.outline, // Border color
+              width: 1.5,
+            ),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        ),
       ),
     );
   }

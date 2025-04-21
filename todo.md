@@ -35,3 +35,14 @@ Backend Go server
 [There two modusles named as start and models, start modes serve as the main and the models module currently contains models but having seprate module for models seems expensive and may be requreid repetitive functions to that modeels and do something with models]
 
 * labale code blocks better to avoid clutter
+
+
+ColorPallete : 
+primary:
+Onprimary:
+secondary:
+onSecondary:
+tertiary:
+tertiary
+error:
+onError:

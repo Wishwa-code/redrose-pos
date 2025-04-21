@@ -66,7 +66,7 @@ final List<NavButtonData> dashBoardButtons = [
     },
   ),
   NavButtonData(
-    label: 'Add custome sale',
+    label: 'Add custom sale',
     icon: Icons.inventory,
     color: const Color(0xFF006FE9),
     onPressed: () {
@@ -92,7 +92,6 @@ class DashBoardPage extends ConsumerWidget {
     final productsAsyncValue = ref.watch(productSearchProvider);
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0d0d0d),
       body: Row(
         children: [
           Expanded(
@@ -215,11 +214,9 @@ class DashBoardPage extends ConsumerWidget {
                                   DateTime.now().second.isEven
                                       ? 'Cant find anything with that name!'
                                       : 'Are you sure the name is correct?',
-                                  style: const TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                                        color: Theme.of(context).colorScheme.onSecondary,
+                                      ),
                                 ),
                               ],
                             ),

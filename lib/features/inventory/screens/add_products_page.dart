@@ -110,218 +110,410 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
     _rootController.text = 'root';
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Form(
-              key: _varianceformKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // const ColoredBox(
-                  //   color: Color(0xFF0d0d0d),
-                  //   child: Padding(
-                  //     padding: EdgeInsets.all(16),
-                  //     child: SizedBox(
-                  //       width: double.infinity,
-                  //       child: Text(
-                  //         'Each product must have unique combinations of category name, variance name, brand, supplier to avoid duplication',
-                  //         style: TextStyle(
-                  //           fontSize: 14,
-                  //           color: Colors.white,
-                  //           fontStyle: FontStyle.italic,
-                  //           fontWeight: FontWeight.w400,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  SizedBox(
-                    width: 400,
-                    height: 500,
-                    child: ProductFilter(
-                      controller: _productnameController,
-                      idController: _productidController,
-                    ),
-                  ),
-                  TextFormField(
-                    controller: _productnameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Product of the variance',
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter product name';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  TextFormField(
-                    controller: _productidController,
-                    decoration: const InputDecoration(
-                      labelText: 'Id of the above product',
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter product name';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  TextFormField(
-                    controller: _displaytitleController,
-                    decoration: const InputDecoration(
-                      labelText: 'Display title',
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter product name';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  TextFormField(
-                    controller: _variancedescriptionController,
-                    decoration: const InputDecoration(
-                      labelText: 'About this variance',
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter product name';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  TextFormField(
-                    controller: _variancetitleController,
-                    decoration: const InputDecoration(
-                      labelText: 'Variance name',
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter product name';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  TextFormField(
-                    controller: _brandController,
-                    decoration: const InputDecoration(
-                      labelText: 'Brand',
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter product name';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  TextFormField(
-                    controller: _supplierController,
-                    decoration: const InputDecoration(
-                      labelText: 'Supplier',
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter product name';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  PriceFormField(
-                    controller: _originalPriceController,
-                    label: 'Original price',
-                  ),
-                  const SizedBox(height: 8),
-                  PriceFormField(
-                    controller: _retailPriceController,
-                    label: 'Retail price',
-                  ),
-                  const SizedBox(height: 8),
-                  PriceFormField(
-                    controller: _wholesalePriceController,
-                    label: 'Wholesale price',
-                    isRequired: false, // Optional field
-                  ),
-                  const SizedBox(height: 8),
-                  ElevatedButton.icon(
-                    icon: const Icon(Icons.upload_file),
-                    label: const Text('Choose Image'),
-                    onPressed: () async {
-                      final result = await FilePicker.platform.pickFiles(
-                        type: FileType.image,
-                      );
-
-                      if (result != null && result.files.single.path != null) {
-                        setState(() {
-                          _selectedImage = File(result.files.single.path!);
-                          _selectedImageName = result.files.single.name;
-                        });
-                      }
-                    },
-                  ),
-                  if (_selectedImageName != null) ...[
-                    const SizedBox(height: 8),
-                    Text('Selected image: $_selectedImageName'),
-                  ],
-                  ActionButton(
-                    onPressed: addVariance,
-                    icon: const SizedBox.shrink(),
-                    label: const Text('Save Product'),
-                  ),
-                ],
-              ),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Last entered product',
-                    style: TextStyle(
-                      backgroundColor: Colors.white,
-                      fontSize: 18, // You can increase this for larger text
-                      fontWeight: FontWeight.w600, // Try w600 or FontWeight.bold
-                    ),
-                  ),
-                  switch (product) {
-                    AsyncData(:final value) => SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Text('Product: ${value.productName}'),
-                            Text('ID: ${value.id}'),
-                            Text('Description: ${value.varianceDescription}'),
-                            Text('varianceTitle: ${value.varianceTitle}'),
-                            Text('originalPrice: ${value.originalPrice}'),
-                            Text('supplier: ${value.supplier}'),
-                            Text('brand: ${value.brand}'),
-                            // Image.network(value.imageUrl),
-                          ],
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Form(
+                key: _varianceformKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Text(
+                          'Category of the new product',
+                          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                color: Theme.of(context).colorScheme.onPrimaryFixed,
+                              ),
                         ),
                       ),
-                    AsyncError(:final error, :final stackTrace) => Text(
-                        'Oops, something unexpected happened: $error',
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          final screenHeight = MediaQuery.of(context).size.height;
+                          final containerHeight = screenHeight < 700 ? 500.0 : 700.0;
+
+                          return Container(
+                            width: 400,
+                            height: containerHeight,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Theme.of(context).colorScheme.outline,
+                                width: 1.5,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                top: 16,
+                                left: 16,
+                                bottom: 4,
+                              ),
+                              child: ProductFilter(
+                                controller: _productnameController,
+                                idController: _productidController,
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    _ => const CircularProgressIndicator(),
-                  },
-                ],
+                    ),
+                    TextFormField(
+                      controller: _productnameController,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimaryFixed,
+                          ),
+                      decoration: InputDecoration(
+                        labelText: 'Category of the new product',
+                        labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                            ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter product name';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: _productidController,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimaryFixed,
+                          ),
+                      decoration: InputDecoration(
+                        labelText: 'Category ID',
+                        labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                            ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter product name';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: _displaytitleController,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimaryFixed,
+                          ),
+                      decoration: InputDecoration(
+                        labelText: 'Display title',
+                        labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                            ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter display title';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: _variancedescriptionController,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimaryFixed,
+                          ),
+                      decoration: InputDecoration(
+                        labelText: 'About this product',
+                        labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                            ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please complete about this product section';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: _variancetitleController,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimaryFixed,
+                          ),
+                      decoration: InputDecoration(
+                        labelText: 'Product name',
+                        labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                            ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter product name';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: _brandController,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimaryFixed,
+                          ),
+                      decoration: InputDecoration(
+                        labelText: 'Brand',
+                        labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                            ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter brand';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: _supplierController,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimaryFixed,
+                          ),
+                      decoration: InputDecoration(
+                        labelText: 'Supplier',
+                        labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                            ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter supplier';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    PriceFormField(
+                      controller: _originalPriceController,
+                      label: 'Original price',
+                    ),
+                    const SizedBox(height: 12),
+                    PriceFormField(
+                      controller: _retailPriceController,
+                      label: 'Retail price',
+                    ),
+                    const SizedBox(height: 12),
+                    PriceFormField(
+                      controller: _wholesalePriceController,
+                      label: 'Wholesale price',
+                      isRequired: false, // Optional field
+                    ),
+                    const SizedBox(height: 25),
+                    ElevatedButton.icon(
+                      label: (_selectedImageName != null)
+                          ? Text('Selected image: $_selectedImageName')
+                          : const Text('Choose Image'),
+                      icon: Icon(Icons.upload_file, color: Theme.of(context).colorScheme.onPrimary),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onPrimaryFixed, // Text and icon color
+                        backgroundColor: Theme.of(context).colorScheme.primary, // Button background
+                        textStyle: Theme.of(context).textTheme.titleMedium, // Font style
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          side: BorderSide(
+                            color: Theme.of(context).colorScheme.outline, // Border color
+                            width: 1.5,
+                          ),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      ),
+                      onPressed: () async {
+                        final result = await FilePicker.platform.pickFiles(
+                          type: FileType.image,
+                        );
+
+                        if (result != null && result.files.single.path != null) {
+                          setState(() {
+                            _selectedImage = File(result.files.single.path!);
+                            _selectedImageName = result.files.single.name;
+                          });
+                        }
+                      },
+                    ),
+                    ActionButton(
+                      onPressed: addVariance,
+                      icon: const SizedBox.shrink(),
+                      label: const Text('Save Product'),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              const Padding(
+                padding: EdgeInsets.only(top: 16, bottom: 30),
+                child: Divider(),
+              ),
+              Center(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Text(
+                        'Last entered product',
+                        style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                            ),
+                      ),
+                    ),
+                    switch (product) {
+                      AsyncData(:final value) => SingleChildScrollView(
+                          child: SizedBox(
+                            height: 400,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image.network(
+                                    value.imageUrl,
+                                    width: 360,
+                                    height: 360,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) => const Icon(
+                                      color: Color.fromARGB(255, 119, 116, 116),
+                                      size: 100,
+                                      Icons.broken_image,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 16),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Category             : ${value.productName}',
+                                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                            ),
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text(
+                                        'ID                         : ${value.id}',
+                                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                            ),
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text(
+                                        'Description        : ${value.varianceDescription}',
+                                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                            ),
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text(
+                                        'Product name   : ${value.varianceTitle}',
+                                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                            ),
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text(
+                                        'originalPrice      : ${value.originalPrice}',
+                                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                            ),
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text(
+                                        'supplier                   : ${value.supplier}',
+                                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                            ),
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text(
+                                        'brand                       : ${value.brand}',
+                                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      AsyncError(:final error, :final stackTrace) => Text(
+                          'Oops, something unexpected happened: $error',
+                        ),
+                      _ => const CircularProgressIndicator(),
+                    },
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
