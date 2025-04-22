@@ -15,9 +15,12 @@ class Variance with _$Variance {
     @JsonKey(name: 'variance') required String varianceTitle,
     @JsonKey(name: 'brand') required String brand,
     @JsonKey(name: 'supplier') required String supplier,
-    @JsonKey(name: 'original_price') required int originalPrice,
-    @JsonKey(name: 'retail_price') required int retailPrice,
-    @JsonKey(name: 'wholesale_price') required String wholesalePrice,
+    @JsonKey(name: 'original_price') required double originalPrice,
+    @JsonKey(name: 'retail_price') required double retailPrice,
+    @JsonKey(name: 'wholesale_price') required double wholesalePrice,
+    @JsonKey(name: 'quantity') required double quantity,
+    @JsonKey(name: 'unit_measure') required String unitMeasure,
+    @JsonKey(name: 'least_sub_unit_measure') required double leastSubUnitMeasure,
   }) = _Variance;
 
   factory Variance.fromJson(Map<String, dynamic> json) => _$VarianceFromJson(json);

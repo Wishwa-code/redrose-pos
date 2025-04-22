@@ -1,4 +1,5 @@
 import 'package:logger/logger.dart';
+
 Logger logger = Logger(
   printer: PrettyPrinter(
       // methodCount: 2, // Number of method calls to be displayed
@@ -10,3 +11,20 @@ Logger logger = Logger(
       //dateTimeFormat: DateTimeFormat.onlyTimeAndSinceStart,
       ),
 );
+
+
+  //Logger.level = Level.warning;
+
+  // logger.t('Trace log');
+
+  // logger.d('Debug log');
+
+  // logger.i('Info log');
+
+  // logger.w('Warning log');
+
+  // logger.e('Error log', error: 'Test Error');
+
+  // logger.f(
+  //   'What a fatal log',
+  // );

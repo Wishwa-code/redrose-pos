@@ -1,8 +1,10 @@
+import 'package:example/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../widgets/home_button.dart';
 import '../../inventory/models/dashboardbuttons.dart';
+import '../../inventory/models/product.dart';
 import '../../inventory/providers/filter_prodcut_state_providers.dart';
 import '../../inventory/providers/product_search_provider.dart';
 
@@ -90,6 +92,7 @@ class DashBoardPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productsAsyncValue = ref.watch(productSearchProvider);
+    final currentPage = ref.watch(currentPageProvider);
 
     return Scaffold(
       body: Row(
@@ -196,6 +199,8 @@ class DashBoardPage extends ConsumerWidget {
                   Expanded(
                     child: productsAsyncValue.when(
                       data: (products) {
+                        final isLastPage = products.length < 10;
+
                         if (products.isEmpty) {
                           return Center(
                             child: Column(
@@ -212,94 +217,140 @@ class DashBoardPage extends ConsumerWidget {
                                 const SizedBox(height: 16),
                                 Text(
                                   DateTime.now().second.isEven
-                                      ? 'Cant find anything with that name!'
-                                      : 'Are you sure the name is correct?',
-                                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                                        color: Theme.of(context).colorScheme.onSecondary,
-                                      ),
+                                      ? 'Theres no prodcut with that name or i have shown you all the products!'
+                                      : 'yeah the list is over or else there is no proucts with that name',
+                                  style: const TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ],
                             ),
                           );
                         }
-                        return ListView.builder(
-                          itemCount: products.length,
-                          itemBuilder: (context, index) {
-                            final product = products[index];
-
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              child: ListTile(
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                                title: Text(
-                                  product['title'].toString(),
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                        return Column(
+                          children: [
+                            if (isLastPage)
+                              const Text(
+                                'This is the last page',
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                                subtitle: Padding(
-                                  padding: const EdgeInsets.only(top: 8),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      // Texts Column
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                              ),
+                            const SizedBox(height: 4),
+                            Expanded(
+                              child: ListView.builder(
+                                itemCount: products.length,
+                                itemBuilder: (context, index) {
+                                  final product = Product.fromJson(products[index]);
+
+                                  return Card(
+                                    margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                                    elevation: 3,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: InkWell(
+                                      onTap: () async {
+                                        ref.read(searchFieldProvider.notifier).state =
+                                            product.title;
+                                        final loadVariances =
+                                            await ProductVariancesRoute(product.id!)
+                                                .push<bool>(context);
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(16),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            Text(
-                                              'Description: ${product['description']}',
-                                              style: const TextStyle(
-                                                color: Colors.white70,
-                                                fontSize: 14,
+                                            // Image
+                                            ClipRRect(
+                                              borderRadius: BorderRadius.circular(8),
+                                              child: Image.network(
+                                                product.imageUrl,
+                                                width: 100,
+                                                height: 100,
+                                                fit: BoxFit.cover,
+                                                errorBuilder: (context, error, stackTrace) =>
+                                                    const Icon(
+                                                  color: Color.fromARGB(255, 119, 116, 116),
+                                                  size: 100,
+                                                  Icons.broken_image,
+                                                ),
                                               ),
                                             ),
-                                            const SizedBox(height: 4),
-                                            Text(
-                                              'Tags: ${product['tag_one']}, ${product['tag_two']}',
-                                              style: const TextStyle(
-                                                color: Colors.white60,
-                                                fontSize: 13,
+                                            const SizedBox(width: 16),
+
+                                            // Info
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    product.title,
+                                                    style: const TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 4),
+                                                  Text(product.description),
+                                                  const SizedBox(height: 8),
+                                                  Wrap(
+                                                    spacing: 8,
+                                                    runSpacing: 4,
+                                                    children: [
+                                                      _buildtag('Department', product.department),
+                                                      _buildtag(
+                                                        'Main Category',
+                                                        product.mainCategory,
+                                                      ),
+                                                      _buildtag(
+                                                        'Sub Category',
+                                                        product.subCategory,
+                                                      ),
+                                                      _buildtag('Tag 1', product.tagOne),
+                                                      _buildtag('Tag 2', product.tagTwo),
+                                                      _buildtag('id', product.id.toString()),
+                                                    ],
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ],
                                         ),
                                       ),
-                                      const SizedBox(width: 12),
-                                      // Image
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: Image.network(
-                                          product['imageurl'] as String,
-                                          width: 60,
-                                          height: 60,
-                                          fit: BoxFit.cover,
-                                          errorBuilder: (context, error, stackTrace) {
-                                            return Container(
-                                              width: 60,
-                                              height: 60,
-                                              color: Colors.grey[800],
-                                              child: const Icon(
-                                                Icons.broken_image,
-                                                color: Colors.white54,
-                                                size: 30,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                tileColor: const Color(0xFF1C1C1C), // optional: dark background
-                                shape:
-                                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                    ),
+                                  );
+                                },
                               ),
-                            );
-                          },
+                            ),
+
+                            /// Pagination Controls
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: currentPage > 1
+                                        ? () => ref.read(currentPageProvider.notifier).state--
+                                        : null,
+                                    child: const Text('Previous'),
+                                  ),
+                                  if (!isLastPage)
+                                    ElevatedButton(
+                                      onPressed: () =>
+                                          ref.read(currentPageProvider.notifier).state++,
+                                      child: const Text('Next'),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ],
                         );
                       },
                       loading: () => const Center(child: CircularProgressIndicator()),
@@ -314,4 +365,14 @@ class DashBoardPage extends ConsumerWidget {
       ),
     );
   }
+}
+
+Widget _buildtag(String label, String value) {
+  return Chip(
+    label: Text('$label: $value'),
+    padding: const EdgeInsets.symmetric(horizontal: 8),
+    side: const BorderSide(
+      width: 0.5, // 👈 thinner border
+    ),
+  );
 }

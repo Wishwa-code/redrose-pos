@@ -36,6 +36,10 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
   final _mainCategoryController = TextEditingController();
   final _subCategoryController = TextEditingController();
 
+  final _quantityController = TextEditingController();
+  final _unitMeasureController = TextEditingController();
+  final _leastSubUnitMeasureController = TextEditingController();
+
   File? _selectedImage;
   String? _selectedImageName;
 
@@ -74,13 +78,16 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
           productName: _productnameController.text,
           displayTitle: _displaytitleController.text,
           varianceDescription: _variancedescriptionController.text,
-          imageUrl: 'will be updated after uploding image to cloud storage',
+          imageUrl: 'will be updated after uploading image to cloud storage',
           varianceTitle: _variancetitleController.text,
           brand: _brandController.text,
           supplier: _supplierController.text,
-          originalPrice: int.parse(_originalPriceController.text),
-          retailPrice: int.parse(_retailPriceController.text),
-          wholesalePrice: _originalPriceController.text,
+          originalPrice: double.tryParse(_originalPriceController.text) ?? 0.0,
+          retailPrice: double.tryParse(_retailPriceController.text) ?? 0.0,
+          wholesalePrice: double.tryParse(_wholesalePriceController.text) ?? 0.0,
+          quantity: double.tryParse(_quantityController.text) ?? 0.0,
+          unitMeasure: _unitMeasureController.text,
+          leastSubUnitMeasure: double.tryParse(_leastSubUnitMeasureController.text) ?? 0.0,
           productId: _productidController.text,
         );
 
@@ -437,6 +444,12 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
+                                      Text(
+                                        'Display title       : ${value.displayTitle}',
+                                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                            ),
+                                      ),
                                       Text(
                                         'Category             : ${value.productName}',
                                         style: Theme.of(context).textTheme.headlineSmall!.copyWith(

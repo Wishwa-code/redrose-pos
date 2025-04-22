@@ -5,7 +5,6 @@ import 'package:http_parser/http_parser.dart';
 import 'package:logger/logger.dart';
 
 import '../features/inventory/models/brand.dart';
-import '../features/inventory/models/enum_item.dart';
 import '../features/inventory/models/product.dart';
 import '../features/inventory/models/supplier.dart';
 import '../features/inventory/models/variance.dart';
@@ -157,10 +156,10 @@ class ApiClient {
 
   Future<Map<String, TreeNode>> fetchEnumsAndBuildTree() async {
     try {
-      final response = await _httpClient.get('/enums');
+      // final response = await _httpClient.get('/enums');
 
-      final data = response.data['enums'] as List<dynamic>;
-      final enums = data.map((item) => EnumItem.fromJson(item as Map<String, dynamic>)).toList();
+      // final data = response.data['enums'] as List<dynamic>;
+      // final enums = data.map((item) => EnumItem.fromJson(item as Map<String, dynamic>)).toList();
 
       final updatedTree = updateTreeLevels(items);
 
@@ -205,8 +204,6 @@ class ApiClient {
 //! ============================================================================ //
 //? ================= ✈️ PRODCUT VARIANCE RELATED API calls ✈️ ===================== //
 //! ============================================================================ //
-
-
 
   Future<Variance> fetchLastVariance() async {
     final response = await _httpClient.get('/variance/last');
@@ -267,8 +264,7 @@ class ApiClient {
     }
   }
 
-
-Future<List<Variance>> fetchVariancesByProductId(String productId) async {
+  Future<List<Variance>> fetchVariancesByProductId(String productId) async {
     try {
       final response = await _httpClient.get('/variance/by-product/$productId');
 
@@ -283,13 +279,11 @@ Future<List<Variance>> fetchVariancesByProductId(String productId) async {
     }
   }
 
-
 //! ============================================================================ //
 //? ================= ✈️ SUPPLIER RELATED API calls ✈️ ===================== //
 //! ============================================================================ //
 
-
-    Future<List<Supplier>> fetchSuppliers() async {
+  Future<List<Supplier>> fetchSuppliers() async {
     try {
       final response = await _httpClient.get('/supplier/getAll'); // or whatever your route is
 
@@ -318,7 +312,6 @@ Future<List<Variance>> fetchVariancesByProductId(String productId) async {
       rethrow;
     }
   }
-
 
   //? below method is not working yet
   // Future<Product> fetchProduct(int id) async {
