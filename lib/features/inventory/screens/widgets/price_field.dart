@@ -33,7 +33,7 @@ class PriceFormField extends StatelessWidget {
       ),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,20}')),
       ],
       validator: (value) {
         if (!isRequired && (value == null || value.isEmpty)) {

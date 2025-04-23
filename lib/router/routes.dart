@@ -246,7 +246,10 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
                     ),
                     IconButton(
                       onPressed: () => scaffoldKey.currentState!.openDrawer(),
-                      icon: const Icon(Icons.arrow_right_alt_sharp),
+                      icon: Icon(
+                        Icons.arrow_right_alt_sharp,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                     const Padding(
                       padding: EdgeInsets.all(8),
@@ -257,7 +260,7 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
               ),
             ),
           ),
-          const VerticalDivider(thickness: 1, width: 1),
+          // const VerticalDivider(thickness: 1, width: 1),
           Expanded(
             child: Column(
               children: [
@@ -277,7 +280,12 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
           ),
           ...destinations.map((Destination destination) {
             return NavigationDrawerDestination(
-              label: Text(destination.label),
+              label: Text(
+                destination.label,
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+              ),
               icon: Icon(
                 (destination.icon as Icon).icon,
                 size: 26,
@@ -290,7 +298,12 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
               ),
             );
           }),
-          const Padding(padding: EdgeInsets.fromLTRB(28, 6, 28, 0), child: Divider()),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            child: Divider(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 40),
             child: SizedBox(
@@ -300,8 +313,9 @@ class _MyShellRouteScreenState extends State<MyShellRouteScreen> {
           ),
           IconButton(
             onPressed: () => scaffoldKey.currentState!.closeDrawer(),
-            icon: const Icon(
+            icon: Icon(
               Icons.subdirectory_arrow_left_sharp,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
         ],

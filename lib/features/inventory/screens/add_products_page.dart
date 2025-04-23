@@ -4,9 +4,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../features/inventory/providers/brand_provider.dart';
+import '../../../../features/inventory/providers/supplier_provider.dart';
 import '../../../widgets/action_button.dart';
 import '../models/variance.dart';
 import '../providers/last_entered_variance_notifier.dart';
+import '../screens/widgets/dropdown_of_provider.dart';
 import '../screens/widgets/price_field.dart';
 import '../screens/widgets/product_filter.dart';
 
@@ -26,7 +29,8 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
   final _displaytitleController = TextEditingController();
   final _variancedescriptionController = TextEditingController();
   final _variancetitleController = TextEditingController();
-  final _brandController = TextEditingController();
+  String? selectedBrandId;
+  String? selectedSupplier;
   final _supplierController = TextEditingController();
   final _originalPriceController = TextEditingController();
   final _retailPriceController = TextEditingController();
@@ -50,7 +54,6 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
     _displaytitleController.dispose();
     _variancedescriptionController.dispose();
     _variancetitleController.dispose();
-    _brandController.dispose();
     _supplierController.dispose();
     _originalPriceController.dispose();
     _retailPriceController.dispose();
@@ -80,7 +83,7 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
           varianceDescription: _variancedescriptionController.text,
           imageUrl: 'will be updated after uploading image to cloud storage',
           varianceTitle: _variancetitleController.text,
-          brand: _brandController.text,
+          brand: selectedBrandId!,
           supplier: _supplierController.text,
           originalPrice: double.tryParse(_originalPriceController.text) ?? 0.0,
           retailPrice: double.tryParse(_retailPriceController.text) ?? 0.0,
@@ -296,38 +299,104 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                       },
                     ),
                     const SizedBox(height: 12),
-                    TextFormField(
-                      controller: _brandController,
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimaryFixed,
-                          ),
-                      decoration: InputDecoration(
-                        labelText: 'Brand',
-                        labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimaryFixed,
-                            ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Theme.of(context).colorScheme.outline,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter brand';
-                        }
-                        return null;
+                    // TextFormField(
+                    //   controller: _brandController,
+                    //   style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    //         color: Theme.of(context).colorScheme.onPrimaryFixed,
+                    //       ),
+                    //   decoration: InputDecoration(
+                    //     labelText: 'Brand',
+                    //     labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    //           color: Theme.of(context).colorScheme.onPrimaryFixed,
+                    //         ),
+                    //     border: OutlineInputBorder(
+                    //       borderSide: BorderSide(
+                    //         color: Theme.of(context).colorScheme.outline,
+                    //       ),
+                    //       borderRadius: BorderRadius.circular(8),
+                    //     ),
+                    //   ),
+                    //   validator: (value) {
+                    //     if (value == null || value.isEmpty) {
+                    //       return 'Please enter brand';
+                    //     }
+                    //     return null;
+                    //   },
+                    // ),
+                    ProviderDropdownField(
+                      provider: brandNotifierProvider,
+                      selectedBrandId: selectedSupplier,
+                      labelText: 'Select brand',
+                      onChanged: (value) {
+                        setState(() {
+                          selectedSupplier = value;
+                        });
                       },
                     ),
                     const SizedBox(height: 12),
+                    // TextFormField(
+                    //   controller: _supplierController,
+                    //   style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    //         color: Theme.of(context).colorScheme.onPrimaryFixed,
+                    //       ),
+                    //   decoration: InputDecoration(
+                    //     labelText: 'Supplier',
+                    //     labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    //           color: Theme.of(context).colorScheme.onPrimaryFixed,
+                    //         ),
+                    //     border: OutlineInputBorder(
+                    //       borderSide: BorderSide(
+                    //         color: Theme.of(context).colorScheme.outline,
+                    //       ),
+                    //       borderRadius: BorderRadius.circular(8),
+                    //     ),
+                    //   ),
+                    //   validator: (value) {
+                    //     if (value == null || value.isEmpty) {
+                    //       return 'Please enter supplier';
+                    //     }
+                    //     return null;
+                    //   },
+                    // ),
+                    ProviderDropdownField(
+                      provider: supplierNotifierProvider,
+                      selectedBrandId: selectedBrandId,
+                      labelText: 'Select supplier',
+                      onChanged: (value) {
+                        setState(() {
+                          selectedBrandId = value;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    PriceFormField(
+                      controller: _originalPriceController,
+                      label: 'Original price',
+                    ),
+                    const SizedBox(height: 12),
+                    PriceFormField(
+                      controller: _retailPriceController,
+                      label: 'Retail price',
+                    ),
+                    const SizedBox(height: 12),
+                    PriceFormField(
+                      controller: _wholesalePriceController,
+                      label: 'Wholesale price',
+                      isRequired: false, // Optional field
+                    ),
+                    const SizedBox(height: 12),
+                    PriceFormField(
+                      controller: _quantityController,
+                      label: 'Quantity',
+                    ),
+                    const SizedBox(height: 12),
                     TextFormField(
-                      controller: _supplierController,
+                      controller: _unitMeasureController,
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                             color: Theme.of(context).colorScheme.onPrimaryFixed,
                           ),
                       decoration: InputDecoration(
-                        labelText: 'Supplier',
+                        labelText: 'Unit metric',
                         labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
                               color: Theme.of(context).colorScheme.onPrimaryFixed,
                             ),
@@ -347,25 +416,24 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                     ),
                     const SizedBox(height: 12),
                     PriceFormField(
-                      controller: _originalPriceController,
-                      label: 'Original price',
-                    ),
-                    const SizedBox(height: 12),
-                    PriceFormField(
-                      controller: _retailPriceController,
-                      label: 'Retail price',
-                    ),
-                    const SizedBox(height: 12),
-                    PriceFormField(
-                      controller: _wholesalePriceController,
-                      label: 'Wholesale price',
-                      isRequired: false, // Optional field
+                      controller: _leastSubUnitMeasureController,
+                      label: 'Min.sub unit as fracture of unit',
                     ),
                     const SizedBox(height: 25),
                     ElevatedButton.icon(
                       label: (_selectedImageName != null)
-                          ? Text('Selected image: $_selectedImageName')
-                          : const Text('Choose Image'),
+                          ? Text(
+                              'Selected image: $_selectedImageName',
+                              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    color: Theme.of(context).colorScheme.onPrimary,
+                                  ),
+                            )
+                          : Text(
+                              'Choose Image',
+                              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    color: Theme.of(context).colorScheme.onPrimary,
+                                  ),
+                            ),
                       icon: Icon(Icons.upload_file, color: Theme.of(context).colorScheme.onPrimary),
                       style: ElevatedButton.styleFrom(
                         foregroundColor:
@@ -397,7 +465,12 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                     ActionButton(
                       onPressed: addVariance,
                       icon: const SizedBox.shrink(),
-                      label: const Text('Save Product'),
+                      label: Text(
+                        'Save Product',
+                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
+                      ),
                     ),
                   ],
                 ),

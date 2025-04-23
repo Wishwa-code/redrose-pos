@@ -214,16 +214,23 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                                 Icons.upload_file,
                                 color: Theme.of(context).colorScheme.onPrimary,
                               ),
-                              label: const Text('Choose Image'),
+                              label: Text(
+                                'Choose Image',
+                                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                      color: Theme.of(context).colorScheme.onPrimary,
+                                    ),
+                              ),
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Theme.of(context)
                                     .colorScheme
                                     .onPrimaryFixed, // Text and icon color
                                 backgroundColor:
                                     Theme.of(context).colorScheme.primary, // Button background
-                                textStyle: Theme.of(context).textTheme.titleMedium, // Font style
+                                textStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                      color: Theme.of(context).colorScheme.onPrimary,
+                                    ), // Font style
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
+                                  borderRadius: BorderRadius.circular(16),
                                   side: BorderSide(
                                     color: Theme.of(context).colorScheme.outline, // Border color
                                     width: 1.5,
@@ -251,7 +258,12 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                             ActionButton(
                               onPressed: addProduct,
                               icon: const SizedBox.shrink(),
-                              label: const Text('Save Product'),
+                              label: Text(
+                                'Save Product',
+                                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                      color: Theme.of(context).colorScheme.onPrimary,
+                                    ),
+                              ),
                             ),
                           ],
                         ),

@@ -56,4 +56,5 @@ flutter:
     - assets/logo/light_logo.png
     - assets/images/nothing_found0.png
     - assets/images/nothing_found.png
+    - assets/images/error_img.png
 

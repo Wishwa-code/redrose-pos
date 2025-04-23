@@ -26,7 +26,7 @@ final lightTheme = ThemeData(
     onError: Colors.white,
     errorContainer: Color(0xFFFFDAD4),
     onErrorContainer: Color(0xFF410001),
-    surface: Color(0xFFFFFBFF),
+    surface: Color(0xFFFFD9E3),
     onSurface: Color(0xFF1C1B1F),
     surfaceContainerHighest: Color(0xFFF3DDDD),
     onSurfaceVariant: Color(0xFF524344),

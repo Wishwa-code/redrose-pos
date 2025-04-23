@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../providers/auth_controller.dart';
 import '../../../widgets/action_button.dart';
+import '../providers/auth_controller.dart';
 
 class LoginPage extends HookConsumerWidget {
   const LoginPage({super.key});
@@ -22,8 +22,16 @@ class LoginPage extends HookConsumerWidget {
             const Text('Login Page'),
             ActionButton(
               onPressed: login,
-              icon: const SizedBox.shrink(),
-              label: const Text('Login'),
+              icon: Icon(
+                Icons.login,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+              label: Text(
+                'Login',
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+              ),
             ),
           ],
         ),

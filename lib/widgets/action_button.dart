@@ -47,7 +47,9 @@ class ActionButton extends HookWidget {
         style: ElevatedButton.styleFrom(
           foregroundColor: Theme.of(context).colorScheme.onPrimaryFixed, // Text and icon color
           backgroundColor: Theme.of(context).colorScheme.primary, // Button background
-          textStyle: Theme.of(context).textTheme.titleMedium, // Font style
+          textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: Theme.of(context).colorScheme.onPrimary,
+              ), // Font style
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
             side: BorderSide(
