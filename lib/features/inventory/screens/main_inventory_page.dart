@@ -1,7 +1,7 @@
+import 'package:example/features/inventory/screens/category_screens/category_manager.dart';
+import 'package:example/features/inventory/screens/product_screens/product_manager.dart';
 import 'package:flutter/material.dart';
 
-import 'add_categories_page.dart';
-import 'add_products_page.dart';
 import 'filter_products_page.dart';
 
 class ProductsPage extends StatefulWidget {
@@ -46,21 +46,21 @@ class _ProductsPageState extends State<ProductsPage> {
                       children: [
                         _buildNavigationButton(
                           context,
-                          'Add Products',
-                          Icons.add,
-                          () => _updateContent('Add Products', const AddVariancesPage()),
-                        ),
-                        _buildNavigationButton(
-                          context,
-                          'Add Categories',
-                          Icons.add_box,
-                          () => _updateContent('Add Categories', const AddProductsPage()),
-                        ),
-                        _buildNavigationButton(
-                          context,
                           'Find',
                           Icons.inventory,
                           () => _updateContent('Find', const FilterProductsPage()),
+                        ),
+                        _buildNavigationButton(
+                          context,
+                          'Manage Products',
+                          Icons.add,
+                          () => _updateContent('Manage Products', const ProductManagerPage()),
+                        ),
+                        _buildNavigationButton(
+                          context,
+                          'Manage Categories',
+                          Icons.add_box,
+                          () => _updateContent('Manage Categories', const CategoryManagerPage()),
                         ),
                         _buildNavigationButton(
                           context,

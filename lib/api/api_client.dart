@@ -74,11 +74,9 @@ class ApiClient {
     return "ApiClient(_httpClient.options.headers['Authorization']: ${_httpClient.options.headers['Authorization']})";
   }
 
-  ///
-  ///
-  ///! This is the section for inventory page related api calls
-  ///
-  ///
+  ///  //! ============================================================================ //
+//? ======== ✈️ This is the section for inventory page related api calls ✈️ ========== //
+//! ============================================================================ //
 
   Future<List<Product>> fetchProducts() async {
     final response = await _httpClient.get<Map<String, dynamic>>('/products');
@@ -148,11 +146,64 @@ class ApiClient {
     return Product.fromJson(productData);
   }
 
-  ///
-  ///
-  ///! This is the section for menu tree related api calls
-  ///
-  ///
+  Future<Product> updateProduct(Product product, File imageFile) async {
+    final fileName = imageFile.path.split(r'\').last;
+
+    final formData = FormData.fromMap({
+      'file': await MultipartFile.fromFile(
+        imageFile.path,
+        filename: fileName,
+        contentType: MediaType('image', 'jpeg'),
+      ),
+    });
+
+    final imgresponse = await _httpClient.post(
+      'https://yqewezudxihyadvmfovd.supabase.co/functions/v1/storage-upload',
+      data: formData,
+      options: Options(
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      ),
+    );
+
+    final imgData = imgresponse.data['data'];
+    final rawPath = imgData['path'] as String;
+    final encodedPath = Uri.encodeComponent(rawPath); // encodes spaces + other special chars
+
+    final publicUrl =
+        'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/public/product_images/$encodedPath';
+
+    final updatedProduct = product.copyWith(imageUrl: publicUrl);
+    final response = await _httpClient.put(
+      '/product/update',
+      data:
+          updatedProduct.toJson(), // Assuming `product.toJson()` matches your backend expectations
+    );
+
+    logger.d('Update product response: $response');
+
+    final productData = response.data['product'] as Map<String, dynamic>;
+
+    return Product.fromJson(productData);
+  }
+
+  Future<Product> fetchProductById(String id) async {
+    final response = await _httpClient.get<Map<String, dynamic>>('/products/get-product/$id');
+
+    final data = response.data;
+
+    if (data == null || data['product'] == null) {
+      logger.d('No product found for id $id: $data');
+      throw Exception('Product not found');
+    }
+
+    return Product.fromJson(data['product'] as Map<String, dynamic>);
+  }
+
+  //! ============================================================================ //
+//? ======== ✈️ This is the section for menu tree related api calls ✈️ ========== //
+//! ============================================================================ //
 
   Future<Map<String, TreeNode>> fetchEnumsAndBuildTree() async {
     try {

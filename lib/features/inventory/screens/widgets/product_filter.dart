@@ -9,9 +9,17 @@ import '../../models/product.dart';
 import './../../providers/filter_prodcut_state_providers.dart';
 
 class ProductFilter extends ConsumerStatefulWidget {
-  const ProductFilter({super.key, this.controller, this.idController});
+  const ProductFilter({
+    super.key, 
+    this.controller, 
+    this.idController, 
+    this.shouldGoOnClick,
+    this.onProductSelected,
+    });
   final TextEditingController? controller;
   final TextEditingController? idController;
+  final bool? shouldGoOnClick;
+  final void Function(String productId)? onProductSelected; 
 
   @override
   ConsumerState<ProductFilter> createState() => _ProductFilterState();
@@ -20,12 +28,14 @@ class ProductFilter extends ConsumerStatefulWidget {
 class _ProductFilterState extends ConsumerState<ProductFilter> {
   late final TextEditingController _controller;
   late final TextEditingController _idController;
+  late final bool _shouldGoOnClick;
 
   @override
   void initState() {
     super.initState();
     _controller = widget.controller ?? TextEditingController();
     _idController = widget.idController ?? TextEditingController();
+    _shouldGoOnClick = widget.shouldGoOnClick ?? true;
 
     _controller.addListener(() {
       final text = _controller.text;
@@ -249,8 +259,13 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
                                     logger.d('product.id--> $product');
                                     _idController.text = product.id?.toString() ?? '';
                                     ref.read(searchFieldProvider.notifier).state = product.title;
-                                    final loadVariances = await ProductVariancesRoute(product.id!)
-                                        .push<bool>(context);
+
+                                    widget.onProductSelected?.call(product.id!);
+
+                                    if (_shouldGoOnClick) {
+                                      final loadVariances = await ProductVariancesRoute(product.id!)
+                                          .push<bool>(context);
+                                    }
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(16),
