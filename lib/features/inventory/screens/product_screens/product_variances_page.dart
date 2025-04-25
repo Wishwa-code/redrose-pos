@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../utils/print_logger.dart';
-import '../../inventory/providers/product_variances_list_provider.dart'; // Adjust import accordingly
-import '../screens/widgets/product_card.dart';
+import '../../../../utils/print_logger.dart';
+import '../../providers/product_variances_list_provider.dart'; // Adjust import accordingly
+import '../widgets/product_card.dart';
 
 class VarianceListPage extends ConsumerWidget {
   const VarianceListPage({required this.productId, super.key});

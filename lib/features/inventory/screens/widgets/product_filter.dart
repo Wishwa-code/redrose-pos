@@ -10,16 +10,16 @@ import './../../providers/filter_prodcut_state_providers.dart';
 
 class ProductFilter extends ConsumerStatefulWidget {
   const ProductFilter({
-    super.key, 
-    this.controller, 
-    this.idController, 
+    super.key,
+    this.controller,
+    this.idController,
     this.shouldGoOnClick,
     this.onProductSelected,
-    });
+  });
   final TextEditingController? controller;
   final TextEditingController? idController;
   final bool? shouldGoOnClick;
-  final void Function(String productId)? onProductSelected; 
+  final void Function(String productId)? onProductSelected;
 
   @override
   ConsumerState<ProductFilter> createState() => _ProductFilterState();
@@ -255,8 +255,10 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
                                 ),
                                 child: InkWell(
                                   onTap: () async {
-                                    _controller.text = product.title;
                                     logger.d('product.id--> $product');
+
+                                    // _controller.text = product.title;
+
                                     _idController.text = product.id?.toString() ?? '';
                                     ref.read(searchFieldProvider.notifier).state = product.title;
 

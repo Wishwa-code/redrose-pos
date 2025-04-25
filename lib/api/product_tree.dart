@@ -3,13 +3,6 @@ import 'package:flutter/foundation.dart'; // Only needed if using @immutable
 // 1. TreeNode Class
 @immutable // Optional: Good practice for data classes that shouldn't change
 class TreeNode {
-  final String index;
-  final bool available;
-  final bool isFolder;
-  final List<String> children;
-  final String data;
-  final int level; // Using int for level as it's typically whole numbers
-  final String image;
 
   // Const constructor for potential performance benefits and immutability
   const TreeNode({
@@ -21,6 +14,13 @@ class TreeNode {
     required this.level,
     required this.image,
   });
+  final String index;
+  final bool available;
+  final bool isFolder;
+  final List<String> children;
+  final String data;
+  final int level; // Using int for level as it's typically whole numbers
+  final String image;
 
   // Optional: Add methods like copyWith, toJson, fromJson if needed later
   // Optional: Add toString for easier debugging
@@ -61,7 +61,7 @@ class TreeNode {
 
 // 3. Constants and Data
 const String imageUrl =
-    "https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/43e3dbcc-f776-46fc-8977-235a055c1b5d_1.bd7990a8ac3ad38c7b88480fb3996077.jpeg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy80M2UzZGJjYy1mNzc2LTQ2ZmMtODk3Ny0yMzVhMDU1YzFiNWRfMS5iZDc5OTBhOGFjM2FkMzhjN2I4ODQ4MGZiMzk5NjA3Ny5qcGVnIiwiaWF0IjoxNzQwMjEzMDI5LCJleHAiOjE3NzE3NDkwMjl9.Al_XbnJ42f0w79uwEElSNtQwlYezZrLoCmo9YpmlR1s";
+    'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/43e3dbcc-f776-46fc-8977-235a055c1b5d_1.bd7990a8ac3ad38c7b88480fb3996077.jpeg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy80M2UzZGJjYy1mNzc2LTQ2ZmMtODk3Ny0yMzVhMDU1YzFiNWRfMS5iZDc5OTBhOGFjM2FkMzhjN2I4ODQ4MGZiMzk5NjA3Ny5qcGVnIiwiaWF0IjoxNzQwMjEzMDI5LCJleHAiOjE3NzE3NDkwMjl9.Al_XbnJ42f0w79uwEElSNtQwlYezZrLoCmo9YpmlR1s';
 
 final Map<String, TreeNode> items = {
   'root': const TreeNode(
@@ -83,7 +83,7 @@ final Map<String, TreeNode> items = {
       'mainindustrial',
       'mainfasterners',
       'mainhomekitchen',
-      'maingiftitems'
+      'maingiftitems',
     ],
     data: 'Menu',
     level: 0,
@@ -109,7 +109,7 @@ final Map<String, TreeNode> items = {
       'asbestoscolorroofingsheets',
       'nonasbestoscolorroofingsheets',
       'ecofreindlyroofingsheets',
-      'zincalluminiumroofingsheets'
+      'zincalluminiumroofingsheets',
     ],
     data: 'Roofing sheets',
     level: 0,
@@ -396,7 +396,7 @@ final Map<String, TreeNode> items = {
       'melwagipipes',
       'taiangipipe',
       'pakistan',
-      'otherlocalbrandsgipipes'
+      'otherlocalbrandsgipipes',
     ],
     data: 'GI pipes(Galvanized Iron Pipes)',
     level: 0,
@@ -511,7 +511,7 @@ final Map<String, TreeNode> items = {
       'grassandplants',
       'naturalpebbles',
       'fencing',
-      'agricultureproducts'
+      'agricultureproducts',
     ],
     data: 'Garden & Decoration',
     level: 0,
@@ -626,7 +626,7 @@ final Map<String, TreeNode> items = {
       'barbedwire',
       'farmfence',
       'wiremesh',
-      'gabions'
+      'gabions',
     ],
     data: 'Fencing',
     level: 0,
@@ -748,7 +748,7 @@ final Map<String, TreeNode> items = {
       'weldedgiandplasticcoatedwiremesh',
       'woovenwiremesh',
       'hexaganolwirenetting',
-      'plasticmesh'
+      'plasticmesh',
     ],
     data: 'Wire mesh',
     level: 0,
@@ -839,7 +839,7 @@ final Map<String, TreeNode> items = {
       'hangersandhooks',
       'bindingwire',
       'brassitems',
-      'woodwaterbase'
+      'woodwaterbase',
     ],
     data: 'General hardware',
     level: 0,
@@ -1016,7 +1016,7 @@ final Map<String, TreeNode> items = {
       'earmuff',
       'safetyrespiratormask',
       'safetybeltandharness',
-      'roadsafety'
+      'roadsafety',
     ],
     data: 'Safety',
     level: 0,
@@ -1170,7 +1170,7 @@ final Map<String, TreeNode> items = {
       'kevilton',
       'chint',
       'otherbrands',
-      'lightingaccesories'
+      'lightingaccesories',
     ],
     data: 'Lighting',
     level: 0,
@@ -1308,7 +1308,7 @@ final Map<String, TreeNode> items = {
     isFolder: false, // Changed to false based on children list
     children: <String>[
       'acl',
-      'keviltonfans'
+      'keviltonfans',
     ], // Assuming these are final items, not sub-folders? If they are sub-folders, change isFolder back to true.
     data: 'Fans',
     level: 0,
@@ -1342,7 +1342,7 @@ final Map<String, TreeNode> items = {
       'circuitbreakers',
       'wiresandcables',
       'conduitaccesories',
-      'wirecodes'
+      'wirecodes',
     ],
     data: 'Accesories',
     level: 0,
@@ -1394,7 +1394,7 @@ final Map<String, TreeNode> items = {
       'cabletrucnking',
       'cabletrucnkingfittings',
       'cabletie',
-      'wirecodes'
+      'wirecodes',
     ],
     data: 'Conduit accesories',
     level: 0,
@@ -1596,7 +1596,7 @@ final Map<String, TreeNode> items = {
       'threadbar',
       'umbrellanails',
       'panheadscrew',
-      'washers'
+      'washers',
     ],
     data: 'Fasterners', // Typo in original? Fasteners?
     level: 0,
@@ -1719,7 +1719,7 @@ final Map<String, TreeNode> items = {
       'electricappliancekitchenware',
       'petcareaccesories',
       'householditems',
-      'weedsandpestcontrol'
+      'weedsandpestcontrol',
     ],
     data: 'Home & Kitchen',
     level: 0,
@@ -1779,7 +1779,7 @@ final Map<String, TreeNode> items = {
       'wrappingitems',
       'booksandotheraccesories',
       'craftitems',
-      'otherstationeryitems'
+      'otherstationeryitems',
     ],
     data: 'Gift items',
     level: 0,
@@ -1838,7 +1838,7 @@ final Map<String, TreeNode> items = {
       'powerTools',
       'powerToolaccessories',
       'handandelectricaltools',
-      'layoutandmeasuringtools'
+      'layoutandmeasuringtools',
     ],
     data: 'Tools',
     level: 0,
@@ -1861,7 +1861,7 @@ final Map<String, TreeNode> items = {
       'aircompressor',
       'otherpowertools',
       'blowers',
-      'weldingmachine'
+      'weldingmachine',
     ],
     data: 'Power Tools',
     level: 0,
@@ -2000,7 +2000,7 @@ final Map<String, TreeNode> items = {
       'routerbits',
       'aircompressotools',
       'weldingRod',
-      'allpowertoolsaccesories'
+      'allpowertoolsaccesories',
     ],
     data: 'Power Tool Accessories',
     level: 0,
@@ -2147,7 +2147,7 @@ final Map<String, TreeNode> items = {
       'knifesharpnersandblocks',
       'testers',
       'masonrytools',
-      'otherhandandelectricaltools'
+      'otherhandandelectricaltools',
     ],
     data: 'Hand and electrical tools',
     level: 0,
@@ -2406,7 +2406,7 @@ final Map<String, TreeNode> items = {
       'durawet',
       'causeway',
       'multilac',
-      'insee'
+      'insee',
     ],
     data: 'Paint List',
     level: 0,
