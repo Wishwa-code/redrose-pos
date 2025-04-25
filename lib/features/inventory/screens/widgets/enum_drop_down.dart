@@ -77,6 +77,7 @@ class EnumDropdownField extends ConsumerWidget {
                 data: 'N/A',
                 level: -1,
                 image: '',
+                sinhalaName: 'නැත',
               ),
               for (var i = 1; i <= 5; i++)
                 TreeNode(
@@ -87,6 +88,7 @@ class EnumDropdownField extends ConsumerWidget {
                   data: 'tagone$i',
                   level: -1,
                   image: '',
+                  sinhalaName: 'පලවනිපලවනි ටැග් එක',
                 ),
             ];
           } else if (level == -2) {
@@ -99,6 +101,7 @@ class EnumDropdownField extends ConsumerWidget {
                 data: 'N/A',
                 level: -2,
                 image: '',
+                sinhalaName: 'නැත',
               ),
               for (var i = 1; i <= 5; i++)
                 TreeNode(
@@ -109,6 +112,7 @@ class EnumDropdownField extends ConsumerWidget {
                   data: 'tagtwo$i',
                   level: -2,
                   image: '',
+                  sinhalaName: 'දෙවැනි ටැග් එක',
                 ),
             ];
           } else {

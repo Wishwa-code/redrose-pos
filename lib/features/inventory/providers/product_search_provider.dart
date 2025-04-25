@@ -16,6 +16,7 @@ Future<List<Map<String, dynamic>>> productSearch(ProductSearchRef ref) async {
   final search = ref.watch(searchFieldProvider).trim();
   final selectedDepartments = ref.watch(departmentFilterProvider);
   final selectedCategories = ref.watch(categoryFilterProvider);
+  final selectedSubCategories = ref.watch(subCategoryFilterProvider);
   final lookinDescription = ref.watch(lookinDescriptionProvider);
   final page = ref.watch(currentPageProvider);
 
@@ -36,6 +37,9 @@ Future<List<Map<String, dynamic>>> productSearch(ProductSearchRef ref) async {
 
   if (selectedCategories.isNotEmpty) {
     queryParams['main_catogory'] = selectedCategories.join(',');
+  }
+  if (selectedSubCategories.isNotEmpty) {
+    queryParams['sub_catogory'] = selectedSubCategories.join(',');
   }
 
   if (lookinDescription) {

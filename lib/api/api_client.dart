@@ -237,6 +237,7 @@ class ApiClient {
         data: node.data,
         level: currentLevel,
         image: node.image,
+        sinhalaName: node.sinhalaName,
       );
 
       updatedTree[nodeId] = updatedNode;

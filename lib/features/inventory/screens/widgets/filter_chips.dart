@@ -90,8 +90,8 @@ class FilterChipsBox extends ConsumerWidget {
             const SizedBox(height: 8),
             if (chipOrDropdown)
               Wrap(
-                spacing: 8,
-                runSpacing: 8,
+                spacing: 14,
+                runSpacing: 14,
                 children: levelNodes.map((index) {
                   final isSelected = selectedValues.contains(index);
                   final label = labelFor(index);
@@ -115,7 +115,7 @@ class FilterChipsBox extends ConsumerWidget {
                       selectedColor: const Color(0xFF006FE9),
                       label: Text(
                         label,
-                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                               color: Theme.of(context).colorScheme.onPrimaryFixed,
                             ),
                       ),

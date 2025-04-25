@@ -92,6 +92,14 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
                   onChanged: () => ref.read(currentPageProvider.notifier).state = 1,
                 ),
 
+                FilterChipsBox(
+                  name: 'Sub Category',
+                  provider: subCategoryFilterProvider,
+                  parentProvider: categoryFilterProvider,
+                  level: 3,
+                  onChanged: () => ref.read(currentPageProvider.notifier).state = 1,
+                ),
+
                 // FilterChipsBox(
                 //   name: 'Brand',
                 //   provider: brandFilterProvider,
@@ -260,7 +268,7 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
                                     // _controller.text = product.title;
 
                                     _idController.text = product.id?.toString() ?? '';
-                                    ref.read(searchFieldProvider.notifier).state = product.title;
+                                    // ref.read(searchFieldProvider.notifier).state = product.title;
 
                                     widget.onProductSelected?.call(product.id!);
 

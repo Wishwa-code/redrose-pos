@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart'; // Only needed if using @immutable
 // 1. TreeNode Class
 @immutable // Optional: Good practice for data classes that shouldn't change
 class TreeNode {
-
   // Const constructor for potential performance benefits and immutability
   const TreeNode({
     required this.index,
@@ -13,6 +12,7 @@ class TreeNode {
     required this.data,
     required this.level,
     required this.image,
+    required this.sinhalaName,
   });
   final String index;
   final bool available;
@@ -21,6 +21,7 @@ class TreeNode {
   final String data;
   final int level; // Using int for level as it's typically whole numbers
   final String image;
+  final String sinhalaName;
 
   // Optional: Add methods like copyWith, toJson, fromJson if needed later
   // Optional: Add toString for easier debugging
@@ -62,7 +63,6 @@ class TreeNode {
 // 3. Constants and Data
 const String imageUrl =
     'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/43e3dbcc-f776-46fc-8977-235a055c1b5d_1.bd7990a8ac3ad38c7b88480fb3996077.jpeg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy80M2UzZGJjYy1mNzc2LTQ2ZmMtODk3Ny0yMzVhMDU1YzFiNWRfMS5iZDc5OTBhOGFjM2FkMzhjN2I4ODQ4MGZiMzk5NjA3Ny5qcGVnIiwiaWF0IjoxNzQwMjEzMDI5LCJleHAiOjE3NzE3NDkwMjl9.Al_XbnJ42f0w79uwEElSNtQwlYezZrLoCmo9YpmlR1s';
-
 final Map<String, TreeNode> items = {
   'root': const TreeNode(
     index: 'root',
@@ -88,6 +88,7 @@ final Map<String, TreeNode> items = {
     data: 'Menu',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'මුල', // Added
   ),
 
   //? roofiung sheets starts from here
@@ -99,6 +100,7 @@ final Map<String, TreeNode> items = {
     data: 'Roofing & Ceiling',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'වහල් සහ සිවිලිං', // Added
   ),
   'roofingsheets': const TreeNode(
     index: 'roofingsheets',
@@ -114,6 +116,7 @@ final Map<String, TreeNode> items = {
     data: 'Roofing sheets',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'වහල් ෂීට්ෂීට්', // Added
   ),
   'asbestosroofingsheets': const TreeNode(
     index: 'asbestosroofingsheets',
@@ -123,6 +126,7 @@ final Map<String, TreeNode> items = {
     data: 'Asbestos roofing sheets',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'ඇස්බෙස්ටෝස් රැෆින්ග් ෂීට්ෂීට්', // Added
   ),
   'asbestoscolorroofingsheets': const TreeNode(
     index: 'asbestoscolorroofingsheets',
@@ -132,6 +136,7 @@ final Map<String, TreeNode> items = {
     data: 'Asbestos color roofing sheets',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'ඇස්බේස්ටෝස් රෑෆින්ග් ෂීට් (පාටපාට)', // Added
   ),
   'nonasbestoscolorroofingsheets': const TreeNode(
     index: 'nonasbestoscolorroofingsheets',
@@ -141,6 +146,7 @@ final Map<String, TreeNode> items = {
     data: 'Non asbestos sheets',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'ඇස්බැස්ටෝස් නොවන ෂී්ට්ෂී්ට්', // Added
   ),
   'fiberroofingsheets': const TreeNode(
     index: 'fiberroofingsheets',
@@ -150,6 +156,7 @@ final Map<String, TreeNode> items = {
     data: 'Fiber roofing sheets',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'ෆයිබර් රෑෆන්ග් ෂීට්ෂීට්', // Added
   ),
   'upvcroofingsheets': const TreeNode(
     index: 'upvcroofingsheets',
@@ -159,6 +166,7 @@ final Map<String, TreeNode> items = {
     data: 'UPVC roofing sheets',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'U PVC රෑෆින්ග් ෂීට්ෂීට්', // Added
   ),
   'transparentroofingsheets': const TreeNode(
     index: 'transparentroofingsheets',
@@ -168,6 +176,7 @@ final Map<String, TreeNode> items = {
     data: 'Transparent roofing sheets',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'විනිවිද පෙනෙන ෂීට්ෂීට්', // Added
   ),
   'ecofreindlyroofingsheets': const TreeNode(
     index: 'ecofreindlyroofingsheets',
@@ -177,6 +186,7 @@ final Map<String, TreeNode> items = {
     data: 'Eco freindly roofing sheets',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'zincalluminiumroofingsheets': const TreeNode(
     index: 'zincalluminiumroofingsheets',
@@ -186,6 +196,7 @@ final Map<String, TreeNode> items = {
     data: 'Zinc alluminium roofing sheets',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'ceilingsheets': const TreeNode(
     index: 'ceilingsheets',
@@ -195,6 +206,7 @@ final Map<String, TreeNode> items = {
     data: 'Ceiling sheets',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'asbestosceilingsheets': const TreeNode(
     index: 'asbestosceilingsheets',
@@ -204,6 +216,7 @@ final Map<String, TreeNode> items = {
     data: 'Asbestos ceiling sheets',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'nonasbestosceilingsheets': const TreeNode(
     index: 'nonasbestosceilingsheets',
@@ -213,6 +226,7 @@ final Map<String, TreeNode> items = {
     data: 'Non asbestos ceiling sheets',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'dth': const TreeNode(
     index: 'dth',
@@ -222,6 +236,7 @@ final Map<String, TreeNode> items = {
     data: 'EL Toro', // Note: data seems duplicated for dth and eltoro
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'eltoro': const TreeNode(
     index: 'eltoro',
@@ -231,6 +246,7 @@ final Map<String, TreeNode> items = {
     data: 'EL Toro', // Note: data seems duplicated for dth and eltoro
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'roofingaccesories': const TreeNode(
     index: 'roofingaccesories',
@@ -240,6 +256,7 @@ final Map<String, TreeNode> items = {
     data: 'Roofing accesories',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'gutterandaccesories': const TreeNode(
     index: 'gutterandaccesories',
@@ -249,6 +266,7 @@ final Map<String, TreeNode> items = {
     data: 'Gutter & accesories',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'anton': const TreeNode(
     index: 'anton',
@@ -258,6 +276,7 @@ final Map<String, TreeNode> items = {
     data: 'Anton',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'slon': const TreeNode(
     index: 'slon',
@@ -267,6 +286,7 @@ final Map<String, TreeNode> items = {
     data: 'S-lon',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'national': const TreeNode(
     index: 'national',
@@ -276,6 +296,7 @@ final Map<String, TreeNode> items = {
     data: 'National',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'ridge': const TreeNode(
     index: 'ridge',
@@ -285,6 +306,7 @@ final Map<String, TreeNode> items = {
     data: 'Ridge',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'asbestos': const TreeNode(
     index: 'asbestos',
@@ -294,6 +316,7 @@ final Map<String, TreeNode> items = {
     data: 'Asbestos',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'fiber': const TreeNode(
     index: 'fiber',
@@ -303,6 +326,7 @@ final Map<String, TreeNode> items = {
     data: 'Fiber',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'foil': const TreeNode(
     index: 'foil',
@@ -312,6 +336,7 @@ final Map<String, TreeNode> items = {
     data: 'Foil',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'roofingpaint': const TreeNode(
     index: 'roofingpaint',
@@ -321,6 +346,7 @@ final Map<String, TreeNode> items = {
     data: 'Roofing paint',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'ceilingaccesories': const TreeNode(
     index: 'ceilingaccesories',
@@ -330,6 +356,7 @@ final Map<String, TreeNode> items = {
     data: 'Ceiling accesories',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
 
   //? mainsteel starts from here
@@ -341,6 +368,7 @@ final Map<String, TreeNode> items = {
     data: 'Steel',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'යකඩයකඩ', // Added
   ),
   'boxbars': const TreeNode(
     index: 'boxbars',
@@ -350,6 +378,7 @@ final Map<String, TreeNode> items = {
     data: 'Box bars',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'බොක්ස් බාර්බාර්', // Added
   ),
   'lanwa': const TreeNode(
     index: 'lanwa',
@@ -359,6 +388,7 @@ final Map<String, TreeNode> items = {
     data: 'Lanwa',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'melwa': const TreeNode(
     index: 'melwa',
@@ -368,6 +398,7 @@ final Map<String, TreeNode> items = {
     data: 'Melwa',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'taian': const TreeNode(
     index: 'taian',
@@ -377,6 +408,7 @@ final Map<String, TreeNode> items = {
     data: 'Taian',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'otherlocalbrands': const TreeNode(
     index: 'otherlocalbrands',
@@ -386,6 +418,7 @@ final Map<String, TreeNode> items = {
     data: 'Other local brands',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'gipipes': const TreeNode(
     index: 'gipipes',
@@ -401,6 +434,7 @@ final Map<String, TreeNode> items = {
     data: 'GI pipes(Galvanized Iron Pipes)',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'lanwagipipes': const TreeNode(
     index: 'lanwagipipes',
@@ -410,6 +444,7 @@ final Map<String, TreeNode> items = {
     data: 'Lanwa',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'melwagipipes': const TreeNode(
     index: 'melwagipipes',
@@ -419,6 +454,7 @@ final Map<String, TreeNode> items = {
     data: 'Melwa',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'taiangipipe': const TreeNode(
     index: 'taiangipipe',
@@ -428,6 +464,7 @@ final Map<String, TreeNode> items = {
     data: 'Taian',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'pakistan': const TreeNode(
     index: 'pakistan',
@@ -437,6 +474,7 @@ final Map<String, TreeNode> items = {
     data: 'Pakistan (Imported)',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'otherlocalbrandsgipipes': const TreeNode(
     index: 'otherlocalbrandsgipipes',
@@ -446,6 +484,7 @@ final Map<String, TreeNode> items = {
     data: 'Other local brands',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'qtbar': const TreeNode(
     index: 'qtbar',
@@ -455,6 +494,7 @@ final Map<String, TreeNode> items = {
     data: 'QT bar (Quench and Self-Tempered Re-Bars)',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'lanwaqtbar': const TreeNode(
     index: 'lanwaqtbar',
@@ -464,6 +504,7 @@ final Map<String, TreeNode> items = {
     data: 'Lanwa',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'melwaqtbar': const TreeNode(
     index: 'melwaqtbar',
@@ -473,6 +514,7 @@ final Map<String, TreeNode> items = {
     data: 'Melwa',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'ashoksteelqtbar': const TreeNode(
     index: 'ashoksteelqtbar',
@@ -482,6 +524,7 @@ final Map<String, TreeNode> items = {
     data: 'Ashok steel',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'msplate': const TreeNode(
     index: 'msplate',
@@ -491,6 +534,7 @@ final Map<String, TreeNode> items = {
     data: 'MS plate',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'gicups': const TreeNode(
     index: 'gicups',
@@ -500,6 +544,7 @@ final Map<String, TreeNode> items = {
     data: 'GI cups',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'maingardenanddecoration': const TreeNode(
     index: 'maingardenanddecoration',
@@ -516,6 +561,7 @@ final Map<String, TreeNode> items = {
     data: 'Garden & Decoration',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'lawnandgarden': const TreeNode(
     index: 'lawnandgarden',
@@ -525,6 +571,7 @@ final Map<String, TreeNode> items = {
     data: 'Lawn and Garden',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'gardeningtools': const TreeNode(
     index: 'gardeningtools',
@@ -534,6 +581,7 @@ final Map<String, TreeNode> items = {
     data: 'Gardening tools',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'pots': const TreeNode(
     index: 'pots',
@@ -543,6 +591,7 @@ final Map<String, TreeNode> items = {
     data: 'Pots',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'wateringsystem': const TreeNode(
     index: 'wateringsystem',
@@ -552,6 +601,7 @@ final Map<String, TreeNode> items = {
     data: 'Watering system',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'pavingstones': const TreeNode(
     index: 'pavingstones',
@@ -561,6 +611,7 @@ final Map<String, TreeNode> items = {
     data: 'Paving stones',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'granitepavingstones': const TreeNode(
     index: 'granitepavingstones',
@@ -570,6 +621,7 @@ final Map<String, TreeNode> items = {
     data: 'Granite paving stones',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'cementpavingstones': const TreeNode(
     index: 'cementpavingstones',
@@ -579,6 +631,7 @@ final Map<String, TreeNode> items = {
     data: 'Cement paving stones/Interlock',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'grassandplants': const TreeNode(
     index: 'grassandplants',
@@ -588,6 +641,7 @@ final Map<String, TreeNode> items = {
     data: 'Grass & Plants',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'malaysiancarpet': const TreeNode(
     index: 'malaysiancarpet',
@@ -597,6 +651,7 @@ final Map<String, TreeNode> items = {
     data: 'Malaysian carpet',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'australiancarpet': const TreeNode(
     index: 'australiancarpet',
@@ -606,6 +661,7 @@ final Map<String, TreeNode> items = {
     data: 'Australian carpet',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'naturalpebbles': const TreeNode(
     index: 'naturalpebbles',
@@ -615,6 +671,7 @@ final Map<String, TreeNode> items = {
     data: 'Natural pebbles',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'fencing': const TreeNode(
     index: 'fencing',
@@ -631,6 +688,7 @@ final Map<String, TreeNode> items = {
     data: 'Fencing',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'pvccoatedchainink': const TreeNode(
     index: 'pvccoatedchainink',
@@ -640,6 +698,7 @@ final Map<String, TreeNode> items = {
     data: 'PVC coated chain ink',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'rcpvccoatedchainink': const TreeNode(
     index: 'rcpvccoatedchainink',
@@ -649,6 +708,7 @@ final Map<String, TreeNode> items = {
     data: 'RC',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'mcpvccoatedchainink': const TreeNode(
     index: 'mcpvccoatedchainink',
@@ -658,6 +718,7 @@ final Map<String, TreeNode> items = {
     data: 'MC',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'masconpvccoatedchainink': const TreeNode(
     index: 'masconpvccoatedchainink',
@@ -667,6 +728,7 @@ final Map<String, TreeNode> items = {
     data: 'Mascon',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'pvccoatedlinewire': const TreeNode(
     index: 'pvccoatedlinewire',
@@ -676,6 +738,7 @@ final Map<String, TreeNode> items = {
     data: 'PVC coated line wire',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'barbedwire': const TreeNode(
     index: 'barbedwire',
@@ -685,6 +748,7 @@ final Map<String, TreeNode> items = {
     data: 'Barbed wire',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'concertinabarbedwire': const TreeNode(
     index: 'concertinabarbedwire',
@@ -694,6 +758,7 @@ final Map<String, TreeNode> items = {
     data: 'Concertina barbed wire(camp wire)',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'pvccoatedbarbedwire': const TreeNode(
     index: 'pvccoatedbarbedwire',
@@ -703,6 +768,7 @@ final Map<String, TreeNode> items = {
     data: 'PVC coated barbed wire',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'gibarbedwire': const TreeNode(
     index: 'gibarbedwire',
@@ -712,6 +778,7 @@ final Map<String, TreeNode> items = {
     data: 'GI barbed wire',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'farmfence': const TreeNode(
     index: 'farmfence',
@@ -721,6 +788,7 @@ final Map<String, TreeNode> items = {
     data: 'Farm fence',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'pvccoatedrebcofarmfence': const TreeNode(
     index: 'pvccoatedrebcofarmfence',
@@ -730,6 +798,7 @@ final Map<String, TreeNode> items = {
     data: 'PVC coated rebco farm fence',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'girebcofarnfence': const TreeNode(
     index: 'girebcofarnfence',
@@ -739,6 +808,7 @@ final Map<String, TreeNode> items = {
     data: 'GI rebco farm fence',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'wiremesh': const TreeNode(
     index: 'wiremesh',
@@ -753,6 +823,7 @@ final Map<String, TreeNode> items = {
     data: 'Wire mesh',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'weldedgiandplasticcoatedwiremesh': const TreeNode(
     index: 'weldedgiandplasticcoatedwiremesh',
@@ -762,6 +833,7 @@ final Map<String, TreeNode> items = {
     data: 'Welded GI & Plastic coated wire mesh',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'woovenwiremesh': const TreeNode(
     index: 'woovenwiremesh',
@@ -771,6 +843,7 @@ final Map<String, TreeNode> items = {
     data: 'Wooven wire mesh',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'hexaganolwirenetting': const TreeNode(
     index: 'hexaganolwirenetting',
@@ -780,6 +853,7 @@ final Map<String, TreeNode> items = {
     data: 'Hexaganol wire netting',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'plasticmesh': const TreeNode(
     index: 'plasticmesh',
@@ -789,6 +863,7 @@ final Map<String, TreeNode> items = {
     data: 'Plastic mesh',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'gabions': const TreeNode(
     index: 'gabions',
@@ -798,6 +873,7 @@ final Map<String, TreeNode> items = {
     data: 'Gabions',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'pvccoatedgabions': const TreeNode(
     index: 'pvccoatedgabions',
@@ -807,6 +883,7 @@ final Map<String, TreeNode> items = {
     data: 'PVC coated gabions',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'gigarbongabions': const TreeNode(
     index: 'gigarbongabions',
@@ -816,6 +893,7 @@ final Map<String, TreeNode> items = {
     data: 'G.I.Garbion Boxes',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'agricultureproducts': const TreeNode(
     index: 'agricultureproducts',
@@ -825,6 +903,7 @@ final Map<String, TreeNode> items = {
     data: 'Agricultural products',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'maingeneralhardware': const TreeNode(
     index: 'maingeneralhardware',
@@ -844,6 +923,7 @@ final Map<String, TreeNode> items = {
     data: 'General hardware',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සාමාන්‍ය හාඩ්වෙයාර් බඩුබඩු', // Added
   ),
   'homeaccesories': const TreeNode(
     index: 'homeaccesories',
@@ -853,6 +933,7 @@ final Map<String, TreeNode> items = {
     data: 'Home accesories',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'doorandwindows': const TreeNode(
     index: 'doorandwindows',
@@ -862,6 +943,7 @@ final Map<String, TreeNode> items = {
     data: 'Doors & Windows',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'mascondoors': const TreeNode(
     index: 'mascondoors',
@@ -871,6 +953,7 @@ final Map<String, TreeNode> items = {
     data: 'Mascon doors',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'aluminiumdoors': const TreeNode(
     index: 'aluminiumdoors',
@@ -880,6 +963,7 @@ final Map<String, TreeNode> items = {
     data: 'Aluminium doors',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'hinges': const TreeNode(
     index: 'hinges',
@@ -889,6 +973,7 @@ final Map<String, TreeNode> items = {
     data: 'Hinges',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'plasticdoors': const TreeNode(
     index: 'plasticdoors',
@@ -898,6 +983,7 @@ final Map<String, TreeNode> items = {
     data: 'Plastic doors',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'floorsandwalls': const TreeNode(
     index: 'floorsandwalls',
@@ -907,6 +993,7 @@ final Map<String, TreeNode> items = {
     data: 'Floors & Walls',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'chaincablerope': const TreeNode(
     index: 'chaincablerope',
@@ -916,6 +1003,7 @@ final Map<String, TreeNode> items = {
     data: 'Chain, Cable & Rope',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'sinks': const TreeNode(
     index: 'sinks',
@@ -925,6 +1013,7 @@ final Map<String, TreeNode> items = {
     data: 'Sinks',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'adhesivetapes': const TreeNode(
     index: 'adhesivetapes',
@@ -934,6 +1023,7 @@ final Map<String, TreeNode> items = {
     data: 'Adhesive tapes',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'padlock': const TreeNode(
     index: 'padlock',
@@ -943,6 +1033,7 @@ final Map<String, TreeNode> items = {
     data: 'Padlock',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'ropes': const TreeNode(
     index: 'ropes',
@@ -952,6 +1043,7 @@ final Map<String, TreeNode> items = {
     data: 'Ropes',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'haspandstaple': const TreeNode(
     index: 'haspandstaple',
@@ -961,6 +1053,7 @@ final Map<String, TreeNode> items = {
     data: 'Hasp & Tapes', // Typo in original? Assuming 'Staples'? Keeping original.
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'hangersandhooks': const TreeNode(
     index: 'hangersandhooks',
@@ -970,6 +1063,7 @@ final Map<String, TreeNode> items = {
     data: 'Hangers & Hooks',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'bindingwire': const TreeNode(
     index: 'bindingwire',
@@ -979,6 +1073,7 @@ final Map<String, TreeNode> items = {
     data: 'Binding wire',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'brassitems': const TreeNode(
     index: 'brassitems',
@@ -988,6 +1083,7 @@ final Map<String, TreeNode> items = {
     data: 'Brass items',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'woodwaterbase': const TreeNode(
     index: 'woodwaterbase',
@@ -997,6 +1093,7 @@ final Map<String, TreeNode> items = {
     data: 'Wood waterbase',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'mainsafety': const TreeNode(
     index: 'mainsafety',
@@ -1021,6 +1118,7 @@ final Map<String, TreeNode> items = {
     data: 'Safety',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'ආරක්ෂා උපකරණඋපකරණ', // Added
   ),
   'personalprotectiveequipment': const TreeNode(
     index: 'personalprotectiveequipment',
@@ -1030,6 +1128,7 @@ final Map<String, TreeNode> items = {
     data: 'Personal protective equipment',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'safetyhemets': const TreeNode(
     index: 'safetyhemets',
@@ -1039,6 +1138,7 @@ final Map<String, TreeNode> items = {
     data: 'Safety helmets',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'safetyjacketsandoverall': const TreeNode(
     index: 'safetyjacketsandoverall',
@@ -1048,6 +1148,7 @@ final Map<String, TreeNode> items = {
     data: 'Safety jackets and overall',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'safetymask': const TreeNode(
     index: 'safetymask',
@@ -1057,6 +1158,7 @@ final Map<String, TreeNode> items = {
     data: 'Safety mask',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'safetygloves': const TreeNode(
     index: 'safetygloves',
@@ -1066,6 +1168,7 @@ final Map<String, TreeNode> items = {
     data: 'Safety gloves',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'safetygoggles': const TreeNode(
     index: 'safetygoggles',
@@ -1075,6 +1178,7 @@ final Map<String, TreeNode> items = {
     data: 'Safety goggles',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'safetyshoes': const TreeNode(
     index: 'safetyshoes',
@@ -1084,6 +1188,7 @@ final Map<String, TreeNode> items = {
     data: 'Safety shoes',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'gumboots': const TreeNode(
     index: 'gumboots',
@@ -1093,6 +1198,7 @@ final Map<String, TreeNode> items = {
     data: 'Gum boots',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'battonortroublelight': const TreeNode(
     index: 'battonortroublelight',
@@ -1102,6 +1208,7 @@ final Map<String, TreeNode> items = {
     data: 'Baton light & Trouble light',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'safetyglass': const TreeNode(
     index: 'safetyglass',
@@ -1111,6 +1218,7 @@ final Map<String, TreeNode> items = {
     data: 'Safety glass',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'earmuff': const TreeNode(
     index: 'earmuff',
@@ -1120,6 +1228,7 @@ final Map<String, TreeNode> items = {
     data: 'Ear muff',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'safetyrespiratormask': const TreeNode(
     index: 'safetyrespiratormask',
@@ -1129,6 +1238,7 @@ final Map<String, TreeNode> items = {
     data: 'Safety respirator mask',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'safetybeltandharness': const TreeNode(
     index: 'safetybeltandharness',
@@ -1138,6 +1248,7 @@ final Map<String, TreeNode> items = {
     data: 'Safety belt and harness',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'roadsafety': const TreeNode(
     index: 'roadsafety',
@@ -1147,6 +1258,7 @@ final Map<String, TreeNode> items = {
     data: 'Road safety',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
 
   //?electrical deportment start from here
@@ -1158,6 +1270,7 @@ final Map<String, TreeNode> items = {
     data: 'Electrical',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'විදුලි උපකරණඋපකරණ', // Added
   ),
   'lighting': const TreeNode(
     index: 'lighting',
@@ -1175,6 +1288,7 @@ final Map<String, TreeNode> items = {
     data: 'Lighting',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'orange': const TreeNode(
     index: 'orange',
@@ -1184,6 +1298,7 @@ final Map<String, TreeNode> items = {
     data: 'Orange',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'cfl': const TreeNode(
     index: 'cfl',
@@ -1193,6 +1308,7 @@ final Map<String, TreeNode> items = {
     data: 'CFL',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'led': const TreeNode(
     index: 'led',
@@ -1202,6 +1318,7 @@ final Map<String, TreeNode> items = {
     data: 'LED',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'panellights': const TreeNode(
     index: 'panellights',
@@ -1211,6 +1328,7 @@ final Map<String, TreeNode> items = {
     data: 'Panel lights',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'decolights': const TreeNode(
     index: 'decolights',
@@ -1220,6 +1338,7 @@ final Map<String, TreeNode> items = {
     data: 'Deco lights',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'quartz': const TreeNode(
     index: 'quartz',
@@ -1229,6 +1348,7 @@ final Map<String, TreeNode> items = {
     data: 'Quartz',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'fluorecent': const TreeNode(
     index: 'fluorecent',
@@ -1238,6 +1358,7 @@ final Map<String, TreeNode> items = {
     data: 'Fluorecent tubes',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'kelani': const TreeNode(
     index: 'kelani',
@@ -1247,6 +1368,7 @@ final Map<String, TreeNode> items = {
     data: 'Kelani',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'laxapana': const TreeNode(
     index: 'laxapana',
@@ -1256,6 +1378,7 @@ final Map<String, TreeNode> items = {
     data: 'Laxpana',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'otherbrands': const TreeNode(
     index: 'otherbrands',
@@ -1265,6 +1388,7 @@ final Map<String, TreeNode> items = {
     data: 'Other brands',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'lightingaccesories': const TreeNode(
     index: 'lightingaccesories',
@@ -1274,6 +1398,7 @@ final Map<String, TreeNode> items = {
     data: 'Lighting Accesories',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'kevilton': const TreeNode(
     index: 'kevilton',
@@ -1283,6 +1408,7 @@ final Map<String, TreeNode> items = {
     data: 'kevilton',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'chint': const TreeNode(
     index: 'chint',
@@ -1292,6 +1418,7 @@ final Map<String, TreeNode> items = {
     data: 'chint',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'homeappliances': const TreeNode(
     index: 'homeappliances',
@@ -1301,6 +1428,7 @@ final Map<String, TreeNode> items = {
     data: 'Home appliances',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'fans': const TreeNode(
     index: 'fans',
@@ -1313,6 +1441,7 @@ final Map<String, TreeNode> items = {
     data: 'Fans',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'acl': const TreeNode(
     index: 'acl',
@@ -1322,6 +1451,7 @@ final Map<String, TreeNode> items = {
     data: 'ACL',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'keviltonfans': const TreeNode(
     index: 'keviltonfans',
@@ -1331,6 +1461,7 @@ final Map<String, TreeNode> items = {
     data: 'Kevilton',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'accesories': const TreeNode(
     index: 'accesories',
@@ -1347,6 +1478,7 @@ final Map<String, TreeNode> items = {
     data: 'Accesories',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'alliedaccesories': const TreeNode(
     index: 'alliedaccesories',
@@ -1356,6 +1488,7 @@ final Map<String, TreeNode> items = {
     data: 'Allied accesories',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'switchesandsockets': const TreeNode(
     index: 'switchesandsockets',
@@ -1365,6 +1498,7 @@ final Map<String, TreeNode> items = {
     data: 'Switches & Sockets',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'circuitbreakers': const TreeNode(
     index: 'circuitbreakers',
@@ -1374,6 +1508,7 @@ final Map<String, TreeNode> items = {
     data: 'Circuit breakers',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'wiresandcables': const TreeNode(
     index: 'wiresandcables',
@@ -1383,6 +1518,7 @@ final Map<String, TreeNode> items = {
     data: 'Wires & Cables',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'conduitaccesories': const TreeNode(
     index: 'conduitaccesories',
@@ -1399,6 +1535,7 @@ final Map<String, TreeNode> items = {
     data: 'Conduit accesories',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'conduitpipes': const TreeNode(
     index: 'conduitpipes',
@@ -1408,6 +1545,7 @@ final Map<String, TreeNode> items = {
     data: 'Conduit pipes',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'conduitpipesfittings': const TreeNode(
     index: 'conduitpipesfittings',
@@ -1417,6 +1555,7 @@ final Map<String, TreeNode> items = {
     data: 'Conduit pipes fittins', // Typo in original? fittings?
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'cabletrucnking': const TreeNode(
     index: 'cabletrucnking',
@@ -1426,6 +1565,7 @@ final Map<String, TreeNode> items = {
     data: 'Conduit pipes fittins', // Data seems incorrect here, likely 'Cable trunking'
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'cabletrucnkingfittings': const TreeNode(
     index: 'cabletrucnkingfittings',
@@ -1435,6 +1575,7 @@ final Map<String, TreeNode> items = {
     data: 'Cable trunking fittings',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'cabletie': const TreeNode(
     index: 'cabletie',
@@ -1444,6 +1585,7 @@ final Map<String, TreeNode> items = {
     data: 'Cable tie',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'wirecodes': const TreeNode(
     index: 'wirecodes',
@@ -1453,6 +1595,7 @@ final Map<String, TreeNode> items = {
     data: 'Wirecode',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'conduits': const TreeNode(
     index: 'conduits',
@@ -1462,6 +1605,7 @@ final Map<String, TreeNode> items = {
     data: 'Conduits',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'pvcconduits': const TreeNode(
     index: 'pvcconduits',
@@ -1471,6 +1615,7 @@ final Map<String, TreeNode> items = {
     data: 'PVC',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'pvcconduitsfittings': const TreeNode(
     index: 'pvcconduitsfittings',
@@ -1480,6 +1625,7 @@ final Map<String, TreeNode> items = {
     data: 'pvcconduitsfittings',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'giconduits': const TreeNode(
     index: 'giconduits',
@@ -1489,6 +1635,7 @@ final Map<String, TreeNode> items = {
     data: 'giconduits',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'giconduitsfittings': const TreeNode(
     index: 'giconduitsfittings',
@@ -1498,6 +1645,7 @@ final Map<String, TreeNode> items = {
     data: 'giconduitsfittings',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'mainplumbing': const TreeNode(
     index: 'mainplumbing',
@@ -1507,6 +1655,7 @@ final Map<String, TreeNode> items = {
     data: 'Plumbing',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'plumbinghardware': const TreeNode(
     index: 'plumbinghardware',
@@ -1516,6 +1665,7 @@ final Map<String, TreeNode> items = {
     data: 'Plumbing', // Data seems too general?
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'plumbingtoolsandaccesories': const TreeNode(
     index: 'plumbingtoolsandaccesories',
@@ -1525,6 +1675,7 @@ final Map<String, TreeNode> items = {
     data: 'Plumbing tools & accesories',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'bathware': const TreeNode(
     index: 'bathware',
@@ -1534,6 +1685,7 @@ final Map<String, TreeNode> items = {
     data: 'Bathware',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'maintileaccesories': const TreeNode(
     index: 'maintileaccesories',
@@ -1543,6 +1695,7 @@ final Map<String, TreeNode> items = {
     data: 'Tile accesories',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'වයිල්', // Added
   ),
   'tilegrout': const TreeNode(
     index: 'tilegrout',
@@ -1552,6 +1705,7 @@ final Map<String, TreeNode> items = {
     data: 'Tile grout',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'mainindustrial': const TreeNode(
     index: 'mainindustrial',
@@ -1561,6 +1715,7 @@ final Map<String, TreeNode> items = {
     data: 'Industrial',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'roadconstructionindustry': const TreeNode(
     index: 'roadconstructionindustry',
@@ -1570,6 +1725,7 @@ final Map<String, TreeNode> items = {
     data: 'Road construction industry',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'plasticandpolythene': const TreeNode(
     index: 'plasticandpolythene',
@@ -1579,6 +1735,7 @@ final Map<String, TreeNode> items = {
     data: 'Plastic & Polythene',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'mainfasterners': const TreeNode(
     index: 'mainfasterners',
@@ -1601,6 +1758,7 @@ final Map<String, TreeNode> items = {
     data: 'Fasterners', // Typo in original? Fasteners?
     level: 0,
     image: imageUrl,
+    sinhalaName: 'තද කරන ඒුවාඒුවා', // Added
   ),
   'anchorbolt': const TreeNode(
     index: 'anchorbolt',
@@ -1610,6 +1768,7 @@ final Map<String, TreeNode> items = {
     data: 'Anchorbolt',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'drywallscrews': const TreeNode(
     index: 'drywallscrews',
@@ -1619,6 +1778,7 @@ final Map<String, TreeNode> items = {
     data: 'Dry wall screws',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'wirenail': const TreeNode(
     index: 'wirenail',
@@ -1628,6 +1788,7 @@ final Map<String, TreeNode> items = {
     data: 'Wire nail',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'rivetandrivettools': const TreeNode(
     index: 'rivetandrivettools',
@@ -1637,6 +1798,7 @@ final Map<String, TreeNode> items = {
     data: 'Rivet and rivet tools',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'wallplugs': const TreeNode(
     index: 'wallplugs',
@@ -1646,6 +1808,7 @@ final Map<String, TreeNode> items = {
     data: 'Wall plugs',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'conctreatenails': const TreeNode(
     index: 'conctreatenails',
@@ -1655,6 +1818,7 @@ final Map<String, TreeNode> items = {
     data: 'Concreate nails', // Typo in original? Concrete?
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'nutandbolts': const TreeNode(
     index: 'nutandbolts',
@@ -1664,6 +1828,7 @@ final Map<String, TreeNode> items = {
     data: 'Nuts & Bolts',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'bindingwireforbindings': const TreeNode(
     index: 'bindingwireforbindings',
@@ -1673,6 +1838,7 @@ final Map<String, TreeNode> items = {
     data: 'Binding wire(reevaluatethisnode)', // Note from original data
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'threadbar': const TreeNode(
     index: 'threadbar',
@@ -1682,6 +1848,7 @@ final Map<String, TreeNode> items = {
     data: 'Thread bar',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'umbrellanails': const TreeNode(
     index: 'umbrellanails',
@@ -1691,6 +1858,7 @@ final Map<String, TreeNode> items = {
     data: 'Umbrella nails',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'panheadscrew': const TreeNode(
     index: 'panheadscrew',
@@ -1700,6 +1868,7 @@ final Map<String, TreeNode> items = {
     data: 'Pan head screw',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'washers': const TreeNode(
     index: 'washers',
@@ -1709,6 +1878,7 @@ final Map<String, TreeNode> items = {
     data: 'Washers',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'mainhomekitchen': const TreeNode(
     index: 'mainhomekitchen',
@@ -1724,6 +1894,7 @@ final Map<String, TreeNode> items = {
     data: 'Home & Kitchen',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'මුලුතැන්ගේලුතැන්ගේ', // Added
   ),
   'cleaningproducts': const TreeNode(
     index: 'cleaningproducts',
@@ -1733,6 +1904,7 @@ final Map<String, TreeNode> items = {
     data: 'Cleaning products',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'electricappliancekitchenware': const TreeNode(
     index: 'electricappliancekitchenware',
@@ -1742,6 +1914,7 @@ final Map<String, TreeNode> items = {
     data: 'Electric appliances & Kitchenware',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'petcareaccesories': const TreeNode(
     index: 'petcareaccesories',
@@ -1751,6 +1924,7 @@ final Map<String, TreeNode> items = {
     data: 'Petcare accesories',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'householditems': const TreeNode(
     index: 'householditems',
@@ -1760,6 +1934,7 @@ final Map<String, TreeNode> items = {
     data: 'House hold items',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'weedsandpestcontrol': const TreeNode(
     index: 'weedsandpestcontrol',
@@ -1769,6 +1944,7 @@ final Map<String, TreeNode> items = {
     data: 'Weeds & Pest control',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'maingiftitems': const TreeNode(
     index: 'maingiftitems',
@@ -1784,6 +1960,7 @@ final Map<String, TreeNode> items = {
     data: 'Gift items',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'vesakdecorationitems': const TreeNode(
     index: 'vesakdecorationitems',
@@ -1793,6 +1970,7 @@ final Map<String, TreeNode> items = {
     data: 'Vesak decoration items',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'wrappingitems': const TreeNode(
     index: 'wrappingitems',
@@ -1802,6 +1980,7 @@ final Map<String, TreeNode> items = {
     data: 'Wrapping items',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'booksandotheraccesories': const TreeNode(
     index: 'booksandotheraccesories',
@@ -1811,6 +1990,7 @@ final Map<String, TreeNode> items = {
     data: 'Books and other accesories',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'craftitems': const TreeNode(
     index: 'craftitems',
@@ -1820,6 +2000,7 @@ final Map<String, TreeNode> items = {
     data: 'Craft items',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'otherstationeryitems': const TreeNode(
     index: 'otherstationeryitems',
@@ -1829,6 +2010,7 @@ final Map<String, TreeNode> items = {
     data: 'Other stationery items',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'mainTools': const TreeNode(
     index: 'mainTools',
@@ -1843,6 +2025,7 @@ final Map<String, TreeNode> items = {
     data: 'Tools',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'ආයූධආයූධ', // Added
   ),
   'powerTools': const TreeNode(
     index: 'powerTools',
@@ -1866,6 +2049,7 @@ final Map<String, TreeNode> items = {
     data: 'Power Tools',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'drills': const TreeNode(
     index: 'drills',
@@ -1875,6 +2059,7 @@ final Map<String, TreeNode> items = {
     data: 'Drills',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'grinders': const TreeNode(
     index: 'grinders',
@@ -1884,6 +2069,7 @@ final Map<String, TreeNode> items = {
     data: 'Grinders',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'planers': const TreeNode(
     index: 'planers',
@@ -1893,6 +2079,7 @@ final Map<String, TreeNode> items = {
     data: 'Planers',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'polishers': const TreeNode(
     index: 'polishers',
@@ -1902,6 +2089,7 @@ final Map<String, TreeNode> items = {
     data: 'Polishers',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'rotarytools': const TreeNode(
     index: 'rotarytools',
@@ -1911,6 +2099,7 @@ final Map<String, TreeNode> items = {
     data: 'Rotary tools',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'routers': const TreeNode(
     index: 'routers',
@@ -1920,6 +2109,7 @@ final Map<String, TreeNode> items = {
     data: 'Routers',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'sanders': const TreeNode(
     index: 'sanders',
@@ -1929,6 +2119,7 @@ final Map<String, TreeNode> items = {
     data: 'Sanders',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'screwdrivers': const TreeNode(
     index: 'screwdrivers',
@@ -1938,6 +2129,7 @@ final Map<String, TreeNode> items = {
     data: 'Screw Drivers',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'saws': const TreeNode(
     index: 'saws',
@@ -1947,6 +2139,7 @@ final Map<String, TreeNode> items = {
     data: 'Saws',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'aircompressor': const TreeNode(
     index: 'aircompressor',
@@ -1956,6 +2149,7 @@ final Map<String, TreeNode> items = {
     data: 'Air Compressor',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'blowers': const TreeNode(
     index: 'blowers',
@@ -1965,6 +2159,7 @@ final Map<String, TreeNode> items = {
     data: 'Blowers',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'weldingmachine': const TreeNode(
     index: 'weldingmachine',
@@ -1974,6 +2169,7 @@ final Map<String, TreeNode> items = {
     data: 'Welding Machine',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'otherpowertools': const TreeNode(
     index: 'otherpowertools',
@@ -1983,6 +2179,7 @@ final Map<String, TreeNode> items = {
     data: 'Other Power Tools',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
 
   'powerToolaccessories': const TreeNode(
@@ -2005,6 +2202,7 @@ final Map<String, TreeNode> items = {
     data: 'Power Tool Accessories',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'planerblades': const TreeNode(
     index: 'planerblades',
@@ -2014,6 +2212,7 @@ final Map<String, TreeNode> items = {
     data: 'Planer blades',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'sawblades': const TreeNode(
     index: 'sawblades',
@@ -2023,6 +2222,7 @@ final Map<String, TreeNode> items = {
     data: 'Sawblades',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'cutofwheel': const TreeNode(
     index: 'cutofwheel',
@@ -2032,6 +2232,7 @@ final Map<String, TreeNode> items = {
     data: 'Cut of Wheel',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'grindingwheels': const TreeNode(
     index: 'grindingwheels',
@@ -2041,6 +2242,7 @@ final Map<String, TreeNode> items = {
     data: 'Grinding wheels',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'drillchucks': const TreeNode(
     index: 'drillchucks',
@@ -2050,6 +2252,7 @@ final Map<String, TreeNode> items = {
     data: 'Drill chucks',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'drillbits': const TreeNode(
     index: 'drillbits',
@@ -2059,6 +2262,7 @@ final Map<String, TreeNode> items = {
     data: 'Drill bits',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'masonry': const TreeNode(
     index: 'masonry',
@@ -2068,6 +2272,7 @@ final Map<String, TreeNode> items = {
     data: 'Masonry',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'hsssteel': const TreeNode(
     index: 'hsssteel',
@@ -2077,6 +2282,7 @@ final Map<String, TreeNode> items = {
     data: 'HSS (Steel)',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'wooden': const TreeNode(
     index: 'wooden',
@@ -2086,6 +2292,7 @@ final Map<String, TreeNode> items = {
     data: 'Wooden',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'holesaw': const TreeNode(
     index: 'holesaw',
@@ -2095,6 +2302,7 @@ final Map<String, TreeNode> items = {
     data: 'Hole saw',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'routerbits': const TreeNode(
     index: 'routerbits',
@@ -2104,6 +2312,7 @@ final Map<String, TreeNode> items = {
     data: 'Router bits',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'aircompressotools': const TreeNode(
     index: 'aircompressotools',
@@ -2113,6 +2322,7 @@ final Map<String, TreeNode> items = {
     data: 'Aim compressor tools', // Typo in original? Air?
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'weldingRod': const TreeNode(
     index: 'weldingRod',
@@ -2122,6 +2332,7 @@ final Map<String, TreeNode> items = {
     data: 'Welding rod',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'allpowertoolsaccesories': const TreeNode(
     index: 'allpowertoolsaccesories',
@@ -2131,6 +2342,7 @@ final Map<String, TreeNode> items = {
     data: 'All power tools accesories',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'handandelectricaltools': const TreeNode(
     index: 'handandelectricaltools',
@@ -2152,6 +2364,7 @@ final Map<String, TreeNode> items = {
     data: 'Hand and electrical tools',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'cuttingtoolsandpilers': const TreeNode(
     index: 'cuttingtoolsandpilers',
@@ -2161,6 +2374,7 @@ final Map<String, TreeNode> items = {
     data: 'Cutting tools & Pilers', // Typo in original? Pliers?
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'hammersandstrikingtools': const TreeNode(
     index: 'hammersandstrikingtools',
@@ -2170,6 +2384,7 @@ final Map<String, TreeNode> items = {
     data: 'Hammers & Striking tools',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'handdrillsandgimlets': const TreeNode(
     index: 'handdrillsandgimlets',
@@ -2179,6 +2394,7 @@ final Map<String, TreeNode> items = {
     data: 'Hand drills, Gimlets & AWLs',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'handsaw': const TreeNode(
     index: 'handsaw',
@@ -2188,6 +2404,7 @@ final Map<String, TreeNode> items = {
     data: 'Hand saw',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'screwdriversandenutdrivers': const TreeNode(
     index: 'screwdriversandenutdrivers',
@@ -2197,6 +2414,7 @@ final Map<String, TreeNode> items = {
     data: 'SCrewdrivers & Nut drivers', // Typo in original? Screwdrivers?
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'socketsandwrenches': const TreeNode(
     index: 'socketsandwrenches',
@@ -2206,6 +2424,7 @@ final Map<String, TreeNode> items = {
     data: 'Socket & Wrenmhes', // Typo in original? Wrenches?
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'guns': const TreeNode(
     index: 'guns',
@@ -2215,6 +2434,7 @@ final Map<String, TreeNode> items = {
     data: 'Guns',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'knifesharpnersandblocks': const TreeNode(
     index: 'knifesharpnersandblocks',
@@ -2224,6 +2444,7 @@ final Map<String, TreeNode> items = {
     data: 'Knife sharpners and blocks', // Typo in original? Sharpeners?
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'testers': const TreeNode(
     index: 'testers',
@@ -2233,6 +2454,7 @@ final Map<String, TreeNode> items = {
     data: 'Testers',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'masonrytools': const TreeNode(
     index: 'masonrytools',
@@ -2242,6 +2464,7 @@ final Map<String, TreeNode> items = {
     data: 'Masonry tools',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'otherhandandelectricaltools': const TreeNode(
     index: 'otherhandandelectricaltools',
@@ -2251,6 +2474,7 @@ final Map<String, TreeNode> items = {
     data: 'Other hand and masonry tools',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'layoutandmeasuringtools': const TreeNode(
     index: 'layoutandmeasuringtools',
@@ -2260,6 +2484,7 @@ final Map<String, TreeNode> items = {
     data: 'Layout & Measuring tools',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'levels': const TreeNode(
     index: 'levels',
@@ -2269,6 +2494,7 @@ final Map<String, TreeNode> items = {
     data: 'Levels',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'magnerpickuptools': const TreeNode(
     index: 'magnerpickuptools',
@@ -2278,6 +2504,7 @@ final Map<String, TreeNode> items = {
     data: 'Magnet & Pickup tools',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'mainBuilding': const TreeNode(
     index: 'mainBuilding',
@@ -2288,6 +2515,7 @@ final Map<String, TreeNode> items = {
     level: 0,
     image:
         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/ultra-grip-tile-adhesive-white.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy91bHRyYS1ncmlwLXRpbGUtYWRoZXNpdmUtd2hpdGUuanBnIiwiaWF0IjoxNzQwMjE0NTIwLCJleHAiOjE3NzE3NTA1MjB9.XbCaUtD23mJtjQ_-XY-WD2c4WDzaCNEug8s2u3XuLZI',
+    sinhalaName: 'ගොඩනැගිලි දූව්‍යදූව්‍ය', // Added
   ),
   'sand': const TreeNode(
     index: 'sand',
@@ -2299,6 +2527,7 @@ final Map<String, TreeNode> items = {
     level: 0,
     image:
         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/unwashed-gravel-makes-a-good-base-for-building-projects-1024x683%20(1).jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy91bndhc2hlZC1ncmF2ZWwtbWFrZXMtYS1nb29kLWJhc2UtZm9yLWJ1aWxkaW5nLXByb2plY3RzLTEwMjR4NjgzICgxKS5qcGciLCJpYXQiOjE3NDAyMTQ1MzIsImV4cCI6MTc3MTc1MDUzMn0.c1Tzigxg7RGWn7-KqSGl1Thr1VuucMMQBUWN3k3PaFg',
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'soil': const TreeNode(
     index: 'soil',
@@ -2309,6 +2538,7 @@ final Map<String, TreeNode> items = {
     level: 0,
     image:
         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/white-cement-1kg.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy93aGl0ZS1jZW1lbnQtMWtnLmpwZyIsImlhdCI6MTc0MDIxNDU0MywiZXhwIjoxNzcxNzUwNTQzfQ.licsE1uRJlb7GtI-vf6VOkWZ_xIwbudB3LYSI-rPW-0',
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'cement': const TreeNode(
     index: 'cement',
@@ -2319,6 +2549,7 @@ final Map<String, TreeNode> items = {
     level: 0,
     image:
         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/output%20(2).jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy9vdXRwdXQgKDIpLmpwZyIsImlhdCI6MTc0MDIxNDU1NiwiZXhwIjoxNzcxNzUwNTU2fQ.5buDC3FaO8aVdfDNZjz7Bj58i6brJImgqNZgrmt6z84',
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'portlandCement': const TreeNode(
     index: 'portlandCement',
@@ -2329,6 +2560,7 @@ final Map<String, TreeNode> items = {
     level: 0,
     image:
         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/Peeps-Yellow-Marshmallow-Chicks-2ct_34f451b9-4fc4-4ffa-aae0-e65e7dd968cb.52349faf607a86406cc0ee0cfcca88f6.webp?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy9QZWVwcy1ZZWxsb3ctTWFyc2htYWxsb3ctQ2hpY2tzLTJjdF8zNGY0NTFiOS00ZmM0LTRmZmEtYWFlMC1lNjVlN2RkOTY4Y2IuNTIzNDlmYWY2MDdhODY0MDZjYzBlZTBjZmNjYTg4ZjYud2VicCIsImlhdCI6MTc0MDIxNDU3MiwiZXhwIjoxNzcxNzUwNTcyfQ.HMpqJPhCpVmZPJzQZh75PsXa1a2VquoNrlE-hdA37X0',
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'coloredCement': const TreeNode(
     index: 'coloredCement',
@@ -2339,6 +2571,7 @@ final Map<String, TreeNode> items = {
     level: 0,
     image:
         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/Keurig-K-Classic-Single-Serve-K-Cup-Pod-Coffee-Maker-Black_23e58041-372d-451f-b8ba-828fd79db877.0e47c3dc1a46e71bbbf8803ff3ed1ce6.webp?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy9LZXVyaWctSy1DbGFzc2ljLVNpbmdsZS1TZXJ2ZS1LLUN1cC1Qb2QtQ29mZmVlLU1ha2VyLUJsYWNrXzIzZTU4MDQxLTM3MmQtNDUxZi1iOGJhLTgyOGZkNzlkYjg3Ny4wZTQ3YzNkYzFhNDZlNzFiYmJmODgwM2ZmM2VkMWNlNi53ZWJwIiwiaWF0IjoxNzQwMjE0NjU4LCJleHAiOjE3NzE3NTA2NTh9.fqK0cJ-FssykJdgPXN7VVpwbChLKId0hZxnCR0AXY4w',
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'tileAdhesive': const TreeNode(
     index: 'tileAdhesive',
@@ -2349,6 +2582,7 @@ final Map<String, TreeNode> items = {
     level: 0,
     image:
         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/Best-Choice-Products-Set-of-4-12in-Woven-Water-Hyacinth-Pantry-Baskets-w-Chalkboard-Label-Chalk-Marker-Natural_6508ce8d-b04e-4d4b-9a79-da313f651367.b72a666b7e077ceec4b5b51b46238b6e.webp?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy9CZXN0LUNob2ljZS1Qcm9kdWN0cy1TZXQtb2YtNC0xMmluLVdvdmVuLVdhdGVyLUh5YWNpbnRoLVBhbnRyeS1CYXNrZXRzLXctQ2hhbGtib2FyZC1MYWJlbC1DaGFsay1NYXJrZXItTmF0dXJhbF82NTA4Y2U4ZC1iMDRlLTRkNGItOWE3OS1kYTMxM2Y2NTEzNjcuYjcyYTY2NmI3ZTA3N2NlZWM0YjViNTFiNDYyMzhiNmUud2VicCIsImlhdCI6MTc0MDIxNDY3NCwiZXhwIjoxNzcxNzUwNjc0fQ.8wybPN3wVUkF65vDwYtZHR9z97Imgt1KhnUWgpmWGKQ',
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'otherCement': const TreeNode(
     index: 'otherCement',
@@ -2358,6 +2592,7 @@ final Map<String, TreeNode> items = {
     data: 'Other cement',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'bricks': const TreeNode(
     index: 'bricks',
@@ -2367,6 +2602,7 @@ final Map<String, TreeNode> items = {
     data: 'Bricks',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'stones': const TreeNode(
     index: 'stones',
@@ -2376,6 +2612,7 @@ final Map<String, TreeNode> items = {
     data: 'Stones',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'mainPaint': const TreeNode(
     index: 'mainPaint',
@@ -2385,6 +2622,7 @@ final Map<String, TreeNode> items = {
     data: 'Paint',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'තීන්තතීන්ත', // Added
   ),
   'paintList': const TreeNode(
     index: 'paintList',
@@ -2411,6 +2649,7 @@ final Map<String, TreeNode> items = {
     data: 'Paint List',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'sayerluck': const TreeNode(
     index: 'sayerluck',
@@ -2420,6 +2659,7 @@ final Map<String, TreeNode> items = {
     data: 'Sayerluck',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'twopackpolyutherenetopcoats': const TreeNode(
     index: 'twopackpolyutherenetopcoats',
@@ -2429,6 +2669,7 @@ final Map<String, TreeNode> items = {
     data: '2 Pack polyutrethane top coats',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'twopackpolyutherenebasecoats': const TreeNode(
     index: 'twopackpolyutherenebasecoats',
@@ -2438,6 +2679,7 @@ final Map<String, TreeNode> items = {
     data: '2 Pack polyutrethane base coats',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'bormawatches': const TreeNode(
     index: 'bormawatches',
@@ -2447,6 +2689,7 @@ final Map<String, TreeNode> items = {
     data: 'Bormawatches',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'jchem': const TreeNode(
     index: 'jchem',
@@ -2456,6 +2699,7 @@ final Map<String, TreeNode> items = {
     data: 'Jchem',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'ncproducts': const TreeNode(
     index: 'ncproducts',
@@ -2465,6 +2709,7 @@ final Map<String, TreeNode> items = {
     data: 'NC products',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'decorativepaint': const TreeNode(
     index: 'decorativepaint',
@@ -2474,6 +2719,7 @@ final Map<String, TreeNode> items = {
     data: 'Decorative paint',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'nippolac': const TreeNode(
     index: 'nippolac',
@@ -2483,6 +2729,7 @@ final Map<String, TreeNode> items = {
     data: 'Nippolac',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'nipponPaint': const TreeNode(
     index: 'nipponPaint',
@@ -2492,6 +2739,7 @@ final Map<String, TreeNode> items = {
     data: 'NipponPaint',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'thinner': const TreeNode(
     index: 'thinner',
@@ -2501,6 +2749,7 @@ final Map<String, TreeNode> items = {
     data: 'Thinner',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'waterproofingmaterials': const TreeNode(
     index: 'waterproofingmaterials',
@@ -2510,6 +2759,7 @@ final Map<String, TreeNode> items = {
     data: 'Water proofing materials',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'masters': const TreeNode(
     index: 'masters',
@@ -2519,6 +2769,7 @@ final Map<String, TreeNode> items = {
     data: 'Masters',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'toaspray': const TreeNode(
     index: 'toaspray',
@@ -2528,6 +2779,7 @@ final Map<String, TreeNode> items = {
     data: 'Toa spray',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'kansai': const TreeNode(
     index: 'kansai',
@@ -2537,6 +2789,7 @@ final Map<String, TreeNode> items = {
     data: 'Kansai',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'masco': const TreeNode(
     index: 'masco',
@@ -2546,6 +2799,7 @@ final Map<String, TreeNode> items = {
     data: 'Masco',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'skimcoat': const TreeNode(
     index: 'skimcoat',
@@ -2555,6 +2809,7 @@ final Map<String, TreeNode> items = {
     data: 'Skimcoat',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'durawet': const TreeNode(
     index: 'durawet',
@@ -2564,6 +2819,7 @@ final Map<String, TreeNode> items = {
     data: 'Durawet',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'causeway': const TreeNode(
     index: 'causeway',
@@ -2573,6 +2829,7 @@ final Map<String, TreeNode> items = {
     data: 'Causeway',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'multilac': const TreeNode(
     index: 'multilac',
@@ -2582,6 +2839,7 @@ final Map<String, TreeNode> items = {
     data: 'Multilac',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'insee': const TreeNode(
     index: 'insee',
@@ -2591,6 +2849,7 @@ final Map<String, TreeNode> items = {
     data: 'Insee(Sanstha)',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'paintTools': const TreeNode(
     index: 'paintTools',
@@ -2600,6 +2859,7 @@ final Map<String, TreeNode> items = {
     data: 'Paint Tools',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'brushesandrollers': const TreeNode(
     index: 'brushesandrollers',
@@ -2609,6 +2869,7 @@ final Map<String, TreeNode> items = {
     data: 'Brushes & Rollers',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'brushes': const TreeNode(
     index: 'brushes',
@@ -2618,6 +2879,7 @@ final Map<String, TreeNode> items = {
     data: 'Brushes',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'rollers': const TreeNode(
     index: 'rollers',
@@ -2627,6 +2889,7 @@ final Map<String, TreeNode> items = {
     data: 'Rollers',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'maskingtape': const TreeNode(
     index: 'maskingtape',
@@ -2636,6 +2899,7 @@ final Map<String, TreeNode> items = {
     data: 'Masking tape',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'sandpaper': const TreeNode(
     index: 'sandpaper',
@@ -2645,6 +2909,7 @@ final Map<String, TreeNode> items = {
     data: 'Sandpaper',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'sprayguns': const TreeNode(
     index: 'sprayguns',
@@ -2654,6 +2919,7 @@ final Map<String, TreeNode> items = {
     data: 'Spray guns',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'paintaccesories': const TreeNode(
     index: 'paintaccesories',
@@ -2663,6 +2929,7 @@ final Map<String, TreeNode> items = {
     data: 'Paint accesories',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'ladders': const TreeNode(
     index: 'ladders',
@@ -2672,6 +2939,7 @@ final Map<String, TreeNode> items = {
     data: 'Ladders',
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
   'adhesiveandtapes': const TreeNode(
     index: 'adhesiveandtapes',
@@ -2681,8 +2949,2629 @@ final Map<String, TreeNode> items = {
     data: 'Adhesive and paints', // Typo in original? Should be Tapes? Kept original.
     level: 0,
     image: imageUrl,
+    sinhalaName: 'සිංහල නම', // Added
   ),
 };
+// final Map<String, TreeNode> items = {
+//   'root': const TreeNode(
+//     index: 'root',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'mainBuilding',
+//       'mainTools',
+//       'mainPaint',
+//       'mainroofingandceiling',
+//       'mainsteel',
+//       'maingardenanddecoration',
+//       'maingeneralhardware',
+//       'mainsafety',
+//       'mainelectrical',
+//       'mainplumbing',
+//       'maintileaccesories',
+//       'mainindustrial',
+//       'mainfasterners',
+//       'mainhomekitchen',
+//       'maingiftitems',
+//     ],
+//     data: 'Menu',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+
+//   //? roofiung sheets starts from here
+//   'mainroofingandceiling': const TreeNode(
+//     index: 'mainroofingandceiling',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['roofingsheets', 'ceilingsheets', 'roofingaccesories', 'ceilingaccesories'],
+//     data: 'Roofing & Ceiling',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'roofingsheets': const TreeNode(
+//     index: 'roofingsheets',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'asbestosroofingsheets',
+//       'asbestoscolorroofingsheets',
+//       'nonasbestoscolorroofingsheets',
+//       'ecofreindlyroofingsheets',
+//       'zincalluminiumroofingsheets',
+//     ],
+//     data: 'Roofing sheets',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'asbestosroofingsheets': const TreeNode(
+//     index: 'asbestosroofingsheets',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Asbestos roofing sheets',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'asbestoscolorroofingsheets': const TreeNode(
+//     index: 'asbestoscolorroofingsheets',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Asbestos color roofing sheets',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'nonasbestoscolorroofingsheets': const TreeNode(
+//     index: 'nonasbestoscolorroofingsheets',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['fiberroofingsheets', 'upvcroofingsheets', 'transparentroofingsheets'],
+//     data: 'Non asbestos sheets',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'fiberroofingsheets': const TreeNode(
+//     index: 'fiberroofingsheets',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Fiber roofing sheets',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'upvcroofingsheets': const TreeNode(
+//     index: 'upvcroofingsheets',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'UPVC roofing sheets',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'transparentroofingsheets': const TreeNode(
+//     index: 'transparentroofingsheets',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Transparent roofing sheets',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'ecofreindlyroofingsheets': const TreeNode(
+//     index: 'ecofreindlyroofingsheets',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Eco freindly roofing sheets',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'zincalluminiumroofingsheets': const TreeNode(
+//     index: 'zincalluminiumroofingsheets',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Zinc alluminium roofing sheets',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'ceilingsheets': const TreeNode(
+//     index: 'ceilingsheets',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['asbestosceilingsheets', 'nonasbestosceilingsheets'],
+//     data: 'Ceiling sheets',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'asbestosceilingsheets': const TreeNode(
+//     index: 'asbestosceilingsheets',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Asbestos ceiling sheets',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'nonasbestosceilingsheets': const TreeNode(
+//     index: 'nonasbestosceilingsheets',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['dth', 'eltoro'],
+//     data: 'Non asbestos ceiling sheets',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'dth': const TreeNode(
+//     index: 'dth',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'EL Toro', // Note: data seems duplicated for dth and eltoro
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'eltoro': const TreeNode(
+//     index: 'eltoro',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'EL Toro', // Note: data seems duplicated for dth and eltoro
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'roofingaccesories': const TreeNode(
+//     index: 'roofingaccesories',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['gutterandaccesories', 'ridge', 'foil', 'roofingpaint'],
+//     data: 'Roofing accesories',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'gutterandaccesories': const TreeNode(
+//     index: 'gutterandaccesories',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['anton', 'slon', 'national'],
+//     data: 'Gutter & accesories',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'anton': const TreeNode(
+//     index: 'anton',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Anton',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'slon': const TreeNode(
+//     index: 'slon',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'S-lon',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'national': const TreeNode(
+//     index: 'national',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'National',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'ridge': const TreeNode(
+//     index: 'ridge',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['asbestos', 'fiber'],
+//     data: 'Ridge',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'asbestos': const TreeNode(
+//     index: 'asbestos',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Asbestos',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'fiber': const TreeNode(
+//     index: 'fiber',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Fiber',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'foil': const TreeNode(
+//     index: 'foil',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Foil',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'roofingpaint': const TreeNode(
+//     index: 'roofingpaint',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Roofing paint',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'ceilingaccesories': const TreeNode(
+//     index: 'ceilingaccesories',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[], // Corrected: Empty list instead of ['']
+//     data: 'Ceiling accesories',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+
+//   //? mainsteel starts from here
+//   'mainsteel': const TreeNode(
+//     index: 'mainsteel',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['boxbars', 'gipipes', 'qtbar', 'msplate', 'gicups'],
+//     data: 'Steel',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'boxbars': const TreeNode(
+//     index: 'boxbars',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['lanwa', 'melwa', 'taian', 'otherlocalbrands'],
+//     data: 'Box bars',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'lanwa': const TreeNode(
+//     index: 'lanwa',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Lanwa',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'melwa': const TreeNode(
+//     index: 'melwa',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Melwa',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'taian': const TreeNode(
+//     index: 'taian',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Taian',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'otherlocalbrands': const TreeNode(
+//     index: 'otherlocalbrands',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Other local brands',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'gipipes': const TreeNode(
+//     index: 'gipipes',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'lanwagipipes',
+//       'melwagipipes',
+//       'taiangipipe',
+//       'pakistan',
+//       'otherlocalbrandsgipipes',
+//     ],
+//     data: 'GI pipes(Galvanized Iron Pipes)',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'lanwagipipes': const TreeNode(
+//     index: 'lanwagipipes',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Lanwa',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'melwagipipes': const TreeNode(
+//     index: 'melwagipipes',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Melwa',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'taiangipipe': const TreeNode(
+//     index: 'taiangipipe',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Taian',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'pakistan': const TreeNode(
+//     index: 'pakistan',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Pakistan (Imported)',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'otherlocalbrandsgipipes': const TreeNode(
+//     index: 'otherlocalbrandsgipipes',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Other local brands',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'qtbar': const TreeNode(
+//     index: 'qtbar',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['lanwaqtbar', 'melwaqtbar', 'ashoksteelqtbar'],
+//     data: 'QT bar (Quench and Self-Tempered Re-Bars)',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'lanwaqtbar': const TreeNode(
+//     index: 'lanwaqtbar',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Lanwa',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'melwaqtbar': const TreeNode(
+//     index: 'melwaqtbar',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Melwa',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'ashoksteelqtbar': const TreeNode(
+//     index: 'ashoksteelqtbar',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Ashok steel',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'msplate': const TreeNode(
+//     index: 'msplate',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'MS plate',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'gicups': const TreeNode(
+//     index: 'gicups',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'GI cups',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'maingardenanddecoration': const TreeNode(
+//     index: 'maingardenanddecoration',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'lawnandgarden',
+//       'pavingstones',
+//       'grassandplants',
+//       'naturalpebbles',
+//       'fencing',
+//       'agricultureproducts',
+//     ],
+//     data: 'Garden & Decoration',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'lawnandgarden': const TreeNode(
+//     index: 'lawnandgarden',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['gardeningtools', 'pots', 'wateringsystem'],
+//     data: 'Lawn and Garden',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'gardeningtools': const TreeNode(
+//     index: 'gardeningtools',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Gardening tools',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'pots': const TreeNode(
+//     index: 'pots',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Pots',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'wateringsystem': const TreeNode(
+//     index: 'wateringsystem',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Watering system',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'pavingstones': const TreeNode(
+//     index: 'pavingstones',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['granitepavingstones', 'cementpavingstones'],
+//     data: 'Paving stones',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'granitepavingstones': const TreeNode(
+//     index: 'granitepavingstones',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Granite paving stones',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'cementpavingstones': const TreeNode(
+//     index: 'cementpavingstones',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Cement paving stones/Interlock',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'grassandplants': const TreeNode(
+//     index: 'grassandplants',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['malaysiancarpet', 'australiancarpet'],
+//     data: 'Grass & Plants',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'malaysiancarpet': const TreeNode(
+//     index: 'malaysiancarpet',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Malaysian carpet',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'australiancarpet': const TreeNode(
+//     index: 'australiancarpet',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Australian carpet',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'naturalpebbles': const TreeNode(
+//     index: 'naturalpebbles',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Natural pebbles',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'fencing': const TreeNode(
+//     index: 'fencing',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'pvccoatedchainink',
+//       'pvccoatedlinewire',
+//       'barbedwire',
+//       'farmfence',
+//       'wiremesh',
+//       'gabions',
+//     ],
+//     data: 'Fencing',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'pvccoatedchainink': const TreeNode(
+//     index: 'pvccoatedchainink',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['rcpvccoatedchainink', 'mcpvccoatedchainink', 'masconpvccoatedchainink'],
+//     data: 'PVC coated chain ink',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'rcpvccoatedchainink': const TreeNode(
+//     index: 'rcpvccoatedchainink',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'RC',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'mcpvccoatedchainink': const TreeNode(
+//     index: 'mcpvccoatedchainink',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'MC',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'masconpvccoatedchainink': const TreeNode(
+//     index: 'masconpvccoatedchainink',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Mascon',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'pvccoatedlinewire': const TreeNode(
+//     index: 'pvccoatedlinewire',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'PVC coated line wire',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'barbedwire': const TreeNode(
+//     index: 'barbedwire',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['concertinabarbedwire', 'pvccoatedbarbedwire', 'gibarbedwire'],
+//     data: 'Barbed wire',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'concertinabarbedwire': const TreeNode(
+//     index: 'concertinabarbedwire',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Concertina barbed wire(camp wire)',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'pvccoatedbarbedwire': const TreeNode(
+//     index: 'pvccoatedbarbedwire',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'PVC coated barbed wire',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'gibarbedwire': const TreeNode(
+//     index: 'gibarbedwire',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'GI barbed wire',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'farmfence': const TreeNode(
+//     index: 'farmfence',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['pvccoatedrebcofarmfence', 'girebcofarnfence'],
+//     data: 'Farm fence',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'pvccoatedrebcofarmfence': const TreeNode(
+//     index: 'pvccoatedrebcofarmfence',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'PVC coated rebco farm fence',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'girebcofarnfence': const TreeNode(
+//     index: 'girebcofarnfence',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'GI rebco farm fence',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'wiremesh': const TreeNode(
+//     index: 'wiremesh',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'weldedgiandplasticcoatedwiremesh',
+//       'woovenwiremesh',
+//       'hexaganolwirenetting',
+//       'plasticmesh',
+//     ],
+//     data: 'Wire mesh',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'weldedgiandplasticcoatedwiremesh': const TreeNode(
+//     index: 'weldedgiandplasticcoatedwiremesh',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Welded GI & Plastic coated wire mesh',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'woovenwiremesh': const TreeNode(
+//     index: 'woovenwiremesh',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Wooven wire mesh',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'hexaganolwirenetting': const TreeNode(
+//     index: 'hexaganolwirenetting',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Hexaganol wire netting',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'plasticmesh': const TreeNode(
+//     index: 'plasticmesh',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Plastic mesh',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'gabions': const TreeNode(
+//     index: 'gabions',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['pvccoatedgabions', 'gigarbongabions'],
+//     data: 'Gabions',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'pvccoatedgabions': const TreeNode(
+//     index: 'pvccoatedgabions',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'PVC coated gabions',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'gigarbongabions': const TreeNode(
+//     index: 'gigarbongabions',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'G.I.Garbion Boxes',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'agricultureproducts': const TreeNode(
+//     index: 'agricultureproducts',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Agricultural products',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'maingeneralhardware': const TreeNode(
+//     index: 'maingeneralhardware',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'homeaccesories',
+//       'adhesivetapes',
+//       'padlock',
+//       'ropes',
+//       'haspandstaple',
+//       'hangersandhooks',
+//       'bindingwire',
+//       'brassitems',
+//       'woodwaterbase',
+//     ],
+//     data: 'General hardware',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'homeaccesories': const TreeNode(
+//     index: 'homeaccesories',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['doorandwindows', 'floorsandwalls', 'chaincablerope', 'sinks'],
+//     data: 'Home accesories',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'doorandwindows': const TreeNode(
+//     index: 'doorandwindows',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['mascondoors', 'aluminiumdoors', 'hinges', 'plasticdoors'],
+//     data: 'Doors & Windows',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'mascondoors': const TreeNode(
+//     index: 'mascondoors',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Mascon doors',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'aluminiumdoors': const TreeNode(
+//     index: 'aluminiumdoors',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Aluminium doors',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'hinges': const TreeNode(
+//     index: 'hinges',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Hinges',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'plasticdoors': const TreeNode(
+//     index: 'plasticdoors',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Plastic doors',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'floorsandwalls': const TreeNode(
+//     index: 'floorsandwalls',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Floors & Walls',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'chaincablerope': const TreeNode(
+//     index: 'chaincablerope',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Chain, Cable & Rope',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'sinks': const TreeNode(
+//     index: 'sinks',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Sinks',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'adhesivetapes': const TreeNode(
+//     index: 'adhesivetapes',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Adhesive tapes',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'padlock': const TreeNode(
+//     index: 'padlock',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Padlock',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'ropes': const TreeNode(
+//     index: 'ropes',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Ropes',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'haspandstaple': const TreeNode(
+//     index: 'haspandstaple',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Hasp & Tapes', // Typo in original? Assuming 'Staples'? Keeping original.
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'hangersandhooks': const TreeNode(
+//     index: 'hangersandhooks',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Hangers & Hooks',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'bindingwire': const TreeNode(
+//     index: 'bindingwire',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Binding wire',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'brassitems': const TreeNode(
+//     index: 'brassitems',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Brass items',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'woodwaterbase': const TreeNode(
+//     index: 'woodwaterbase',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Wood waterbase',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'mainsafety': const TreeNode(
+//     index: 'mainsafety',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'personalprotectiveequipment',
+//       'safetyhemets',
+//       'safetyjacketsandoverall',
+//       'safetymask',
+//       'safetygloves',
+//       'safetygoggles',
+//       'safetyshoes',
+//       'gumboots',
+//       'battonortroublelight',
+//       'safetyglass',
+//       'earmuff',
+//       'safetyrespiratormask',
+//       'safetybeltandharness',
+//       'roadsafety',
+//     ],
+//     data: 'Safety',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'personalprotectiveequipment': const TreeNode(
+//     index: 'personalprotectiveequipment',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Personal protective equipment',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'safetyhemets': const TreeNode(
+//     index: 'safetyhemets',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Safety helmets',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'safetyjacketsandoverall': const TreeNode(
+//     index: 'safetyjacketsandoverall',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Safety jackets and overall',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'safetymask': const TreeNode(
+//     index: 'safetymask',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Safety mask',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'safetygloves': const TreeNode(
+//     index: 'safetygloves',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Safety gloves',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'safetygoggles': const TreeNode(
+//     index: 'safetygoggles',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Safety goggles',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'safetyshoes': const TreeNode(
+//     index: 'safetyshoes',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Safety shoes',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'gumboots': const TreeNode(
+//     index: 'gumboots',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Gum boots',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'battonortroublelight': const TreeNode(
+//     index: 'battonortroublelight',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Baton light & Trouble light',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'safetyglass': const TreeNode(
+//     index: 'safetyglass',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Safety glass',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'earmuff': const TreeNode(
+//     index: 'earmuff',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Ear muff',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'safetyrespiratormask': const TreeNode(
+//     index: 'safetyrespiratormask',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Safety respirator mask',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'safetybeltandharness': const TreeNode(
+//     index: 'safetybeltandharness',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Safety belt and harness',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'roadsafety': const TreeNode(
+//     index: 'roadsafety',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Road safety',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+
+//   //?electrical deportment start from here
+//   'mainelectrical': const TreeNode(
+//     index: 'mainelectrical',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['lighting', 'homeappliances', 'accesories', 'conduits'],
+//     data: 'Electrical',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'lighting': const TreeNode(
+//     index: 'lighting',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'orange',
+//       'kelani',
+//       'laxapana',
+//       'kevilton',
+//       'chint',
+//       'otherbrands',
+//       'lightingaccesories',
+//     ],
+//     data: 'Lighting',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'orange': const TreeNode(
+//     index: 'orange',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['cfl', 'led', 'panellights', 'decolights', 'quartz', 'fluorecent'],
+//     data: 'Orange',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'cfl': const TreeNode(
+//     index: 'cfl',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'CFL',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'led': const TreeNode(
+//     index: 'led',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'LED',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'panellights': const TreeNode(
+//     index: 'panellights',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Panel lights',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'decolights': const TreeNode(
+//     index: 'decolights',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Deco lights',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'quartz': const TreeNode(
+//     index: 'quartz',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Quartz',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'fluorecent': const TreeNode(
+//     index: 'fluorecent',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Fluorecent tubes',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'kelani': const TreeNode(
+//     index: 'kelani',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Kelani',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'laxapana': const TreeNode(
+//     index: 'laxapana',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Laxpana',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'otherbrands': const TreeNode(
+//     index: 'otherbrands',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Other brands',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'lightingaccesories': const TreeNode(
+//     index: 'lightingaccesories',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Lighting Accesories',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'kevilton': const TreeNode(
+//     index: 'kevilton',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'kevilton',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'chint': const TreeNode(
+//     index: 'chint',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'chint',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'homeappliances': const TreeNode(
+//     index: 'homeappliances',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['fans'],
+//     data: 'Home appliances',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'fans': const TreeNode(
+//     index: 'fans',
+//     available: true,
+//     isFolder: false, // Changed to false based on children list
+//     children: <String>[
+//       'acl',
+//       'keviltonfans',
+//     ], // Assuming these are final items, not sub-folders? If they are sub-folders, change isFolder back to true.
+//     data: 'Fans',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'acl': const TreeNode(
+//     index: 'acl',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'ACL',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'keviltonfans': const TreeNode(
+//     index: 'keviltonfans',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Kevilton',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'accesories': const TreeNode(
+//     index: 'accesories',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'alliedaccesories',
+//       'switchesandsockets',
+//       'circuitbreakers',
+//       'wiresandcables',
+//       'conduitaccesories',
+//       'wirecodes',
+//     ],
+//     data: 'Accesories',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'alliedaccesories': const TreeNode(
+//     index: 'alliedaccesories',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Allied accesories',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'switchesandsockets': const TreeNode(
+//     index: 'switchesandsockets',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Switches & Sockets',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'circuitbreakers': const TreeNode(
+//     index: 'circuitbreakers',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Circuit breakers',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'wiresandcables': const TreeNode(
+//     index: 'wiresandcables',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Wires & Cables',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'conduitaccesories': const TreeNode(
+//     index: 'conduitaccesories',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'conduitpipes',
+//       'conduitpipesfittings',
+//       'cabletrucnking',
+//       'cabletrucnkingfittings',
+//       'cabletie',
+//       'wirecodes',
+//     ],
+//     data: 'Conduit accesories',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'conduitpipes': const TreeNode(
+//     index: 'conduitpipes',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Conduit pipes',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'conduitpipesfittings': const TreeNode(
+//     index: 'conduitpipesfittings',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Conduit pipes fittins', // Typo in original? fittings?
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'cabletrucnking': const TreeNode(
+//     index: 'cabletrucnking',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Conduit pipes fittins', // Data seems incorrect here, likely 'Cable trunking'
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'cabletrucnkingfittings': const TreeNode(
+//     index: 'cabletrucnkingfittings',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Cable trunking fittings',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'cabletie': const TreeNode(
+//     index: 'cabletie',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Cable tie',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'wirecodes': const TreeNode(
+//     index: 'wirecodes',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Wirecode',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'conduits': const TreeNode(
+//     index: 'conduits',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['pvcconduits', 'pvcconduitsfittings', 'giconduits', 'giconduitsfittings'],
+//     data: 'Conduits',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'pvcconduits': const TreeNode(
+//     index: 'pvcconduits',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'PVC',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'pvcconduitsfittings': const TreeNode(
+//     index: 'pvcconduitsfittings',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'pvcconduitsfittings',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'giconduits': const TreeNode(
+//     index: 'giconduits',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'giconduits',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'giconduitsfittings': const TreeNode(
+//     index: 'giconduitsfittings',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'giconduitsfittings',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'mainplumbing': const TreeNode(
+//     index: 'mainplumbing',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['plumbinghardware', 'plumbingtoolsandaccesories', 'bathware'],
+//     data: 'Plumbing',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'plumbinghardware': const TreeNode(
+//     index: 'plumbinghardware',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Plumbing', // Data seems too general?
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'plumbingtoolsandaccesories': const TreeNode(
+//     index: 'plumbingtoolsandaccesories',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Plumbing tools & accesories',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'bathware': const TreeNode(
+//     index: 'bathware',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Bathware',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'maintileaccesories': const TreeNode(
+//     index: 'maintileaccesories',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['tilegrout'],
+//     data: 'Tile accesories',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'tilegrout': const TreeNode(
+//     index: 'tilegrout',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Tile grout',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'mainindustrial': const TreeNode(
+//     index: 'mainindustrial',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['roadconstructionindustry', 'plasticandpolythene'],
+//     data: 'Industrial',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'roadconstructionindustry': const TreeNode(
+//     index: 'roadconstructionindustry',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Road construction industry',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'plasticandpolythene': const TreeNode(
+//     index: 'plasticandpolythene',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Plastic & Polythene',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'mainfasterners': const TreeNode(
+//     index: 'mainfasterners',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'anchorbolt',
+//       'drywallscrews',
+//       'wirenail',
+//       'rivetandrivettools',
+//       'wallplugs',
+//       'conctreatenails',
+//       'nutandbolts',
+//       'bindingwireforbindings',
+//       'threadbar',
+//       'umbrellanails',
+//       'panheadscrew',
+//       'washers',
+//     ],
+//     data: 'Fasterners', // Typo in original? Fasteners?
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'anchorbolt': const TreeNode(
+//     index: 'anchorbolt',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Anchorbolt',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'drywallscrews': const TreeNode(
+//     index: 'drywallscrews',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Dry wall screws',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'wirenail': const TreeNode(
+//     index: 'wirenail',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Wire nail',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'rivetandrivettools': const TreeNode(
+//     index: 'rivetandrivettools',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Rivet and rivet tools',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'wallplugs': const TreeNode(
+//     index: 'wallplugs',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Wall plugs',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'conctreatenails': const TreeNode(
+//     index: 'conctreatenails',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Concreate nails', // Typo in original? Concrete?
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'nutandbolts': const TreeNode(
+//     index: 'nutandbolts',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Nuts & Bolts',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'bindingwireforbindings': const TreeNode(
+//     index: 'bindingwireforbindings',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Binding wire(reevaluatethisnode)', // Note from original data
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'threadbar': const TreeNode(
+//     index: 'threadbar',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Thread bar',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'umbrellanails': const TreeNode(
+//     index: 'umbrellanails',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Umbrella nails',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'panheadscrew': const TreeNode(
+//     index: 'panheadscrew',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Pan head screw',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'washers': const TreeNode(
+//     index: 'washers',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Washers',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'mainhomekitchen': const TreeNode(
+//     index: 'mainhomekitchen',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'cleaningproducts',
+//       'electricappliancekitchenware',
+//       'petcareaccesories',
+//       'householditems',
+//       'weedsandpestcontrol',
+//     ],
+//     data: 'Home & Kitchen',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'cleaningproducts': const TreeNode(
+//     index: 'cleaningproducts',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Cleaning products',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'electricappliancekitchenware': const TreeNode(
+//     index: 'electricappliancekitchenware',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Electric appliances & Kitchenware',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'petcareaccesories': const TreeNode(
+//     index: 'petcareaccesories',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Petcare accesories',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'householditems': const TreeNode(
+//     index: 'householditems',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'House hold items',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'weedsandpestcontrol': const TreeNode(
+//     index: 'weedsandpestcontrol',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Weeds & Pest control',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'maingiftitems': const TreeNode(
+//     index: 'maingiftitems',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'vesakdecorationitems',
+//       'wrappingitems',
+//       'booksandotheraccesories',
+//       'craftitems',
+//       'otherstationeryitems',
+//     ],
+//     data: 'Gift items',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'vesakdecorationitems': const TreeNode(
+//     index: 'vesakdecorationitems',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Vesak decoration items',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'wrappingitems': const TreeNode(
+//     index: 'wrappingitems',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Wrapping items',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'booksandotheraccesories': const TreeNode(
+//     index: 'booksandotheraccesories',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Books and other accesories',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'craftitems': const TreeNode(
+//     index: 'craftitems',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Craft items',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'otherstationeryitems': const TreeNode(
+//     index: 'otherstationeryitems',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Other stationery items',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'mainTools': const TreeNode(
+//     index: 'mainTools',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'powerTools',
+//       'powerToolaccessories',
+//       'handandelectricaltools',
+//       'layoutandmeasuringtools',
+//     ],
+//     data: 'Tools',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'powerTools': const TreeNode(
+//     index: 'powerTools',
+//     available: false, // Note: Available is false here
+//     isFolder: true,
+//     children: <String>[
+//       'drills',
+//       'grinders',
+//       'planers',
+//       'polishers',
+//       'rotarytools',
+//       'routers',
+//       'sanders',
+//       'screwdrivers',
+//       'saws',
+//       'aircompressor',
+//       'otherpowertools',
+//       'blowers',
+//       'weldingmachine',
+//     ],
+//     data: 'Power Tools',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'drills': const TreeNode(
+//     index: 'drills',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Drills',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'grinders': const TreeNode(
+//     index: 'grinders',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Grinders',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'planers': const TreeNode(
+//     index: 'planers',
+//     available: false, // Note: Available is false here
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Planers',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'polishers': const TreeNode(
+//     index: 'polishers',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Polishers',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'rotarytools': const TreeNode(
+//     index: 'rotarytools',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Rotary tools',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'routers': const TreeNode(
+//     index: 'routers',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Routers',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'sanders': const TreeNode(
+//     index: 'sanders',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Sanders',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'screwdrivers': const TreeNode(
+//     index: 'screwdrivers',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Screw Drivers',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'saws': const TreeNode(
+//     index: 'saws',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Saws',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'aircompressor': const TreeNode(
+//     index: 'aircompressor',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Air Compressor',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'blowers': const TreeNode(
+//     index: 'blowers',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Blowers',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'weldingmachine': const TreeNode(
+//     index: 'weldingmachine',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Welding Machine',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'otherpowertools': const TreeNode(
+//     index: 'otherpowertools',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Other Power Tools',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+
+//   'powerToolaccessories': const TreeNode(
+//     index: 'powerToolaccessories',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'planerblades',
+//       'sawblades',
+//       'cutofwheel',
+//       'grindingwheels',
+//       'drillchucks',
+//       'drillbits',
+//       'holesaw',
+//       'routerbits',
+//       'aircompressotools',
+//       'weldingRod',
+//       'allpowertoolsaccesories',
+//     ],
+//     data: 'Power Tool Accessories',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'planerblades': const TreeNode(
+//     index: 'planerblades',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Planer blades',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'sawblades': const TreeNode(
+//     index: 'sawblades',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[], // Corrected from ['']
+//     data: 'Sawblades',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'cutofwheel': const TreeNode(
+//     index: 'cutofwheel',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[], // Corrected from ['']
+//     data: 'Cut of Wheel',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'grindingwheels': const TreeNode(
+//     index: 'grindingwheels',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Grinding wheels',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'drillchucks': const TreeNode(
+//     index: 'drillchucks',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Drill chucks',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'drillbits': const TreeNode(
+//     index: 'drillbits',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['masonry', 'hsssteel', 'wooden'],
+//     data: 'Drill bits',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'masonry': const TreeNode(
+//     index: 'masonry',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Masonry',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'hsssteel': const TreeNode(
+//     index: 'hsssteel',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'HSS (Steel)',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'wooden': const TreeNode(
+//     index: 'wooden',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Wooden',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'holesaw': const TreeNode(
+//     index: 'holesaw',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Hole saw',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'routerbits': const TreeNode(
+//     index: 'routerbits',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Router bits',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'aircompressotools': const TreeNode(
+//     index: 'aircompressotools',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Aim compressor tools', // Typo in original? Air?
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'weldingRod': const TreeNode(
+//     index: 'weldingRod',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Welding rod',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'allpowertoolsaccesories': const TreeNode(
+//     index: 'allpowertoolsaccesories',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'All power tools accesories',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'handandelectricaltools': const TreeNode(
+//     index: 'handandelectricaltools',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'cuttingtoolsandpilers',
+//       'hammersandstrikingtools',
+//       'handdrillsandgimlets',
+//       'handsaw',
+//       'screwdriversandenutdrivers',
+//       'socketsandwrenches',
+//       'guns',
+//       'knifesharpnersandblocks',
+//       'testers',
+//       'masonrytools',
+//       'otherhandandelectricaltools',
+//     ],
+//     data: 'Hand and electrical tools',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'cuttingtoolsandpilers': const TreeNode(
+//     index: 'cuttingtoolsandpilers',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Cutting tools & Pilers', // Typo in original? Pliers?
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'hammersandstrikingtools': const TreeNode(
+//     index: 'hammersandstrikingtools',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Hammers & Striking tools',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'handdrillsandgimlets': const TreeNode(
+//     index: 'handdrillsandgimlets',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Hand drills, Gimlets & AWLs',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'handsaw': const TreeNode(
+//     index: 'handsaw',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Hand saw',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'screwdriversandenutdrivers': const TreeNode(
+//     index: 'screwdriversandenutdrivers',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'SCrewdrivers & Nut drivers', // Typo in original? Screwdrivers?
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'socketsandwrenches': const TreeNode(
+//     index: 'socketsandwrenches',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Socket & Wrenmhes', // Typo in original? Wrenches?
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'guns': const TreeNode(
+//     index: 'guns',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Guns',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'knifesharpnersandblocks': const TreeNode(
+//     index: 'knifesharpnersandblocks',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Knife sharpners and blocks', // Typo in original? Sharpeners?
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'testers': const TreeNode(
+//     index: 'testers',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Testers',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'masonrytools': const TreeNode(
+//     index: 'masonrytools',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Masonry tools',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'otherhandandelectricaltools': const TreeNode(
+//     index: 'otherhandandelectricaltools',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Other hand and masonry tools',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'layoutandmeasuringtools': const TreeNode(
+//     index: 'layoutandmeasuringtools',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['levels', 'magnerpickuptools'],
+//     data: 'Layout & Measuring tools',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'levels': const TreeNode(
+//     index: 'levels',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Levels',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'magnerpickuptools': const TreeNode(
+//     index: 'magnerpickuptools',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Magnet & Pickup tools',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'mainBuilding': const TreeNode(
+//     index: 'mainBuilding',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['cement', 'sand', 'soil', 'bricks', 'stones'],
+//     data: 'Building Mateirlas', // Typo in original? Materials?
+//     level: 0,
+//     image:
+//         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/ultra-grip-tile-adhesive-white.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy91bHRyYS1ncmlwLXRpbGUtYWRoZXNpdmUtd2hpdGUuanBnIiwiaWF0IjoxNzQwMjE0NTIwLCJleHAiOjE3NzE3NTA1MjB9.XbCaUtD23mJtjQ_-XY-WD2c4WDzaCNEug8s2u3XuLZI',
+//   ),
+//   'sand': const TreeNode(
+//     index: 'sand',
+//     available: true,
+//     isFolder:
+//         true, // Should likely be false if children is empty? Or represent different types of sand? Kept as true based on original.
+//     children: <String>[],
+//     data: 'Sand',
+//     level: 0,
+//     image:
+//         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/unwashed-gravel-makes-a-good-base-for-building-projects-1024x683%20(1).jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy91bndhc2hlZC1ncmF2ZWwtbWFrZXMtYS1nb29kLWJhc2UtZm9yLWJ1aWxkaW5nLXByb2plY3RzLTEwMjR4NjgzICgxKS5qcGciLCJpYXQiOjE3NDAyMTQ1MzIsImV4cCI6MTc3MTc1MDUzMn0.c1Tzigxg7RGWn7-KqSGl1Thr1VuucMMQBUWN3k3PaFg',
+//   ),
+//   'soil': const TreeNode(
+//     index: 'soil',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Soil',
+//     level: 0,
+//     image:
+//         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/white-cement-1kg.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy93aGl0ZS1jZW1lbnQtMWtnLmpwZyIsImlhdCI6MTc0MDIxNDU0MywiZXhwIjoxNzcxNzUwNTQzfQ.licsE1uRJlb7GtI-vf6VOkWZ_xIwbudB3LYSI-rPW-0',
+//   ),
+//   'cement': const TreeNode(
+//     index: 'cement',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['portlandCement', 'tileAdhesive', 'coloredCement', 'otherCement'],
+//     data: 'Cement',
+//     level: 0,
+//     image:
+//         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/output%20(2).jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy9vdXRwdXQgKDIpLmpwZyIsImlhdCI6MTc0MDIxNDU1NiwiZXhwIjoxNzcxNzUwNTU2fQ.5buDC3FaO8aVdfDNZjz7Bj58i6brJImgqNZgrmt6z84',
+//   ),
+//   'portlandCement': const TreeNode(
+//     index: 'portlandCement',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Portland Cement',
+//     level: 0,
+//     image:
+//         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/Peeps-Yellow-Marshmallow-Chicks-2ct_34f451b9-4fc4-4ffa-aae0-e65e7dd968cb.52349faf607a86406cc0ee0cfcca88f6.webp?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy9QZWVwcy1ZZWxsb3ctTWFyc2htYWxsb3ctQ2hpY2tzLTJjdF8zNGY0NTFiOS00ZmM0LTRmZmEtYWFlMC1lNjVlN2RkOTY4Y2IuNTIzNDlmYWY2MDdhODY0MDZjYzBlZTBjZmNjYTg4ZjYud2VicCIsImlhdCI6MTc0MDIxNDU3MiwiZXhwIjoxNzcxNzUwNTcyfQ.HMpqJPhCpVmZPJzQZh75PsXa1a2VquoNrlE-hdA37X0',
+//   ),
+//   'coloredCement': const TreeNode(
+//     index: 'coloredCement',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Colored cement',
+//     level: 0,
+//     image:
+//         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/Keurig-K-Classic-Single-Serve-K-Cup-Pod-Coffee-Maker-Black_23e58041-372d-451f-b8ba-828fd79db877.0e47c3dc1a46e71bbbf8803ff3ed1ce6.webp?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy9LZXVyaWctSy1DbGFzc2ljLVNpbmdsZS1TZXJ2ZS1LLUN1cC1Qb2QtQ29mZmVlLU1ha2VyLUJsYWNrXzIzZTU4MDQxLTM3MmQtNDUxZi1iOGJhLTgyOGZkNzlkYjg3Ny4wZTQ3YzNkYzFhNDZlNzFiYmJmODgwM2ZmM2VkMWNlNi53ZWJwIiwiaWF0IjoxNzQwMjE0NjU4LCJleHAiOjE3NzE3NTA2NTh9.fqK0cJ-FssykJdgPXN7VVpwbChLKId0hZxnCR0AXY4w',
+//   ),
+//   'tileAdhesive': const TreeNode(
+//     index: 'tileAdhesive',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Tile adhesive (Mortar)',
+//     level: 0,
+//     image:
+//         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/Best-Choice-Products-Set-of-4-12in-Woven-Water-Hyacinth-Pantry-Baskets-w-Chalkboard-Label-Chalk-Marker-Natural_6508ce8d-b04e-4d4b-9a79-da313f651367.b72a666b7e077ceec4b5b51b46238b6e.webp?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy9CZXN0LUNob2ljZS1Qcm9kdWN0cy1TZXQtb2YtNC0xMmluLVdvdmVuLVdhdGVyLUh5YWNpbnRoLVBhbnRyeS1CYXNrZXRzLXctQ2hhbGtib2FyZC1MYWJlbC1DaGFsay1NYXJrZXItTmF0dXJhbF82NTA4Y2U4ZC1iMDRlLTRkNGItOWE3OS1kYTMxM2Y2NTEzNjcuYjcyYTY2NmI3ZTA3N2NlZWM0YjViNTFiNDYyMzhiNmUud2VicCIsImlhdCI6MTc0MDIxNDY3NCwiZXhwIjoxNzcxNzUwNjc0fQ.8wybPN3wVUkF65vDwYtZHR9z97Imgt1KhnUWgpmWGKQ',
+//   ),
+//   'otherCement': const TreeNode(
+//     index: 'otherCement',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Other cement',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'bricks': const TreeNode(
+//     index: 'bricks',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Bricks',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'stones': const TreeNode(
+//     index: 'stones',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Stones',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'mainPaint': const TreeNode(
+//     index: 'mainPaint',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['paintList', 'paintTools', 'paintaccesories', 'adhesiveandtapes'],
+//     data: 'Paint',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'paintList': const TreeNode(
+//     index: 'paintList',
+//     available: true,
+//     isFolder: true,
+//     children: <String>[
+//       'sayerluck',
+//       'bormawatches',
+//       'jchem',
+//       'nippolac',
+//       'nipponPaint',
+//       'thinner',
+//       'waterproofingmaterials',
+//       'masters',
+//       'toaspray',
+//       'kansai',
+//       'masco',
+//       'skimcoat',
+//       'durawet',
+//       'causeway',
+//       'multilac',
+//       'insee',
+//     ],
+//     data: 'Paint List',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'sayerluck': const TreeNode(
+//     index: 'sayerluck',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['twopackpolyutherenetopcoats', 'twopackpolyutherenebasecoats'],
+//     data: 'Sayerluck',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'twopackpolyutherenetopcoats': const TreeNode(
+//     index: 'twopackpolyutherenetopcoats',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: '2 Pack polyutrethane top coats',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'twopackpolyutherenebasecoats': const TreeNode(
+//     index: 'twopackpolyutherenebasecoats',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: '2 Pack polyutrethane base coats',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'bormawatches': const TreeNode(
+//     index: 'bormawatches',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Bormawatches',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'jchem': const TreeNode(
+//     index: 'jchem',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['ncproducts', 'decorativepaint'],
+//     data: 'Jchem',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'ncproducts': const TreeNode(
+//     index: 'ncproducts',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'NC products',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'decorativepaint': const TreeNode(
+//     index: 'decorativepaint',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Decorative paint',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'nippolac': const TreeNode(
+//     index: 'nippolac',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Nippolac',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'nipponPaint': const TreeNode(
+//     index: 'nipponPaint',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'NipponPaint',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'thinner': const TreeNode(
+//     index: 'thinner',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Thinner',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'waterproofingmaterials': const TreeNode(
+//     index: 'waterproofingmaterials',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Water proofing materials',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'masters': const TreeNode(
+//     index: 'masters',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Masters',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'toaspray': const TreeNode(
+//     index: 'toaspray',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Toa spray',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'kansai': const TreeNode(
+//     index: 'kansai',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Kansai',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'masco': const TreeNode(
+//     index: 'masco',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Masco',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'skimcoat': const TreeNode(
+//     index: 'skimcoat',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Skimcoat',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'durawet': const TreeNode(
+//     index: 'durawet',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Durawet',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'causeway': const TreeNode(
+//     index: 'causeway',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Causeway',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'multilac': const TreeNode(
+//     index: 'multilac',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Multilac',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'insee': const TreeNode(
+//     index: 'insee',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Insee(Sanstha)',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'paintTools': const TreeNode(
+//     index: 'paintTools',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['brushesandrollers', 'maskingtape', 'sandpaper', 'sprayguns'],
+//     data: 'Paint Tools',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'brushesandrollers': const TreeNode(
+//     index: 'brushesandrollers',
+//     available: true,
+//     isFolder: true,
+//     children: <String>['brushes', 'rollers'],
+//     data: 'Brushes & Rollers',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'brushes': const TreeNode(
+//     index: 'brushes',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Brushes',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'rollers': const TreeNode(
+//     index: 'rollers',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Rollers',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'maskingtape': const TreeNode(
+//     index: 'maskingtape',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Masking tape',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'sandpaper': const TreeNode(
+//     index: 'sandpaper',
+//     available: false, // Note: Available is false here
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Sandpaper',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'sprayguns': const TreeNode(
+//     index: 'sprayguns',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Spray guns',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'paintaccesories': const TreeNode(
+//     index: 'paintaccesories',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Paint accesories',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'ladders': const TreeNode(
+//     index: 'ladders',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Ladders',
+//     level: 0,
+//     image: imageUrl,
+//   ),
+//   'adhesiveandtapes': const TreeNode(
+//     index: 'adhesiveandtapes',
+//     available: true,
+//     isFolder: false,
+//     children: <String>[],
+//     data: 'Adhesive and paints', // Typo in original? Should be Tapes? Kept original.
+//     level: 0,
+//     image: imageUrl,
+//   ),
+// };
 
 // To use it:
 // TreeNode rootNode = items['root']!;
