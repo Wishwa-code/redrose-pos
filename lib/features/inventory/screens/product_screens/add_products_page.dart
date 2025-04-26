@@ -180,7 +180,7 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                             color: Theme.of(context).colorScheme.onPrimaryFixed,
                           ),
                       decoration: InputDecoration(
-                        labelText: 'Category of the new product',
+                        labelText: 'Category of the new product | නව අයිතමයේ වර්ගය',
                         labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
                               color: Theme.of(context).colorScheme.onPrimaryFixed,
                             ),
@@ -205,7 +205,7 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                             color: Theme.of(context).colorScheme.onPrimaryFixed,
                           ),
                       decoration: InputDecoration(
-                        labelText: 'Category ID',
+                        labelText: 'Category ID | වර්ග අංකය',
                         labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
                               color: Theme.of(context).colorScheme.onPrimaryFixed,
                             ),
@@ -230,7 +230,7 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                             color: Theme.of(context).colorScheme.onPrimaryFixed,
                           ),
                       decoration: InputDecoration(
-                        labelText: 'Display title',
+                        labelText: 'Display title | සිංහල නම',
                         labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
                               color: Theme.of(context).colorScheme.onPrimaryFixed,
                             ),
@@ -255,7 +255,7 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                             color: Theme.of(context).colorScheme.onPrimaryFixed,
                           ),
                       decoration: InputDecoration(
-                        labelText: 'About this product',
+                        labelText: 'About this product | අයිතමයේ විස්තරය',
                         labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
                               color: Theme.of(context).colorScheme.onPrimaryFixed,
                             ),
@@ -280,7 +280,7 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                             color: Theme.of(context).colorScheme.onPrimaryFixed,
                           ),
                       decoration: InputDecoration(
-                        labelText: 'Product name',
+                        labelText: 'Product name | අයිතමයේ නම',
                         labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
                               color: Theme.of(context).colorScheme.onPrimaryFixed,
                             ),
@@ -326,7 +326,7 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                     ProviderDropdownField(
                       provider: brandNotifierProvider,
                       selectedBrandId: selectedSupplier,
-                      labelText: 'Select brand',
+                      labelText: 'Select brand | සන්නාමය',
                       onChanged: (value) {
                         setState(() {
                           selectedSupplier = value;
@@ -361,7 +361,7 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                     ProviderDropdownField(
                       provider: supplierNotifierProvider,
                       selectedBrandId: selectedBrandId,
-                      labelText: 'Select supplier',
+                      labelText: 'Select supplier | සැපයුම්කරු',
                       onChanged: (value) {
                         setState(() {
                           selectedBrandId = value;
@@ -371,23 +371,23 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                     const SizedBox(height: 12),
                     PriceFormField(
                       controller: _originalPriceController,
-                      label: 'Original price',
+                      label: 'Original price | මුල් මිල',
                     ),
                     const SizedBox(height: 12),
                     PriceFormField(
                       controller: _retailPriceController,
-                      label: 'Retail price',
+                      label: 'Retail price | සිල්ලර මිල',
                     ),
                     const SizedBox(height: 12),
                     PriceFormField(
                       controller: _wholesalePriceController,
-                      label: 'Wholesale price',
+                      label: 'Wholesale price | තොග මිල',
                       isRequired: false, // Optional field
                     ),
                     const SizedBox(height: 12),
                     PriceFormField(
                       controller: _quantityController,
-                      label: 'Quantity',
+                      label: 'Quantity | පරිමාණය',
                     ),
                     const SizedBox(height: 12),
                     TextFormField(
@@ -396,7 +396,7 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                             color: Theme.of(context).colorScheme.onPrimaryFixed,
                           ),
                       decoration: InputDecoration(
-                        labelText: 'Unit metric',
+                        labelText: 'Unit metric | ඒකකය',
                         labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
                               color: Theme.of(context).colorScheme.onPrimaryFixed,
                             ),
@@ -417,7 +417,8 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                     const SizedBox(height: 12),
                     PriceFormField(
                       controller: _leastSubUnitMeasureController,
-                      label: 'Min.sub unit as fracture of unit',
+                      label:
+                          'Min.sub unit as fracture of unit | විකුණන අවම පරිමාණය ඒ්කකයේ භාගයක් වශයෙන් 1 ට වඩා අඩු දශම සංඛ්‍යාවක් ලෙස',
                     ),
                     const SizedBox(height: 25),
                     ElevatedButton.icon(

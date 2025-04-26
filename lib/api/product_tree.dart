@@ -1506,7 +1506,7 @@ final Map<String, TreeNode> items = {
     data: 'Tools',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'ආයූධ', // Added
+    sinhalaName: 'මෙවලම්', // Added
   ),
   'powerTools': const TreeNode(
     index: 'powerTools',

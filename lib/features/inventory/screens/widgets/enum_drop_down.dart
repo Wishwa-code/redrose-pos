@@ -173,7 +173,7 @@ class EnumDropdownField extends ConsumerWidget {
               .map(
                 (node) => DropdownMenuItem(
                   value: node.index,
-                  child: Text(node.index),
+                  child: Text(node.sinhalaName),
                 ),
               )
               .toList(),

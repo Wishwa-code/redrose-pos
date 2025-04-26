@@ -117,7 +117,7 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                               color: Theme.of(context).colorScheme.onPrimaryFixed,
                             ),
                         decoration: InputDecoration(
-                          labelText: 'Product Name',
+                          labelText: 'Product Name | වර්ගයේ නම',
                           labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
                                 color: Theme.of(context).colorScheme.onPrimaryFixed,
                               ),
@@ -142,7 +142,7 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                               color: Theme.of(context).colorScheme.onPrimaryFixed,
                             ),
                         decoration: InputDecoration(
-                          labelText: 'Description',
+                          labelText: 'Description | විස්තරය',
                           labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
                                 color: Theme.of(context).colorScheme.onPrimaryFixed,
                               ),
