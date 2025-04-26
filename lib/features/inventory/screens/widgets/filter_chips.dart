@@ -90,8 +90,8 @@ class FilterChipsBox extends ConsumerWidget {
             const SizedBox(height: 8),
             if (chipOrDropdown)
               Wrap(
-                spacing: 14,
-                runSpacing: 14,
+                spacing: 10,
+                runSpacing: 10,
                 children: levelNodes.map((index) {
                   final isSelected = selectedValues.contains(index);
                   final label = labelFor(index);
@@ -130,8 +130,8 @@ class FilterChipsBox extends ConsumerWidget {
                         ref.read(provider.notifier).state = updated;
                         onChanged?.call();
                       },
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                      labelPadding: const EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 8),
                       visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
