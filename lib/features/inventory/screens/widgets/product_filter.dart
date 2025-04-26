@@ -29,6 +29,7 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
   late final TextEditingController _controller;
   late final TextEditingController _idController;
   late final bool _shouldGoOnClick;
+  bool isSinhala = true;
 
   @override
   void initState() {
@@ -67,11 +68,38 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  'Menu tree',
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimaryFixed,
-                      ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Menu tree',
+                      style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimaryFixed,
+                          ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          isSinhala ? 'En' : 'සිං',
+                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                color: Theme.of(context).colorScheme.onPrimaryFixed,
+                              ),
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Switch(
+                          value: isSinhala,
+                          onChanged: (value) {
+                            setState(() {
+                              isSinhala = value;
+                            });
+                          },
+                          activeColor: Colors.blue,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 12),
 
@@ -81,6 +109,7 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
                   parentProvider: rootProvider,
                   level: 1,
                   onChanged: () => ref.read(currentPageProvider.notifier).state = 1,
+                  isSinhala: isSinhala,
                 ),
                 const SizedBox(height: 12),
 
@@ -90,6 +119,7 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
                   parentProvider: departmentFilterProvider,
                   level: 2,
                   onChanged: () => ref.read(currentPageProvider.notifier).state = 1,
+                  isSinhala: isSinhala,
                 ),
 
                 FilterChipsBox(
@@ -98,6 +128,7 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
                   parentProvider: categoryFilterProvider,
                   level: 3,
                   onChanged: () => ref.read(currentPageProvider.notifier).state = 1,
+                  isSinhala: isSinhala,
                 ),
 
                 // FilterChipsBox(

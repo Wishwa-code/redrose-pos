@@ -13,6 +13,7 @@ class FilterChipsBox extends ConsumerWidget {
     this.parentProvider,
     this.chipOrDropdown = true,
     this.onChanged,
+    this.isSinhala = false,
   });
 
   final String name;
@@ -21,6 +22,7 @@ class FilterChipsBox extends ConsumerWidget {
   final StateProvider<List<String>>? parentProvider;
   final bool chipOrDropdown;
   final VoidCallback? onChanged;
+  final bool isSinhala;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -76,7 +78,8 @@ class FilterChipsBox extends ConsumerWidget {
             .map((node) => node.index)
             .toList();
 
-        String labelFor(String index) => items[index]?.data ?? index;
+        String labelFor(String index) =>
+            isSinhala ? (items[index]?.sinhalaName ?? index) : (items[index]?.data ?? index);
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,7 +133,7 @@ class FilterChipsBox extends ConsumerWidget {
                         ref.read(provider.notifier).state = updated;
                         onChanged?.call();
                       },
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                       labelPadding: const EdgeInsets.symmetric(horizontal: 8),
                       visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
