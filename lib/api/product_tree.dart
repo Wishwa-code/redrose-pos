@@ -2011,7 +2011,7 @@ final Map<String, TreeNode> items = {
     level: 0,
     image:
         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/output%20(2).jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy9vdXRwdXQgKDIpLmpwZyIsImlhdCI6MTc0MDIxNDU1NiwiZXhwIjoxNzcxNzUwNTU2fQ.5buDC3FaO8aVdfDNZjz7Bj58i6brJImgqNZgrmt6z84',
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'සිමෙන්ති', // Added
   ),
   'portlandCement': const TreeNode(
     index: 'portlandCement',
@@ -2022,7 +2022,7 @@ final Map<String, TreeNode> items = {
     level: 0,
     image:
         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/Peeps-Yellow-Marshmallow-Chicks-2ct_34f451b9-4fc4-4ffa-aae0-e65e7dd968cb.52349faf607a86406cc0ee0cfcca88f6.webp?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy9QZWVwcy1ZZWxsb3ctTWFyc2htYWxsb3ctQ2hpY2tzLTJjdF8zNGY0NTFiOS00ZmM0LTRmZmEtYWFlMC1lNjVlN2RkOTY4Y2IuNTIzNDlmYWY2MDdhODY0MDZjYzBlZTBjZmNjYTg4ZjYud2VicCIsImlhdCI6MTc0MDIxNDU3MiwiZXhwIjoxNzcxNzUwNTcyfQ.HMpqJPhCpVmZPJzQZh75PsXa1a2VquoNrlE-hdA37X0',
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'පොර්ට්ලනඩ් සිමෙනති(සාමාන්‍ය සිමෙන්ති)', // Added
   ),
   'coloredCement': const TreeNode(
     index: 'coloredCement',
@@ -2033,7 +2033,7 @@ final Map<String, TreeNode> items = {
     level: 0,
     image:
         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/Keurig-K-Classic-Single-Serve-K-Cup-Pod-Coffee-Maker-Black_23e58041-372d-451f-b8ba-828fd79db877.0e47c3dc1a46e71bbbf8803ff3ed1ce6.webp?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy9LZXVyaWctSy1DbGFzc2ljLVNpbmdsZS1TZXJ2ZS1LLUN1cC1Qb2QtQ29mZmVlLU1ha2VyLUJsYWNrXzIzZTU4MDQxLTM3MmQtNDUxZi1iOGJhLTgyOGZkNzlkYjg3Ny4wZTQ3YzNkYzFhNDZlNzFiYmJmODgwM2ZmM2VkMWNlNi53ZWJwIiwiaWF0IjoxNzQwMjE0NjU4LCJleHAiOjE3NzE3NTA2NTh9.fqK0cJ-FssykJdgPXN7VVpwbChLKId0hZxnCR0AXY4w',
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'පාට සිමෙන්ති', // Added
   ),
   'tileAdhesive': const TreeNode(
     index: 'tileAdhesive',
@@ -2044,7 +2044,7 @@ final Map<String, TreeNode> items = {
     level: 0,
     image:
         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/sign/products/Best-Choice-Products-Set-of-4-12in-Woven-Water-Hyacinth-Pantry-Baskets-w-Chalkboard-Label-Chalk-Marker-Natural_6508ce8d-b04e-4d4b-9a79-da313f651367.b72a666b7e077ceec4b5b51b46238b6e.webp?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9kdWN0cy9CZXN0LUNob2ljZS1Qcm9kdWN0cy1TZXQtb2YtNC0xMmluLVdvdmVuLVdhdGVyLUh5YWNpbnRoLVBhbnRyeS1CYXNrZXRzLXctQ2hhbGtib2FyZC1MYWJlbC1DaGFsay1NYXJrZXItTmF0dXJhbF82NTA4Y2U4ZC1iMDRlLTRkNGItOWE3OS1kYTMxM2Y2NTEzNjcuYjcyYTY2NmI3ZTA3N2NlZWM0YjViNTFiNDYyMzhiNmUud2VicCIsImlhdCI6MTc0MDIxNDY3NCwiZXhwIjoxNzcxNzUwNjc0fQ.8wybPN3wVUkF65vDwYtZHR9z97Imgt1KhnUWgpmWGKQ',
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'ටයිල් ඇඩිසිව්', // Added
   ),
   'otherCement': const TreeNode(
     index: 'otherCement',
@@ -2054,7 +2054,7 @@ final Map<String, TreeNode> items = {
     data: 'Other cement',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'වෙනත් සිමෙන්ති', // Added
   ),
   'bricks': const TreeNode(
     index: 'bricks',
@@ -2064,7 +2064,7 @@ final Map<String, TreeNode> items = {
     data: 'Bricks',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'ගඩොල්', // Added
   ),
   'stones': const TreeNode(
     index: 'stones',
@@ -2074,7 +2074,7 @@ final Map<String, TreeNode> items = {
     data: 'Stones',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'ගල්', // Added
   ),
   'mainPaint': const TreeNode(
     index: 'mainPaint',
@@ -2084,244 +2084,139 @@ final Map<String, TreeNode> items = {
     data: 'Paint',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'තීන්තතීන්ත', // Added
+    sinhalaName: 'තීන්ත', // Added
   ),
   'paintList': const TreeNode(
     index: 'paintList',
     available: true,
     isFolder: true,
     children: <String>[
-      'sayerluck',
-      'bormawatches',
-      'jchem',
-      'nippolac',
-      'nipponPaint',
-      'thinner',
-      'waterproofingmaterials',
-      'masters',
-      'toaspray',
-      'kansai',
-      'masco',
-      'skimcoat',
-      'durawet',
-      'causeway',
-      'multilac',
-      'insee',
+      'emulsion',
+      'enamel',
+      'weathercoat',
+      'floorcoat',
+      'colorvarnish',
+      'kemikote',
+      'nontoxic',
+      'woodstain',
+      'sandingsealer',
+      'roofingpaint',
     ],
     data: 'Paint List',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'තීන්ත වර්ග', // Added
   ),
-  'sayerluck': const TreeNode(
-    index: 'sayerluck',
+  'emulsion': const TreeNode(
+    index: 'emulsion',
     available: true,
     isFolder: true,
-    children: <String>['twopackpolyutherenetopcoats', 'twopackpolyutherenebasecoats'],
-    data: 'Sayerluck',
-    level: 0,
-    image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
-  ),
-  'twopackpolyutherenetopcoats': const TreeNode(
-    index: 'twopackpolyutherenetopcoats',
-    available: true,
-    isFolder: false,
     children: <String>[],
-    data: '2 Pack polyutrethane top coats',
+    data: 'Emulsion',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'ඉමල්ෂන්', // Added
   ),
-  'twopackpolyutherenebasecoats': const TreeNode(
-    index: 'twopackpolyutherenebasecoats',
-    available: true,
-    isFolder: false,
-    children: <String>[],
-    data: '2 Pack polyutrethane base coats',
-    level: 0,
-    image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
-  ),
-  'bormawatches': const TreeNode(
+
+  'enamel': const TreeNode(
     index: 'bormawatches',
     available: true,
     isFolder: false,
     children: <String>[],
-    data: 'Bormawatches',
+    data: 'Enamel',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'එනමල්', // Added
   ),
-  'jchem': const TreeNode(
+  'weathercoat': const TreeNode(
     index: 'jchem',
     available: true,
     isFolder: true,
     children: <String>['ncproducts', 'decorativepaint'],
-    data: 'Jchem',
+    data: 'Weathercoat',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'වෙදර් කෝට්', // Added
   ),
-  'ncproducts': const TreeNode(
-    index: 'ncproducts',
+  'floorcoat': const TreeNode(
+    index: 'floorcoat',
     available: true,
     isFolder: false,
     children: <String>[],
-    data: 'NC products',
+    data: 'Floor coat',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'ෆ්ලෝර් කෝට්', // Added
   ),
-  'decorativepaint': const TreeNode(
-    index: 'decorativepaint',
+  'colorvarnish': const TreeNode(
+    index: 'colorvarnish',
     available: true,
     isFolder: false,
     children: <String>[],
-    data: 'Decorative paint',
+    data: 'Color Varnish',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'කලර් වර්නිෂ්', // Added
   ),
-  'nippolac': const TreeNode(
-    index: 'nippolac',
+  'kemikote': const TreeNode(
+    index: 'kemikote',
     available: true,
     isFolder: false,
     children: <String>[],
-    data: 'Nippolac',
+    data: 'Kemikote',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'කෙමි කෝට්', // Added
   ),
-  'nipponPaint': const TreeNode(
-    index: 'nipponPaint',
+  'nontoxic': const TreeNode(
+    index: 'nontoxic',
     available: true,
     isFolder: false,
     children: <String>[],
-    data: 'NipponPaint',
+    data: 'Non toxic',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'නන් ටොක්සික්', // Added
   ),
-  'thinner': const TreeNode(
-    index: 'thinner',
+  'woodstain': const TreeNode(
+    index: 'woodstain',
     available: true,
     isFolder: false,
     children: <String>[],
-    data: 'Thinner',
+    data: 'Wood stain',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'වෘඩ් ස්ටේන්', // Added
   ),
-  'waterproofingmaterials': const TreeNode(
-    index: 'waterproofingmaterials',
+  'sandingsealer': const TreeNode(
+    index: 'sandingsealer',
     available: true,
     isFolder: false,
     children: <String>[],
-    data: 'Water proofing materials',
+    data: 'Sanding sealer',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'සැන්ඩින්ග් සීලර්', // Added
   ),
-  'masters': const TreeNode(
-    index: 'masters',
+  'roofingpaint': const TreeNode(
+    index: 'roofingpaint',
     available: true,
     isFolder: false,
     children: <String>[],
-    data: 'Masters',
+    data: 'Roofing paint',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
-  ),
-  'toaspray': const TreeNode(
-    index: 'toaspray',
-    available: true,
-    isFolder: false,
-    children: <String>[],
-    data: 'Toa spray',
-    level: 0,
-    image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
-  ),
-  'kansai': const TreeNode(
-    index: 'kansai',
-    available: true,
-    isFolder: false,
-    children: <String>[],
-    data: 'Kansai',
-    level: 0,
-    image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
-  ),
-  'masco': const TreeNode(
-    index: 'masco',
-    available: true,
-    isFolder: false,
-    children: <String>[],
-    data: 'Masco',
-    level: 0,
-    image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
-  ),
-  'skimcoat': const TreeNode(
-    index: 'skimcoat',
-    available: true,
-    isFolder: false,
-    children: <String>[],
-    data: 'Skimcoat',
-    level: 0,
-    image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
-  ),
-  'durawet': const TreeNode(
-    index: 'durawet',
-    available: true,
-    isFolder: false,
-    children: <String>[],
-    data: 'Durawet',
-    level: 0,
-    image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
-  ),
-  'causeway': const TreeNode(
-    index: 'causeway',
-    available: true,
-    isFolder: false,
-    children: <String>[],
-    data: 'Causeway',
-    level: 0,
-    image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
-  ),
-  'multilac': const TreeNode(
-    index: 'multilac',
-    available: true,
-    isFolder: false,
-    children: <String>[],
-    data: 'Multilac',
-    level: 0,
-    image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
-  ),
-  'insee': const TreeNode(
-    index: 'insee',
-    available: true,
-    isFolder: false,
-    children: <String>[],
-    data: 'Insee(Sanstha)',
-    level: 0,
-    image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'රෑෆින්ග් පෙන්ට්පෙන්ට්', // Added
   ),
   'paintTools': const TreeNode(
     index: 'paintTools',
     available: true,
     isFolder: true,
-    children: <String>['brushesandrollers', 'maskingtape', 'sandpaper', 'sprayguns'],
+    children: <String>['brushesandrollers', 'maskingtape', 'sandpaper', 'sprayguns', 'ladders'],
     data: 'Paint Tools',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'තීන්ත උපාංග', // Added
   ),
   'brushesandrollers': const TreeNode(
     index: 'brushesandrollers',
@@ -2331,7 +2226,7 @@ final Map<String, TreeNode> items = {
     data: 'Brushes & Rollers',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'තීන්ත බුරුසු සහ රෝලර්ස්', // Added
   ),
   'brushes': const TreeNode(
     index: 'brushes',
@@ -2341,7 +2236,7 @@ final Map<String, TreeNode> items = {
     data: 'Brushes',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'තීන්ත බුරුසු', // Added
   ),
   'rollers': const TreeNode(
     index: 'rollers',
@@ -2351,7 +2246,7 @@ final Map<String, TreeNode> items = {
     data: 'Rollers',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'රෝලර්ස්', // Added
   ),
   'maskingtape': const TreeNode(
     index: 'maskingtape',
@@ -2361,7 +2256,7 @@ final Map<String, TreeNode> items = {
     data: 'Masking tape',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'මාස්කින්ග් ටේප්', // Added
   ),
   'sandpaper': const TreeNode(
     index: 'sandpaper',
@@ -2371,7 +2266,7 @@ final Map<String, TreeNode> items = {
     data: 'Sandpaper',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'වැලි කොළ', // Added
   ),
   'sprayguns': const TreeNode(
     index: 'sprayguns',
@@ -2381,18 +2276,9 @@ final Map<String, TreeNode> items = {
     data: 'Spray guns',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'තීන්ත gun', // Added
   ),
-  'paintaccesories': const TreeNode(
-    index: 'paintaccesories',
-    available: true,
-    isFolder: false,
-    children: <String>[],
-    data: 'Paint accesories',
-    level: 0,
-    image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
-  ),
+
   'ladders': const TreeNode(
     index: 'ladders',
     available: true,
@@ -2401,7 +2287,7 @@ final Map<String, TreeNode> items = {
     data: 'Ladders',
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'ඉනි මග', // Added
   ),
   'adhesiveandtapes': const TreeNode(
     index: 'adhesiveandtapes',
@@ -2411,7 +2297,7 @@ final Map<String, TreeNode> items = {
     data: 'Adhesive and paints', // Typo in original? Should be Tapes? Kept original.
     level: 0,
     image: imageUrl,
-    sinhalaName: 'සිංහල නම', // Added
+    sinhalaName: 'ඇලවුම්', // Added
   ),
 };
 // final Map<String, TreeNode> items = {

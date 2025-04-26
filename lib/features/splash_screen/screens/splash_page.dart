@@ -6,14 +6,19 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Splash Page'),
-            SizedBox(height: 16),
-            LoadingSpinner(),
+            Text(
+              'වයලා.....',
+              style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimaryFixed,
+                  ),
+            ),
+            const SizedBox(height: 16),
+            const LoadingSpinner(),
           ],
         ),
       ),

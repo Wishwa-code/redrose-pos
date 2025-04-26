@@ -68,7 +68,7 @@ class _ProductsPageState extends State<ProductsPage> {
                           Icons.shopping_cart,
                           () => _updateContent(
                             'Purchase Orders',
-                            const Center(child: Text('Purchase Orders Content')),
+                            const Center(child: Text('Manage Brands')),
                           ),
                         ),
                         _buildNavigationButton(
@@ -77,7 +77,7 @@ class _ProductsPageState extends State<ProductsPage> {
                           Icons.swap_horiz,
                           () => _updateContent(
                             'Transfers',
-                            const Center(child: Text('Transfers Content')),
+                            const Center(child: Text('Manage Suppliers')),
                           ),
                         ),
                       ],
@@ -91,7 +91,7 @@ class _ProductsPageState extends State<ProductsPage> {
           const VerticalDivider(width: 1),
           // Right side content
           Expanded(
-            child: _selectedContent ?? const Center(child: Text('Select an option')),
+            child: _selectedContent ?? const FilterProductsPage(),
           ),
         ],
       ),
