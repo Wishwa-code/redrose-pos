@@ -2,6 +2,8 @@
 //!which is the case only when variable are are part of current tree but tagone1 and tagtwo1 are added for future use
 //!there fore is atatched false make thos drop down listt work freely
 
+//!also we have weird bug here when department drop down hit hot reload to see how it loads selected prodcuts data
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -88,7 +90,7 @@ class EnumDropdownField extends ConsumerWidget {
                   data: 'tagone$i',
                   level: -1,
                   image: '',
-                  sinhalaName: 'පලවනිපලවනි ටැග් එක',
+                  sinhalaName: 'පලවනි ටැග් එක',
                 ),
             ];
           } else if (level == -2) {
@@ -144,10 +146,15 @@ class EnumDropdownField extends ConsumerWidget {
           );
         }
 
+        // logger.t('🔥 Filtered nodes: $filteredNodes Controller text: ${controller.text}');
+
         return FormBuilderDropdown<String>(
           name: name,
-          initialValue:
-              filteredNodes.contains(controller.text) ? controller.text : filteredNodes.first.index,
+          initialValue: (name != 'department')
+              ? filteredNodes.contains(controller.text)
+                  ? controller.text
+                  : filteredNodes.first.index
+              : controller.text,
           style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 color: Theme.of(context).colorScheme.onPrimaryFixed,
               ),

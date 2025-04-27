@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../utils/print_logger.dart';
+
 class ProviderDropdownField extends ConsumerWidget {
   const ProviderDropdownField({
     super.key,
-    required this.selectedBrandId,
+    required this.selectedValue,
     required this.onChanged,
     required this.provider,
     this.labelText = 'Select ',
   });
 
-  final String? selectedBrandId;
+  final String? selectedValue;
   final ValueChanged<String?> onChanged;
   final String labelText;
   final ProviderListenable<AsyncValue<List<dynamic>>> provider;
@@ -21,8 +23,11 @@ class ProviderDropdownField extends ConsumerWidget {
 
     return brandAsync.when(
       data: (brands) {
+        logger.d('🌿 Provider dropdown brands $brands');
         return DropdownButtonFormField<String>(
-          value: selectedBrandId,
+          value: brands.any((b) => b.name == selectedValue)
+              ? selectedValue
+              : brands.first.name.toString(),
           isExpanded: true,
           decoration: InputDecoration(
             labelText: labelText,

@@ -28,14 +28,16 @@ class ProductFilter extends ConsumerStatefulWidget {
 class _ProductFilterState extends ConsumerState<ProductFilter> {
   late final TextEditingController _controller;
   late final TextEditingController _idController;
+  late final TextEditingController _productTitleController;
   late final bool _shouldGoOnClick;
   bool isSinhala = true;
 
   @override
   void initState() {
     super.initState();
-    _controller = widget.controller ?? TextEditingController();
     _idController = widget.idController ?? TextEditingController();
+    _productTitleController = widget.controller ?? TextEditingController();
+    _controller = TextEditingController();
     _shouldGoOnClick = widget.shouldGoOnClick ?? true;
 
     _controller.addListener(() {
@@ -296,7 +298,7 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
                                   onTap: () async {
                                     logger.d('product.id--> $product');
 
-                                    // _controller.text = product.title;
+                                    _productTitleController.text = product.title;
 
                                     _idController.text = product.id?.toString() ?? '';
                                     // ref.read(searchFieldProvider.notifier).state = product.title;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../../utils/print_logger.dart';
-import '../../providers/product_variances_list_provider.dart'; // Adjust import accordingly
+import '../../providers/last_entered_variance_notifier.dart';
+import '../../providers/product_variances_list_provider.dart';
 import '../widgets/product_card.dart';
 
 class VarianceListPage extends ConsumerWidget {
@@ -48,7 +48,15 @@ class VarianceListPage extends ConsumerWidget {
                 ),
                 itemBuilder: (context, index) {
                   final variance = variances[index];
-                  return VarianceCard(variance: variance);
+                  return InkWell(
+                    onTap: () async {
+                      logger.d('product.id--> $variance');
+
+                      await ref.read(lastVarianceProvider.notifier).selectVariance(variance);
+                      Navigator.pop(context); // widget.onProductSelected?.call(product.id!);
+                    },
+                    child: VarianceCard(variance: variance),
+                  );
                 },
               ),
             );

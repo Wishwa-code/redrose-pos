@@ -35,4 +35,24 @@ class LastVariance extends _$LastVariance {
     // Update the state
     state = AsyncData(newProduct);
   }
+
+  Future<void> fetchVarianceById(String id) async {
+    state = const AsyncLoading(); // optional
+    try {
+      final apiService = await ref.watch(apiServiceProvider.future);
+      final variance = await apiService.fetchVarianceById(id);
+      state = AsyncData(variance);
+    } catch (e, st) {
+      state = AsyncError(e, st);
+    }
+  }
+
+  Future<void> selectVariance(Variance product) async {
+    state = const AsyncLoading(); // optional
+    try {
+      state = AsyncData(product);
+    } catch (e, st) {
+      state = AsyncError(e, st);
+    }
+  }
 }

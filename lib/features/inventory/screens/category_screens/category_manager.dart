@@ -38,6 +38,11 @@ class _CategoryManagerPageState extends ConsumerState<CategoryManagerPage>
           color: Theme.of(context).colorScheme.surface,
           child: TabBar(
             controller: _tabController,
+            // onTap: (index) {
+            //   _tabController.animateTo(index,
+            //       duration: const Duration(milliseconds: 600),
+            //       curve: Curves.fastLinearToSlowEaseIn); // <— smooth animation
+            // },
             labelColor: Theme.of(context).colorScheme.primary,
             tabs: const [
               Tab(text: 'Add Category'),

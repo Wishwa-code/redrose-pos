@@ -64,7 +64,8 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
       //     await ref.read(lastProductProvider.notifier).uploadImage(imageFile);
 
       // Create dummy product
-      final newProduct = Product(
+      final updatedProduct = Product(
+        id: _productidController.text,
         title: _titleController.text,
         description: _descriptionController.text,
         tagOne: _tagOneController.text,
@@ -76,7 +77,7 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
       );
 
       // Call the notifier to add product
-      await ref.read(lastProductProvider.notifier).updateProduct(newProduct, _selectedImage!);
+      await ref.read(lastProductProvider.notifier).updateProduct(updatedProduct, _selectedImage!);
 
       // Show feedback
       ScaffoldMessenger.of(context).showSnackBar(

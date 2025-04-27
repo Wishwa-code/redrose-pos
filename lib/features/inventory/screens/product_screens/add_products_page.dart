@@ -168,6 +168,7 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                               child: ProductFilter(
                                 controller: _productnameController,
                                 idController: _productidController,
+                                shouldGoOnClick: false,
                               ),
                             ),
                           );
@@ -325,7 +326,7 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                     // ),
                     ProviderDropdownField(
                       provider: brandNotifierProvider,
-                      selectedBrandId: selectedSupplier,
+                      selectedValue: selectedSupplier,
                       labelText: 'Select brand | සන්නාමය',
                       onChanged: (value) {
                         setState(() {
@@ -360,7 +361,7 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                     // ),
                     ProviderDropdownField(
                       provider: supplierNotifierProvider,
-                      selectedBrandId: selectedBrandId,
+                      selectedValue: selectedBrandId,
                       labelText: 'Select supplier | සැපයුම්කරු',
                       onChanged: (value) {
                         setState(() {

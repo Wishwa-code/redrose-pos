@@ -175,8 +175,11 @@ class ApiClient {
         'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/public/product_images/$encodedPath';
 
     final updatedProduct = product.copyWith(imageUrl: publicUrl);
+
+    logger.d('Shape of the updated product: $updatedProduct');
+
     final response = await _httpClient.put(
-      '/product/update',
+      '/products/update',
       data:
           updatedProduct.toJson(), // Assuming `product.toJson()` matches your backend expectations
     );
@@ -329,6 +332,25 @@ class ApiClient {
       logger.f('Error fetching variances for product $productId: $e');
       rethrow;
     }
+  }
+
+  Future<Variance> fetchVarianceById(String id) async {
+    final response = await _httpClient.get<Map<String, dynamic>>('/variance/get-product/$id');
+
+    final data = response.data;
+
+    if (data == null || data['product'] == null) {
+      logger.d('No product found for id $id: $data');
+      throw Exception('Product not found');
+    }
+
+    final responseMap = data as Map<String, dynamic>;
+
+
+    final varianceMap = responseMap['product'] as Map<String, dynamic>;
+
+// ✅ Convert to Variance model
+    return Variance.fromJson(varianceMap);
   }
 
 //! ============================================================================ //

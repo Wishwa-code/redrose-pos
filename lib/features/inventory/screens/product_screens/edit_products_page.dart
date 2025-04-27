@@ -84,7 +84,7 @@ class _AddVariancesPageState extends ConsumerState<EditVariancesPage> {
           imageUrl: 'will be updated after uploading image to cloud storage',
           varianceTitle: _variancetitleController.text,
           brand: selectedBrandId!,
-          supplier: _supplierController.text,
+          supplier: selectedSupplier!,
           originalPrice: double.tryParse(_originalPriceController.text) ?? 0.0,
           retailPrice: double.tryParse(_retailPriceController.text) ?? 0.0,
           wholesalePrice: double.tryParse(_wholesalePriceController.text) ?? 0.0,
@@ -118,6 +118,32 @@ class _AddVariancesPageState extends ConsumerState<EditVariancesPage> {
   Widget build(BuildContext context) {
     final product = ref.watch(lastVarianceProvider);
     _rootController.text = 'root';
+
+    ref.listen<AsyncValue<Variance?>>(
+      lastVarianceProvider,
+      (prev, next) {
+        next.whenData((variance) {
+          if (variance != null) {
+            // debugPrint('Fetched product: ${product.displayTitle}');
+            // Optionally update controllers with product data
+
+            _displaytitleController.text = variance.displayTitle;
+            _variancedescriptionController.text = variance.varianceDescription;
+            _variancetitleController.text = variance.varianceTitle;
+            selectedBrandId = variance.brand;
+            selectedSupplier = variance.supplier;
+            // _supplierController.text = variance.supplier;
+            _originalPriceController.text = variance.originalPrice.toString();
+            _retailPriceController.text = variance.retailPrice.toString();
+            _wholesalePriceController.text = variance.wholesalePrice.toString();
+            _quantityController.text = variance.quantity.toString();
+            _unitMeasureController.text = variance.unitMeasure;
+            _leastSubUnitMeasureController.text = variance.leastSubUnitMeasure.toString();
+            // etc.
+          }
+        });
+      },
+    );
 
     return Scaffold(
       body: Padding(
@@ -299,72 +325,24 @@ class _AddVariancesPageState extends ConsumerState<EditVariancesPage> {
                       },
                     ),
                     const SizedBox(height: 12),
-                    // TextFormField(
-                    //   controller: _brandController,
-                    //   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    //         color: Theme.of(context).colorScheme.onPrimaryFixed,
-                    //       ),
-                    //   decoration: InputDecoration(
-                    //     labelText: 'Brand',
-                    //     labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    //           color: Theme.of(context).colorScheme.onPrimaryFixed,
-                    //         ),
-                    //     border: OutlineInputBorder(
-                    //       borderSide: BorderSide(
-                    //         color: Theme.of(context).colorScheme.outline,
-                    //       ),
-                    //       borderRadius: BorderRadius.circular(8),
-                    //     ),
-                    //   ),
-                    //   validator: (value) {
-                    //     if (value == null || value.isEmpty) {
-                    //       return 'Please enter brand';
-                    //     }
-                    //     return null;
-                    //   },
-                    // ),
                     ProviderDropdownField(
                       provider: brandNotifierProvider,
-                      selectedBrandId: selectedSupplier,
+                      selectedValue: selectedBrandId,
                       labelText: 'Select brand',
                       onChanged: (value) {
                         setState(() {
-                          selectedSupplier = value;
+                          selectedBrandId = value;
                         });
                       },
                     ),
                     const SizedBox(height: 12),
-                    // TextFormField(
-                    //   controller: _supplierController,
-                    //   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    //         color: Theme.of(context).colorScheme.onPrimaryFixed,
-                    //       ),
-                    //   decoration: InputDecoration(
-                    //     labelText: 'Supplier',
-                    //     labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    //           color: Theme.of(context).colorScheme.onPrimaryFixed,
-                    //         ),
-                    //     border: OutlineInputBorder(
-                    //       borderSide: BorderSide(
-                    //         color: Theme.of(context).colorScheme.outline,
-                    //       ),
-                    //       borderRadius: BorderRadius.circular(8),
-                    //     ),
-                    //   ),
-                    //   validator: (value) {
-                    //     if (value == null || value.isEmpty) {
-                    //       return 'Please enter supplier';
-                    //     }
-                    //     return null;
-                    //   },
-                    // ),
                     ProviderDropdownField(
                       provider: supplierNotifierProvider,
-                      selectedBrandId: selectedBrandId,
+                      selectedValue: selectedSupplier,
                       labelText: 'Select supplier',
                       onChanged: (value) {
                         setState(() {
-                          selectedBrandId = value;
+                          selectedSupplier = value;
                         });
                       },
                     ),
