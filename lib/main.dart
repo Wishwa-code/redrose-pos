@@ -7,12 +7,13 @@ import 'features/settings/models/dark_theme.dart';
 import 'features/settings/models/light_theme.dart';
 import 'features/settings/providers/theme_provider.dart';
 import 'router/router.dart';
-import 'utils/state_logger.dart';
 
 void main() {
+  // debugRepaintRainbowEnabled = true;
+  // debugInvertOversizedImages = true;
   runApp(
     const ProviderScope(
-      observers: [StateLogger()],
+      // observers: [StateLogger()],
       child: _EagerInitialization(
         child: MyAwesomeApp(),
       ),

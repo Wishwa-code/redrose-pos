@@ -95,7 +95,7 @@ class ApiClient {
   Future<Product> fetchLastProduct() async {
     final response = await _httpClient.get('/last-product');
 
-    logger.d('Last added product: $response');
+    // logger.d('Last added product: $response');
 
     // Assuming the API response contains a 'product' key with a single product object
     final productData = response.data['product'] as Map<String, dynamic>;
@@ -204,6 +204,58 @@ class ApiClient {
     return Product.fromJson(data['product'] as Map<String, dynamic>);
   }
 
+  Future<List<Product>> productSearch({
+    required String search,
+    required List<String> selectedDepartments,
+    required List<String> selectedCategories,
+    required List<String> selectedSubCategories,
+    required bool lookinDescription,
+    required int page,
+  }) async {
+    final queryParams = <String, String>{
+      'sort': 'title',
+      'order': 'asc',
+      'page': page.toString(),
+      'pagesize': '10',
+    };
+
+    if (search.isNotEmpty) {
+      queryParams['title'] = search;
+    }
+
+    if (selectedDepartments.isNotEmpty) {
+      queryParams['department'] = selectedDepartments.join(',');
+    }
+
+    if (selectedCategories.isNotEmpty) {
+      queryParams['main_catogory'] = selectedCategories.join(',');
+    }
+
+    if (selectedSubCategories.isNotEmpty) {
+      queryParams['sub_catogory'] = selectedSubCategories.join(',');
+    }
+
+    if (lookinDescription) {
+      queryParams['lookinDescription'] = 'true';
+    }
+
+    final response = await _httpClient.get('/products/search', queryParameters: queryParams);
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to fetch data: ${response.statusCode}');
+    }
+
+    final data = response.data;
+    final products = data['products'];
+
+    if (products == null || products is! List) {
+      logger.d('❗ Unexpected or missing "products" key: $data');
+      return [];
+    }
+
+    return (data['products'] as List).cast<_ResponseData>().map(Product.fromJson).toList();
+  }
+
   //! ============================================================================ //
 //? ======== ✈️ This is the section for menu tree related api calls ✈️ ========== //
 //! ============================================================================ //
@@ -263,7 +315,7 @@ class ApiClient {
   Future<Variance> fetchLastVariance() async {
     final response = await _httpClient.get('/variance/last');
 
-    logger.d('Last added variance: $response');
+    // logger.d('Last added variance: $response');
 
     final varianceData = response.data['variance'] as Map<String, dynamic>;
 

@@ -45,11 +45,29 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
   final _unitMeasureController = TextEditingController();
   final _leastSubUnitMeasureController = TextEditingController();
 
+  final _barcodeController = TextEditingController();
+
+  final FocusNode _focusNode = FocusNode();
+  final FocusNode _displayTitlefNode = FocusNode();
+  final FocusNode _aboutThisProdcutfNode = FocusNode();
+  final FocusNode _productNamefNode = FocusNode();
+  final FocusNode _brandfNode = FocusNode();
+  final FocusNode _supplierfNode = FocusNode();
+  final FocusNode _originalPricefNode = FocusNode();
+
+  final FocusNode _retailPricefNode = FocusNode();
+  final FocusNode _wholesalelPricefNode = FocusNode();
+  final FocusNode _unitmetricfNode = FocusNode();
+  final FocusNode _quantityefNode = FocusNode();
+  final FocusNode _leastsubunitfNode = FocusNode();
+
   File? _selectedImage;
   String? _selectedImageName;
 
   @override
   void dispose() {
+    _focusNode.dispose();
+    _barcodeController.dispose();
     _productnameController.dispose();
     _productidController.dispose();
     _displaytitleController.dispose();
@@ -62,7 +80,16 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
     _departmentController.dispose();
     _mainCategoryController.dispose();
     _subCategoryController.dispose();
+    _quantityController.dispose();
+    _unitMeasureController.dispose();
+    _leastSubUnitMeasureController.dispose();
+    _rootController.dispose();
     super.dispose();
+  }
+
+  void _focusTextField(string) {
+    FocusScope.of(context).requestFocus(_focusNode);
+    print(string);
   }
 
   Future<void> addVariance() async {
@@ -177,6 +204,7 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                                     controller: _productnameController,
                                     idController: _productidController,
                                     shouldGoOnClick: false,
+                                    onProductSelected: _focusTextField,
                                   ),
                                 ),
                               );
@@ -189,61 +217,86 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                       spacing: 20,
                       children: [
                         Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 16),
-                            child: TextFormField(
-                              controller: _productnameController,
-                              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                    color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                  ),
-                              decoration: InputDecoration(
-                                labelText: 'Category of the new product | නව අයිතමයේ වර්ගය',
-                                labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                      color: Theme.of(context).colorScheme.primary,
-                                    ),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Theme.of(context).colorScheme.outline.withAlpha(225),
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
+                          child: TextFormField(
+                            controller: _productnameController,
+                            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Theme.of(context).colorScheme.onPrimaryFixed,
                                 ),
+                            decoration: InputDecoration(
+                              labelText: 'Category of the new product | නව අයිතමයේ වර්ගය',
+                              labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).colorScheme.outline.withAlpha(225),
+                                ),
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter product name';
-                                }
-                                return null;
-                              },
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter product name';
+                              }
+                              return null;
+                            },
                           ),
                         ),
                         Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 16),
-                            child: TextFormField(
-                              controller: _productidController,
-                              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                    color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                  ),
-                              decoration: InputDecoration(
-                                labelText: 'Category ID | වර්ග අංකය',
-                                labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                      color: Theme.of(context).colorScheme.primary,
-                                    ),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Theme.of(context).colorScheme.outline,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
+                          child: TextFormField(
+                            controller: _productidController,
+                            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Theme.of(context).colorScheme.onPrimaryFixed,
                                 ),
+                            decoration: InputDecoration(
+                              labelText: 'Category ID | වර්ග අංකය',
+                              labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).colorScheme.outline,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter product name';
-                                }
-                                return null;
-                              },
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter product name';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            focusNode: _focusNode,
+                            controller: _barcodeController,
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (_) {
+                              FocusScope.of(context).requestFocus(_displayTitlefNode);
+                            },
+                            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                ),
+                            decoration: InputDecoration(
+                              labelText: 'Product Barcode | වර්ග අංකය',
+                              labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).colorScheme.outline,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter product name';
+                              }
+                              return null;
+                            },
                           ),
                         ),
                       ],
@@ -276,6 +329,11 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                               spacing: 20,
                               children: [
                                 TextFormField(
+                                  focusNode: _displayTitlefNode,
+                                  textInputAction: TextInputAction.next,
+                                  onFieldSubmitted: (_) {
+                                    FocusScope.of(context).requestFocus(_aboutThisProdcutfNode);
+                                  },
                                   controller: _displaytitleController,
                                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                                         color: Theme.of(context).colorScheme.onPrimaryFixed,
@@ -300,6 +358,11 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                                   },
                                 ),
                                 TextFormField(
+                                  focusNode: _aboutThisProdcutfNode,
+                                  textInputAction: TextInputAction.next,
+                                  onFieldSubmitted: (_) {
+                                    FocusScope.of(context).requestFocus(_productNamefNode);
+                                  },
                                   controller: _variancedescriptionController,
                                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                                         color: Theme.of(context).colorScheme.onPrimaryFixed,
@@ -324,6 +387,11 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                                   },
                                 ),
                                 TextFormField(
+                                  focusNode: _productNamefNode,
+                                  textInputAction: TextInputAction.next,
+                                  onFieldSubmitted: (_) {
+                                    FocusScope.of(context).requestFocus(_brandfNode);
+                                  },
                                   controller: _variancetitleController,
                                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                                         color: Theme.of(context).colorScheme.onPrimaryFixed,
@@ -368,21 +436,26 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                                   ),
                                 ),
                                 ProviderDropdownField(
+                                  focusNode: _brandfNode,
                                   provider: brandNotifierProvider,
                                   selectedValue: selectedSupplier,
                                   labelText: 'Select brand | සන්නාමය',
                                   onChanged: (value) {
                                     setState(() {
+                                      FocusScope.of(context).requestFocus(_supplierfNode);
                                       selectedSupplier = value;
                                     });
                                   },
                                 ),
                                 ProviderDropdownField(
+                                  focusNode: _supplierfNode,
                                   provider: supplierNotifierProvider,
                                   selectedValue: selectedBrandId,
                                   labelText: 'Select supplier | සැපයුම්කරු',
                                   onChanged: (value) {
                                     setState(() {
+                                      FocusScope.of(context).requestFocus(_originalPricefNode);
+
                                       selectedBrandId = value;
                                     });
                                   },
@@ -425,22 +498,31 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                                     children: [
                                       Expanded(
                                         child: PriceFormField(
-                                          // contentPadding: const EdgeInsets.symmetric(
-                                          //   vertical: 100,
-                                          //   horizontal: 5,
-                                          // ),
+                                          focusNode: _originalPricefNode,
+                                          onFieldSubmitted: (_) {
+                                            FocusScope.of(context).requestFocus(_retailPricefNode);
+                                          },
                                           controller: _originalPriceController,
                                           label: 'Original price | මුල් මිල',
                                         ),
                                       ),
                                       Expanded(
                                         child: PriceFormField(
+                                          focusNode: _retailPricefNode,
+                                          onFieldSubmitted: (_) {
+                                            FocusScope.of(context)
+                                                .requestFocus(_wholesalelPricefNode);
+                                          },
                                           controller: _retailPriceController,
                                           label: 'Retail price | සිල්ලර මිල',
                                         ),
                                       ),
                                       Expanded(
                                         child: PriceFormField(
+                                          focusNode: _wholesalelPricefNode,
+                                          onFieldSubmitted: (_) {
+                                            FocusScope.of(context).requestFocus(_unitmetricfNode);
+                                          },
                                           controller: _wholesalePriceController,
                                           label: 'Wholesale price | තොග මිල',
                                           isRequired: false, // Optional field
@@ -470,6 +552,11 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                                 ),
                                 const SizedBox(height: 34),
                                 TextFormField(
+                                  focusNode: _unitmetricfNode,
+                                  textInputAction: TextInputAction.next,
+                                  onFieldSubmitted: (_) {
+                                    FocusScope.of(context).requestFocus(_quantityefNode);
+                                  },
                                   controller: _unitMeasureController,
                                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                                         color: Theme.of(context).colorScheme.onPrimaryFixed,
@@ -499,12 +586,17 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                                   children: [
                                     Expanded(
                                       child: PriceFormField(
+                                        focusNode: _quantityefNode,
+                                        onFieldSubmitted: (_) {
+                                          FocusScope.of(context).requestFocus(_leastsubunitfNode);
+                                        },
                                         controller: _quantityController,
                                         label: 'Quantity | පරිමාණය',
                                       ),
                                     ),
                                     Expanded(
                                       child: PriceFormField(
+                                        focusNode: _leastsubunitfNode,
                                         controller: _leastSubUnitMeasureController,
                                         label:
                                             'Min.sub unit as fracture of unit | විකුණන අවම පරිමාණය ඒ්කකයේ භාගයක් වශයෙන් 1 ට වඩා අඩු දශම සංඛ්‍යාවක් ලෙස',

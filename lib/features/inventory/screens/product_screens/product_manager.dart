@@ -14,13 +14,14 @@ class ProductManagerPage extends ConsumerStatefulWidget {
 }
 
 class _CategoryManagerPageState extends ConsumerState<ProductManagerPage>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController =
+        TabController(length: 2, vsync: this, animationDuration: const Duration(milliseconds: 600));
   }
 
   @override
@@ -38,7 +39,13 @@ class _CategoryManagerPageState extends ConsumerState<ProductManagerPage>
           color: Theme.of(context).colorScheme.surface,
           child: TabBar(
             controller: _tabController,
-            labelColor: Theme.of(context).colorScheme.primary,
+            labelColor: Theme.of(context).colorScheme.tertiary,
+            labelStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+            indicatorWeight: 5,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorColor: Theme.of(context).colorScheme.tertiary,
             tabs: const [
               Tab(text: 'Add Product'),
               Tab(text: 'Edit Product'),

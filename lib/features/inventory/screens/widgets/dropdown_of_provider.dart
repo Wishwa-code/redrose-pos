@@ -10,12 +10,14 @@ class ProviderDropdownField extends ConsumerWidget {
     required this.onChanged,
     required this.provider,
     this.labelText = 'Select ',
+    this.focusNode,
   });
 
   final String? selectedValue;
   final ValueChanged<String?> onChanged;
   final String labelText;
   final ProviderListenable<AsyncValue<List<dynamic>>> provider;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,6 +27,8 @@ class ProviderDropdownField extends ConsumerWidget {
       data: (brands) {
         logger.d('🌿 Provider dropdown brands $brands');
         return DropdownButtonFormField<String>(
+
+          focusNode: focusNode,
           value: brands.any((b) => b.name == selectedValue)
               ? selectedValue
               : brands.first.name.toString(),

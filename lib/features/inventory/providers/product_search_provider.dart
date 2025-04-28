@@ -1,17 +1,14 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../utils/print_logger.dart';
+import '/api/api_client_service.dart';
+import '../models/product.dart';
 import './filter_prodcut_state_providers.dart';
 
 part 'product_search_provider.g.dart'; // <-- Make sure this matches your file
 
 @riverpod
-Future<List<Map<String, dynamic>>> productSearch(ProductSearchRef ref) async {
-  final client = http.Client();
-  ref.onDispose(client.close);
+Future<List<Product>> productSearch(ProductSearchRef ref) async {
+  final apiService = await ref.watch(apiServiceProvider.future);
 
   final search = ref.watch(searchFieldProvider).trim();
   final selectedDepartments = ref.watch(departmentFilterProvider);
@@ -20,50 +17,19 @@ Future<List<Map<String, dynamic>>> productSearch(ProductSearchRef ref) async {
   final lookinDescription = ref.watch(lookinDescriptionProvider);
   final page = ref.watch(currentPageProvider);
 
-  final queryParams = <String, String>{
-    'sort': 'title',
-    'order': 'asc',
-    'page': page.toString(),
-    'pagesize': '10',
-  };
+  final products = await apiService.productSearch(
+    search: search,
+    selectedDepartments: selectedDepartments,
+    selectedCategories: selectedCategories,
+    selectedSubCategories: selectedSubCategories,
+    lookinDescription: lookinDescription,
+    page: page,
+  );
 
-  if (search.isNotEmpty) {
-    queryParams['title'] = search;
-  }
+  ref.keepAlive();
 
-  if (selectedDepartments.isNotEmpty) {
-    queryParams['department'] = selectedDepartments.join(',');
-  }
-
-  if (selectedCategories.isNotEmpty) {
-    queryParams['main_catogory'] = selectedCategories.join(',');
-  }
-  if (selectedSubCategories.isNotEmpty) {
-    queryParams['sub_catogory'] = selectedSubCategories.join(',');
-  }
-
-  if (lookinDescription) {
-    // <-- Check if lookinDescription is true
-    queryParams['lookinDescription'] = 'true';
-  }
-
-  final uri = Uri.http('localhost:8080', '/products/search', queryParams);
-
-  final response = await client.get(uri);
-  if (response.statusCode != 200) {
-    throw Exception('Failed to fetch data: ${response.statusCode}');
-  }
-
-  final data = jsonDecode(response.body);
-  final products = data['products'];
-  if (products == null || products is! List) {
-    logger.d('❗ Unexpected or missing "products" key: $data');
-    return [];
-  }
-
-  return products.cast<Map<String, dynamic>>();
+  return products;
 }
-
 // // Copyright (c) 2019, the Dart project authors.  Please see the AUTHORS file
 // // for details. All rights reserved. Use of this source code is governed by a
 // // BSD-style license that can be found in the LICENSE file.

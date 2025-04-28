@@ -7,21 +7,31 @@ class PriceFormField extends StatelessWidget {
     required this.controller,
     required this.label,
     this.isRequired = true,
+    this.focusNode,
+    this.textInputAction = TextInputAction.next,
     this.contentPadding = const EdgeInsets.symmetric(
       vertical: 34,
       horizontal: 10,
     ),
+    this.onFieldSubmitted,
   });
   final TextEditingController controller;
   final String label;
   final bool isRequired;
   final EdgeInsetsGeometry contentPadding;
+  final FocusNode? focusNode;
+  final TextInputAction textInputAction;
+
+  final ValueChanged<String>? onFieldSubmitted;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: TextFormField(
+        focusNode:focusNode,
         controller: controller,
+
+        onFieldSubmitted:onFieldSubmitted,
         style: Theme.of(context).textTheme.labelMedium!.copyWith(
               color: Theme.of(context).colorScheme.onPrimaryFixed,
             ),

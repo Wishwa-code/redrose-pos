@@ -287,73 +287,71 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                       ),
                     ),
                     switch (product) {
-                      AsyncData(:final value) => SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.network(
-                                  value.imageUrl,
-                                  width: 300,
-                                  height: 300,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) => const Icon(
-                                    color: Color.fromARGB(255, 119, 116, 116),
-                                    size: 100,
-                                    Icons.broken_image,
-                                  ),
+                      AsyncData(:final value) => Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.network(
+                                value.imageUrl,
+                                width: 300,
+                                height: 300,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) => const Icon(
+                                  color: Color.fromARGB(255, 119, 116, 116),
+                                  size: 100,
+                                  Icons.broken_image,
                                 ),
                               ),
-                              Column(
-                                spacing: 10,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Product               : ${value.title}',
-                                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                          color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                        ),
-                                  ),
-                                  Text(
-                                    'ID                          : ${value.id}',
-                                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                          color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                        ),
-                                  ),
-                                  Text(
-                                    'Description         : ${value.description}',
-                                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                          color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                        ),
-                                  ),
-                                  Text(
-                                    'Tags                      : ${value.tagOne}, ${value.tagTwo}',
-                                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                          color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                        ),
-                                  ),
-                                  Text(
-                                    'Department        : ${value.department}',
-                                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                          color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                        ),
-                                  ),
-                                  Text(
-                                    'Main Category    : ${value.mainCategory}',
-                                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                          color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                        ),
-                                  ),
-                                  Text(
-                                    'Sub Category      : ${value.subCategory}',
-                                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                          color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                            ),
+                            Column(
+                              spacing: 10,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Product               : ${value.title}',
+                                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                      ),
+                                ),
+                                Text(
+                                  'ID                          : ${value.id}',
+                                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                      ),
+                                ),
+                                Text(
+                                  'Description         : ${value.description}',
+                                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                      ),
+                                ),
+                                Text(
+                                  'Tags                      : ${value.tagOne}, ${value.tagTwo}',
+                                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                      ),
+                                ),
+                                Text(
+                                  'Department        : ${value.department}',
+                                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                      ),
+                                ),
+                                Text(
+                                  'Main Category    : ${value.mainCategory}',
+                                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                      ),
+                                ),
+                                Text(
+                                  'Sub Category      : ${value.subCategory}',
+                                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       AsyncError(:final error, :final stackTrace) => Text(
                           'Oops, something unexpected happened: $error',

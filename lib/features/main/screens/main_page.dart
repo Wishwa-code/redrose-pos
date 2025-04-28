@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../widgets/home_button.dart';
 import '../../inventory/models/dashboardbuttons.dart';
-import '../../inventory/models/product.dart';
 import '../../inventory/providers/filter_prodcut_state_providers.dart';
 import '../../inventory/providers/product_search_provider.dart';
 
@@ -245,7 +244,7 @@ class DashBoardPage extends ConsumerWidget {
                               child: ListView.builder(
                                 itemCount: products.length,
                                 itemBuilder: (context, index) {
-                                  final product = Product.fromJson(products[index]);
+                                  final product = products[index];
 
                                   return Card(
                                     margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
