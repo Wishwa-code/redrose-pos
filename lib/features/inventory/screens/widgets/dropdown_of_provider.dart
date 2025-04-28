@@ -31,6 +31,9 @@ class ProviderDropdownField extends ConsumerWidget {
           isExpanded: true,
           decoration: InputDecoration(
             labelText: labelText,
+            labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -40,7 +43,12 @@ class ProviderDropdownField extends ConsumerWidget {
             ...brands.map(
               (brand) => DropdownMenuItem<String>(
                 value: brand.name.toString(),
-                child: Text(brand.name.toString()),
+                child: Text(
+                  brand.name.toString(),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimaryFixed,
+                      ),
+                ),
               ),
             ),
           ],

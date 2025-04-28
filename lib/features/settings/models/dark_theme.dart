@@ -17,6 +17,7 @@ final darkTheme = ThemeData(
     onSecondary: Colors.white,
     secondaryContainer: Color(0xFF3A0034),
     onSecondaryContainer: Color(0xFFFFD7F1),
+    onSecondaryFixed: Color.fromARGB(255, 207, 78, 121),
     tertiary: Color(0xFFD92C30),
     onTertiary: Colors.white,
     tertiaryContainer: Color(0xFF93000A),

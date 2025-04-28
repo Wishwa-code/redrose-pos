@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -126,34 +127,50 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 2,
+              flex: 4,
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(22),
                 child: Form(
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
+                    spacing: 20,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: Text(
+                            'Select the category you want to change | වෙනස් කිරීමට අවශ්‍ය වර්ගය/කාණ්ඩය තෝරගන්න',
+                            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                                  color: Theme.of(context).colorScheme.onTertiaryContainer,
+                                ),
+                          ),
+                        ),
+                      ),
+                      DottedBorder(
+                        borderType: BorderType.RRect,
+                        dashPattern: const [4, 2],
+                        radius: const Radius.circular(8),
+                        color: Theme.of(context).colorScheme.outline,
                         child: LayoutBuilder(
                           builder: (context, constraints) {
                             final screenHeight = MediaQuery.of(context).size.height;
                             final containerHeight = screenHeight < 700 ? 500.0 : 700.0;
 
-                            return Container(
-                              width: 400,
+                            return SizedBox(
+                              // width: 400,
                               height: containerHeight,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Theme.of(context).colorScheme.outline,
-                                  width: 1.5,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
+                              // decoration: BoxDecoration(
+                              //   border: Border.all(
+                              //     color: Theme.of(context).colorScheme.outline,
+                              //     width: 1.5,
+                              //   ),
+                              //   borderRadius: BorderRadius.circular(8),
+                              // ),
                               child: Padding(
                                 padding: const EdgeInsets.only(
-                                  top: 16,
+                                  top: 4,
                                   left: 16,
                                   bottom: 4,
                                 ),
@@ -180,7 +197,7 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                         decoration: InputDecoration(
                           labelText: 'Product Name',
                           labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -196,7 +213,6 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 16),
                       TextFormField(
                         controller: _productidController,
                         style: Theme.of(context).textTheme.titleMedium!.copyWith(
@@ -205,7 +221,7 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                         decoration: InputDecoration(
                           labelText: 'Category ID',
                           labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -221,7 +237,6 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 16),
                       TextFormField(
                         controller: _descriptionController,
                         style: Theme.of(context).textTheme.titleMedium!.copyWith(
@@ -230,7 +245,7 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                         decoration: InputDecoration(
                           labelText: 'Description',
                           labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -241,7 +256,6 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                         ),
                         maxLines: 2,
                       ),
-                      const SizedBox(height: 16),
                       EnumDropdownField(
                         key: ValueKey(_productidController.text),
                         name: 'department',
@@ -252,7 +266,6 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                         isattached: true,
                         level: 1,
                       ),
-                      const SizedBox(height: 16),
                       EnumDropdownField(
                         name: 'main_categorie',
                         label: 'Main Category',
@@ -262,7 +275,6 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                         isattached: true, // main_categorie use department
                         level: 2,
                       ),
-                      const SizedBox(height: 16),
                       EnumDropdownField(
                         name: 'sub_categorie',
                         label: 'Sub Category',
@@ -272,7 +284,6 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                         isattached: true,
                         level: 3,
                       ),
-                      const SizedBox(height: 16),
                       EnumDropdownField(
                         name: 'tag_one',
                         label: 'Tag one',
@@ -282,7 +293,6 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                         isattached: false,
                         level: -1,
                       ),
-                      const SizedBox(height: 16),
                       EnumDropdownField(
                         name: 'tag_two',
                         label: 'Tag two',
@@ -292,7 +302,6 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                         isattached: false,
                         level: -2,
                       ),
-                      const SizedBox(height: 24),
                       ElevatedButton.icon(
                         icon: Icon(
                           Icons.upload_file,
@@ -353,16 +362,16 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                 ),
               ),
             ),
-            ColoredBox(
-              color: Theme.of(context).colorScheme.outline,
-              child: SizedBox(
-                width: 1,
-                child: SizedBox(
-                  height: screenHeight,
-                  width: 0.5,
-                ),
-              ),
-            ),
+            // ColoredBox(
+            //   color: Theme.of(context).colorScheme.outline,
+            //   child: SizedBox(
+            //     width: 1,
+            //     child: SizedBox(
+            //       height: screenHeight,
+            //       width: 0.5,
+            //     ),
+            //   ),
+            // ),
             Expanded(
               flex: 2,
               child: Padding(

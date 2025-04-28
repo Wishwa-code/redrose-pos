@@ -53,4 +53,14 @@ const textTheme = TextTheme(
     fontSize: 15,
     fontWeight: FontWeight.w800,
   ),
+  labelMedium: TextStyle(
+    fontFamily: 'IBM Plex Sans',
+    fontSize: 42,
+    fontWeight: FontWeight.w500,
+  ),
+  bodyLarge: TextStyle(
+    fontFamily: 'IBM Plex Sans',
+    fontSize: 28,
+    fontWeight: FontWeight.w500,
+  ),
 );

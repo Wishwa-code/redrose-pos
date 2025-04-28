@@ -344,8 +344,7 @@ class ApiClient {
       throw Exception('Product not found');
     }
 
-    final responseMap = data as Map<String, dynamic>;
-
+    final responseMap = data;
 
     final varianceMap = responseMap['product'] as Map<String, dynamic>;
 

@@ -103,12 +103,13 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 2,
+              flex: 4,
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(22),
+                padding: const EdgeInsets.all(40),
                 child: Form(
                   key: _formKey,
                   child: Column(
+                    spacing: 20,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       TextFormField(
@@ -119,7 +120,7 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                         decoration: InputDecoration(
                           labelText: 'Product Name | වර්ගයේ නම',
                           labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -135,7 +136,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 16),
                       TextFormField(
                         controller: _descriptionController,
                         style: Theme.of(context).textTheme.titleMedium!.copyWith(
@@ -144,7 +144,7 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                         decoration: InputDecoration(
                           labelText: 'Description | විස්තරය',
                           labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -155,7 +155,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                         ),
                         maxLines: 2,
                       ),
-                      const SizedBox(height: 16),
                       EnumDropdownField(
                         name: 'department',
                         label: 'Department',
@@ -165,7 +164,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                         isattached: true,
                         level: 1,
                       ),
-                      const SizedBox(height: 16),
                       EnumDropdownField(
                         name: 'main_categorie',
                         label: 'Main Category',
@@ -175,7 +173,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                         isattached: true, // main_categorie use department
                         level: 2,
                       ),
-                      const SizedBox(height: 16),
                       EnumDropdownField(
                         name: 'sub_categorie',
                         label: 'Sub Category',
@@ -185,7 +182,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                         isattached: true,
                         level: 3,
                       ),
-                      const SizedBox(height: 16),
                       EnumDropdownField(
                         name: 'tag_one',
                         label: 'Tag one',
@@ -195,7 +191,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                         isattached: false,
                         level: -1,
                       ),
-                      const SizedBox(height: 16),
                       EnumDropdownField(
                         name: 'tag_two',
                         label: 'Tag two',
@@ -205,7 +200,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                         isattached: false,
                         level: -2,
                       ),
-                      const SizedBox(height: 24),
                       ElevatedButton.icon(
                         icon: Icon(
                           Icons.upload_file,
@@ -266,16 +260,16 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                 ),
               ),
             ),
-            ColoredBox(
-              color: Theme.of(context).colorScheme.outline,
-              child: SizedBox(
-                width: 1,
-                child: SizedBox(
-                  height: screenHeight,
-                  width: 0.5,
-                ),
-              ),
-            ),
+            // ColoredBox(
+            //   color: Theme.of(context).colorScheme.outline,
+            //   child: SizedBox(
+            //     width: 1,
+            //     child: SizedBox(
+            //       height: screenHeight,
+            //       width: 0.5,
+            //     ),
+            //   ),
+            // ),
             Expanded(
               flex: 2,
               child: Padding(

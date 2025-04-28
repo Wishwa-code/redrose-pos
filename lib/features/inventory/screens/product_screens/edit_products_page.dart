@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -139,6 +140,7 @@ class _AddVariancesPageState extends ConsumerState<EditVariancesPage> {
             _quantityController.text = variance.quantity.toString();
             _unitMeasureController.text = variance.unitMeasure;
             _leastSubUnitMeasureController.text = variance.leastSubUnitMeasure.toString();
+
             // etc.
           }
         });
@@ -147,47 +149,45 @@ class _AddVariancesPageState extends ConsumerState<EditVariancesPage> {
 
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(40),
         child: SingleChildScrollView(
           child: Column(
             children: [
               Form(
                 key: _varianceformKey,
                 child: Column(
+                  spacing: 20,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.only(bottom: 10),
                       child: SizedBox(
                         width: double.infinity,
                         child: Text(
-                          'Category of the new product',
-                          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                color: Theme.of(context).colorScheme.onPrimaryFixed,
+                          'Select a product to update | වෙනස් කල යුතු අයිතමය තෝරන්න.',
+                          style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                                color: Theme.of(context).colorScheme.onTertiaryContainer,
                               ),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
+                    DottedBorder(
+                      borderType: BorderType.RRect,
+                      dashPattern: const [4, 2],
+                      radius: const Radius.circular(8),
+                      color: Theme.of(context).colorScheme.outline,
                       child: LayoutBuilder(
                         builder: (context, constraints) {
                           final screenHeight = MediaQuery.of(context).size.height;
                           final containerHeight = screenHeight < 700 ? 500.0 : 700.0;
 
-                          return Container(
-                            width: 400,
+                          return SizedBox(
+                            // width: 400,
                             height: containerHeight,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Theme.of(context).colorScheme.outline,
-                                width: 1.5,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+
                             child: Padding(
                               padding: const EdgeInsets.only(
-                                top: 16,
+                                top: 4,
                                 left: 16,
                                 bottom: 4,
                               ),
@@ -200,202 +200,332 @@ class _AddVariancesPageState extends ConsumerState<EditVariancesPage> {
                         },
                       ),
                     ),
-                    TextFormField(
-                      controller: _productnameController,
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimaryFixed,
-                          ),
-                      decoration: InputDecoration(
-                        labelText: 'Category of the new product',
-                        labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                    Row(
+                      spacing: 20,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 16),
+                            child: TextFormField(
+                              controller: _productnameController,
+                              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                  ),
+                              decoration: InputDecoration(
+                                labelText: 'Category of the new product',
+                                labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                      color: Theme.of(context).colorScheme.primary,
+                                    ),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Theme.of(context).colorScheme.outline,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter product name';
+                                }
+                                return null;
+                              },
                             ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Theme.of(context).colorScheme.outline,
                           ),
-                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 16),
+                            child: TextFormField(
+                              controller: _productidController,
+                              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                  ),
+                              decoration: InputDecoration(
+                                labelText: 'Category ID',
+                                labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                      color: Theme.of(context).colorScheme.primary,
+                                    ),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Theme.of(context).colorScheme.outline,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter product name';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(),
+                      child: DottedBorder(
+                        dashPattern: const [6, 3], // dash length, gap
+                        color: Theme.of(context).colorScheme.outline, // line color
+                        padding: EdgeInsets.zero,
+                        customPath: (size) {
+                          return Path()
+                            ..moveTo(0, 0)
+                            ..lineTo(size.width, 0); // draw a horizontal line
+                        },
+                        child: const SizedBox(
+                          width: double.infinity,
+                          height: 1, // thickness of the line
                         ),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter product name';
-                        }
-                        return null;
-                      },
                     ),
-                    const SizedBox(height: 12),
-                    TextFormField(
-                      controller: _productidController,
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimaryFixed,
-                          ),
-                      decoration: InputDecoration(
-                        labelText: 'Category ID',
-                        labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 20,
+                              children: [
+                                TextFormField(
+                                  controller: _displaytitleController,
+                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                      ),
+                                  decoration: InputDecoration(
+                                    labelText: 'Display title',
+                                    labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                          color: Theme.of(context).colorScheme.primary,
+                                        ),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Theme.of(context).colorScheme.outline,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter display title';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                TextFormField(
+                                  controller: _variancedescriptionController,
+                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                      ),
+                                  decoration: InputDecoration(
+                                    labelText: 'About this product',
+                                    labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                          color: Theme.of(context).colorScheme.primary,
+                                        ),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Theme.of(context).colorScheme.outline,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please complete about this product section';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                TextFormField(
+                                  controller: _variancetitleController,
+                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                      ),
+                                  decoration: InputDecoration(
+                                    labelText: 'Product name',
+                                    labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                          color: Theme.of(context).colorScheme.primary,
+                                        ),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Theme.of(context).colorScheme.outline,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter product name';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 4,
+                                    vertical: 16,
+                                  ),
+                                  child: DottedBorder(
+                                    dashPattern: const [6, 3], // dash length, gap
+                                    color: Theme.of(context).colorScheme.outline, // line color
+                                    padding: EdgeInsets.zero,
+                                    customPath: (size) {
+                                      return Path()
+                                        ..moveTo(0, 0)
+                                        ..lineTo(size.width, 0); // draw a horizontal line
+                                    },
+                                    child: const SizedBox(
+                                      width: double.infinity,
+                                      height: 1, // thickness of the line
+                                    ),
+                                  ),
+                                ),
+                                ProviderDropdownField(
+                                  provider: brandNotifierProvider,
+                                  selectedValue: selectedBrandId,
+                                  labelText: 'Select brand',
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedBrandId = value;
+                                    });
+                                  },
+                                ),
+                                ProviderDropdownField(
+                                  provider: supplierNotifierProvider,
+                                  selectedValue: selectedSupplier,
+                                  labelText: 'Select supplier',
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedSupplier = value;
+                                    });
+                                  },
+                                ),
+                              ],
                             ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Theme.of(context).colorScheme.outline,
                           ),
-                          borderRadius: BorderRadius.circular(8),
                         ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter product name';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                    TextFormField(
-                      controller: _displaytitleController,
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimaryFixed,
-                          ),
-                      decoration: InputDecoration(
-                        labelText: 'Display title',
-                        labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                        Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                              child: DottedBorder(
+                                dashPattern: const [6, 3], // Dash length and gap
+                                color: Theme.of(context).colorScheme.outline, // Line color
+                                padding: EdgeInsets.zero,
+                                customPath: (size) {
+                                  return Path()
+                                    ..moveTo(0, 0) // Starting point of the vertical line
+                                    ..lineTo(0, size.height); // Draw the line vertically
+                                },
+                                child: const SizedBox(
+                                  width: 1, // Set the thickness of the divider (horizontal size)
+                                  height: 337, // Set the height (vertical length) of the divider
+                                ),
+                              ),
                             ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Theme.of(context).colorScheme.outline,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
+                          ],
                         ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter display title';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                    TextFormField(
-                      controller: _variancedescriptionController,
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimaryFixed,
-                          ),
-                      decoration: InputDecoration(
-                        labelText: 'About this product',
-                        labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimaryFixed,
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 34),
+                                  child: Row(
+                                    spacing: 20,
+                                    children: [
+                                      Expanded(
+                                        child: PriceFormField(
+                                          controller: _originalPriceController,
+                                          label: 'Original price',
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: PriceFormField(
+                                          controller: _retailPriceController,
+                                          label: 'Retail price',
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: PriceFormField(
+                                          controller: _wholesalePriceController,
+                                          label: 'Wholesale price',
+                                          isRequired: false, // Optional field
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 4,
+                                  ),
+                                  child: DottedBorder(
+                                    dashPattern: const [6, 3], // dash length, gap
+                                    color: Theme.of(context).colorScheme.outline, // line color
+                                    padding: EdgeInsets.zero,
+                                    customPath: (size) {
+                                      return Path()
+                                        ..moveTo(0, 0)
+                                        ..lineTo(size.width, 0); // draw a horizontal line
+                                    },
+                                    child: const SizedBox(
+                                      width: double.infinity,
+                                      height: 1, // thickness of the line
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 34),
+                                TextFormField(
+                                  controller: _unitMeasureController,
+                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                      ),
+                                  decoration: InputDecoration(
+                                    labelText: 'Unit metric',
+                                    labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                          color: Theme.of(context).colorScheme.primary,
+                                        ),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Theme.of(context).colorScheme.outline,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter supplier';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                const SizedBox(height: 20),
+                                Row(
+                                  spacing: 20,
+                                  children: [
+                                    Expanded(
+                                      child: PriceFormField(
+                                        controller: _quantityController,
+                                        label: 'Quantity',
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: PriceFormField(
+                                        controller: _leastSubUnitMeasureController,
+                                        label: 'Min.sub unit as fracture of unit',
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Theme.of(context).colorScheme.outline,
                           ),
-                          borderRadius: BorderRadius.circular(8),
                         ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please complete about this product section';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                    TextFormField(
-                      controller: _variancetitleController,
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimaryFixed,
-                          ),
-                      decoration: InputDecoration(
-                        labelText: 'Product name',
-                        labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimaryFixed,
-                            ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Theme.of(context).colorScheme.outline,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter product name';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                    ProviderDropdownField(
-                      provider: brandNotifierProvider,
-                      selectedValue: selectedBrandId,
-                      labelText: 'Select brand',
-                      onChanged: (value) {
-                        setState(() {
-                          selectedBrandId = value;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                    ProviderDropdownField(
-                      provider: supplierNotifierProvider,
-                      selectedValue: selectedSupplier,
-                      labelText: 'Select supplier',
-                      onChanged: (value) {
-                        setState(() {
-                          selectedSupplier = value;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                    PriceFormField(
-                      controller: _originalPriceController,
-                      label: 'Original price',
-                    ),
-                    const SizedBox(height: 12),
-                    PriceFormField(
-                      controller: _retailPriceController,
-                      label: 'Retail price',
-                    ),
-                    const SizedBox(height: 12),
-                    PriceFormField(
-                      controller: _wholesalePriceController,
-                      label: 'Wholesale price',
-                      isRequired: false, // Optional field
-                    ),
-                    const SizedBox(height: 12),
-                    PriceFormField(
-                      controller: _quantityController,
-                      label: 'Quantity',
-                    ),
-                    const SizedBox(height: 12),
-                    TextFormField(
-                      controller: _unitMeasureController,
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimaryFixed,
-                          ),
-                      decoration: InputDecoration(
-                        labelText: 'Unit metric',
-                        labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimaryFixed,
-                            ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Theme.of(context).colorScheme.outline,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter supplier';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                    PriceFormField(
-                      controller: _leastSubUnitMeasureController,
-                      label: 'Min.sub unit as fracture of unit',
+                      ],
                     ),
                     const SizedBox(height: 25),
                     ElevatedButton.icon(
