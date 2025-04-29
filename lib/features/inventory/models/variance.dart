@@ -9,6 +9,7 @@ class Variance with _$Variance {
     @JsonKey(fromJson: _idFromJson) int? id, // optional for inserts
     required String productName,
     @JsonKey(name: 'product_id') required String productId,
+    @JsonKey(name: 'barcode') required String barcode,
     required String displayTitle,
     @JsonKey(name: 'about_this_variance') required String varianceDescription,
     @JsonKey(name: 'imageurl') required String imageUrl,

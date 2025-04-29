@@ -111,7 +111,7 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
                   onChanged: () => ref.read(currentPageProvider.notifier).state = 1,
                   isSinhala: isSinhala,
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 26),
                 FilterChipsBox(
                   name: 'Category',
                   provider: categoryFilterProvider,
@@ -120,6 +120,7 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
                   onChanged: () => ref.read(currentPageProvider.notifier).state = 1,
                   isSinhala: isSinhala,
                 ),
+                const SizedBox(height: 26),
                 FilterChipsBox(
                   name: 'Sub Category',
                   provider: subCategoryFilterProvider,

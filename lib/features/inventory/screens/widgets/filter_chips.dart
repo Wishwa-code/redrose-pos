@@ -68,7 +68,6 @@ class FilterChipsBox extends ConsumerWidget {
               final isCorrectLevel = node.level == level;
 
               final hasValidParent = parentProvider == null ||
-                  parentValues.isEmpty ||
                   (parentNode != null &&
                       parentNode.level == level - 1 &&
                       parentValues.contains(parentNode.index));
@@ -95,51 +94,88 @@ class FilterChipsBox extends ConsumerWidget {
               Wrap(
                 spacing: 10,
                 runSpacing: 10,
-                children: levelNodes.map((index) {
-                  final isSelected = selectedValues.contains(index);
-                  final label = labelFor(index);
+                children: parentValues.isEmpty
+                    ? isSinhala
+                        ? [
+                            Text(
+                              'මීට ඉහල අත්තේ කිසිදු ශාඛාවක් තෝර ගැන නැත',
+                              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                  ),
+                            ),
+                          ]
+                        : [
+                            Text(
+                              'No values selected for parent level',
+                              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                  ),
+                            ),
+                          ]
+                    : levelNodes.isEmpty
+                        ? isSinhala
+                            ? [
+                                Text(
+                                  'තෝරා ගෙන ඇති ශාඛාවන්ට මේ අත්තේ අගයන් නැත',
+                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                      ),
+                                ),
+                              ]
+                            : [
+                                Text(
+                                  'Selected chips doesnt have child level at $name',
+                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                      ),
+                                ),
+                              ]
+                        : levelNodes.map((index) {
+                            final isSelected = selectedValues.contains(index);
+                            final label = labelFor(index);
 
-                  return Theme(
-                    data: Theme.of(context).copyWith(
-                      chipTheme: Theme.of(context).chipTheme.copyWith(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16), // 👈 Set border radius here
-                            ),
-                          ),
-                    ),
-                    child: FilterChip(
-                      // avatar: isSelected
-                      //     ? const Icon(
-                      //         Icons.check, // Replace with your desired icon
-                      //         size: 10,
-                      //         color: Colors.white,
-                      //       )
-                      //     : null,
-                      selectedColor: const Color(0xFF006FE9),
-                      label: Text(
-                        label,
-                        style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimaryFixed,
-                            ),
-                      ),
-                      selected: isSelected,
-                      onSelected: (bool selected) {
-                        final updated = [...selectedValues];
-                        if (selected) {
-                          updated.add(index);
-                        } else {
-                          updated.remove(index);
-                        }
-                        ref.read(provider.notifier).state = updated;
-                        onChanged?.call();
-                      },
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                      labelPadding: const EdgeInsets.symmetric(horizontal: 8),
-                      visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
-                  );
-                }).toList(),
+                            return Theme(
+                              data: Theme.of(context).copyWith(
+                                chipTheme: Theme.of(context).chipTheme.copyWith(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(16), // 👈 Set border radius here
+                                      ),
+                                    ),
+                              ),
+                              child: FilterChip(
+                                backgroundColor: (level == 1)
+                                    ? Theme.of(context).colorScheme.surfaceContainerLow
+                                    : (level == 2)
+                                        ? Theme.of(context).colorScheme.surfaceContainerHigh
+                                        : (level == 3)
+                                            ? Theme.of(context).colorScheme.surfaceContainerHighest
+                                            : Theme.of(context).colorScheme.surfaceContainerLowest,
+                                selectedColor: const Color(0xFF006FE9),
+                                label: Text(
+                                  label,
+                                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                      ),
+                                ),
+                                selected: isSelected,
+                                onSelected: (bool selected) {
+                                  final updated = [...selectedValues];
+                                  if (selected) {
+                                    updated.add(index);
+                                  } else {
+                                    updated.remove(index);
+                                  }
+                                  ref.read(provider.notifier).state = updated;
+                                  onChanged?.call();
+                                },
+                                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                                labelPadding: const EdgeInsets.symmetric(horizontal: 8),
+                                visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                            );
+                          }).toList(),
               )
             else
               DropdownButtonFormField<String>(

@@ -1,7 +1,7 @@
-import 'package:example/features/auth/providers/auth_controller.dart';
-import 'package:example/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:redrose_pos/features/auth/providers/auth_controller.dart';
+import 'package:redrose_pos/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {

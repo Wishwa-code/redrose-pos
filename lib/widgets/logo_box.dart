@@ -1,6 +1,7 @@
-import 'package:example/features/settings/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../features/settings/providers/theme_provider.dart';
 
 class LogoBox extends ConsumerWidget {
   const LogoBox({super.key});

@@ -44,7 +44,6 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
   final _quantityController = TextEditingController();
   final _unitMeasureController = TextEditingController();
   final _leastSubUnitMeasureController = TextEditingController();
-
   final _barcodeController = TextEditingController();
 
   final FocusNode _focusNode = FocusNode();
@@ -120,6 +119,7 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
           unitMeasure: _unitMeasureController.text,
           leastSubUnitMeasure: double.tryParse(_leastSubUnitMeasureController.text) ?? 0.0,
           productId: _productidController.text,
+          barcode: _barcodeController.text,
         );
 
         // Call the notifier to add product
@@ -280,7 +280,7 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                                   color: Theme.of(context).colorScheme.onPrimaryFixed,
                                 ),
                             decoration: InputDecoration(
-                              labelText: 'Product Barcode | වර්ග අංකය',
+                              labelText: 'Product Barcode | බාර්කෝඩ් අංකය',
                               labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
                                     color: Theme.of(context).colorScheme.primary,
                                   ),

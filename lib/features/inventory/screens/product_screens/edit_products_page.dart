@@ -45,11 +45,14 @@ class _AddVariancesPageState extends ConsumerState<EditVariancesPage> {
   final _unitMeasureController = TextEditingController();
   final _leastSubUnitMeasureController = TextEditingController();
 
+  final _barcodeController = TextEditingController();
+
   File? _selectedImage;
   String? _selectedImageName;
 
   @override
   void dispose() {
+    _barcodeController.dispose();
     _productnameController.dispose();
     _productidController.dispose();
     _displaytitleController.dispose();
@@ -93,6 +96,7 @@ class _AddVariancesPageState extends ConsumerState<EditVariancesPage> {
           unitMeasure: _unitMeasureController.text,
           leastSubUnitMeasure: double.tryParse(_leastSubUnitMeasureController.text) ?? 0.0,
           productId: _productidController.text,
+          barcode: _barcodeController.text,
         );
 
         // Call the notifier to add product
@@ -259,6 +263,37 @@ class _AddVariancesPageState extends ConsumerState<EditVariancesPage> {
                                 return null;
                               },
                             ),
+                          ),
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            // focusNode: _focusNode,
+                            controller: _barcodeController,
+                            textInputAction: TextInputAction.next,
+                            // onFieldSubmitted: (_) {
+                            //   FocusScope.of(context).requestFocus(_displayTitlefNode);
+                            // },
+                            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Theme.of(context).colorScheme.onPrimaryFixed,
+                                ),
+                            decoration: InputDecoration(
+                              labelText: 'Product Barcode | බාර්කෝඩ් අංකය',
+                              labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).colorScheme.outline,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter product name';
+                              }
+                              return null;
+                            },
                           ),
                         ),
                       ],
