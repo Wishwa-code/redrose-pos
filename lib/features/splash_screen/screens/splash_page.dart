@@ -1,5 +1,6 @@
-import 'package:example/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
+
+import '/widgets/loading_spinner.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});

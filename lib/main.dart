@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../utils/print_logger.dart';
@@ -29,13 +30,23 @@ class MyAwesomeApp extends ConsumerWidget {
     final router = ref.watch(routerProvider);
     final themeMode = ref.watch(themeNotifierProvider);
 
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerConfig: router,
-      title: 'Redrose POS',
-      themeMode: themeMode,
-      theme: lightTheme,
-      darkTheme: darkTheme,
+    return KeyboardListener(
+      focusNode: FocusNode()..requestFocus(),
+      onKeyEvent: (event) {
+        if (event is KeyDownEvent) {
+          // Handle key down event
+          logger.d('Key down event: ${event.logicalKey}');
+          // scaffoldKey.currentState!.closeDrawer(),
+        }
+      },
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerConfig: router,
+        title: 'Redrose POS',
+        themeMode: themeMode,
+        theme: lightTheme,
+        darkTheme: darkTheme,
+      ),
     );
   }
 }

@@ -1,7 +1,7 @@
-import 'package:example/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '/router/routes.dart';
 import '../../../widgets/home_button.dart';
 import '../../inventory/models/dashboardbuttons.dart';
 import '../../inventory/providers/filter_prodcut_state_providers.dart';

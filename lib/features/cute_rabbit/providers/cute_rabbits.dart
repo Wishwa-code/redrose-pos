@@ -1,7 +1,8 @@
-import 'package:example/utils/cache_for.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../../utils/cache_for.dart';
 
 part 'cute_rabbits.g.dart';
 

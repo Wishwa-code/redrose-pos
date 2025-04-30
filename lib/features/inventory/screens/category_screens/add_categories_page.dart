@@ -9,6 +9,7 @@ import '../../../../widgets/action_button.dart';
 import '../../models/product.dart';
 import '../../providers/last_entered_product_notifier.dart';
 import '../widgets/enum_drop_down.dart';
+import '../widgets/value_card.dart';
 
 class AddProductsPage extends ConsumerStatefulWidget {
   const AddProductsPage({super.key});
@@ -46,17 +47,17 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
   }
 
   Future<void> addProduct() async {
+    if (_selectedImage == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select an image.')),
+      );
+      return;
+    }
     if (_formKey.currentState!.validate()) {
       final imageFile = File('C:/1wishmi/cw1/dev/v3/assets/rebel.jpg');
       print('manual image path ${imageFile.path} ');
       print('attached image path ${_selectedImage!.path}');
 
-      if (_selectedImage == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please select an image.')),
-        );
-        return;
-      }
       // final uploadResponse =
       //     await ref.read(lastProductProvider.notifier).uploadImage(imageFile);
 
@@ -205,12 +206,19 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                           Icons.upload_file,
                           color: Theme.of(context).colorScheme.onPrimary,
                         ),
-                        label: Text(
-                          'Choose Image',
-                          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                color: Theme.of(context).colorScheme.onPrimary,
+                        label: (_selectedImageName != null)
+                            ? Text(
+                                _selectedImageName!,
+                                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                      color: Theme.of(context).colorScheme.onPrimary,
+                                    ),
+                              )
+                            : Text(
+                                'Choose Image',
+                                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                      color: Theme.of(context).colorScheme.onPrimary,
+                                    ),
                               ),
-                        ),
                         style: ElevatedButton.styleFrom(
                           foregroundColor:
                               Theme.of(context).colorScheme.onPrimaryFixed, // Text and icon color
@@ -241,10 +249,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                           }
                         },
                       ),
-                      if (_selectedImageName != null) ...[
-                        const SizedBox(height: 8),
-                        Text('Selected image: $_selectedImageName'),
-                      ],
                       ActionButton(
                         onPressed: addProduct,
                         icon: const SizedBox.shrink(),
@@ -275,7 +279,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
               child: Padding(
                 padding: const EdgeInsets.all(22),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(bottom: 12),
@@ -293,63 +296,54 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                               borderRadius: BorderRadius.circular(8),
                               child: Image.network(
                                 value.imageUrl,
-                                width: 300,
-                                height: 300,
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) => const Icon(
                                   color: Color.fromARGB(255, 119, 116, 116),
-                                  size: 100,
+                                  size: 250,
                                   Icons.broken_image,
                                 ),
                               ),
                             ),
-                            Column(
-                              spacing: 10,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Product               : ${value.title}',
-                                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                      ),
-                                ),
-                                Text(
-                                  'ID                          : ${value.id}',
-                                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                      ),
-                                ),
-                                Text(
-                                  'Description         : ${value.description}',
-                                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                      ),
-                                ),
-                                Text(
-                                  'Tags                      : ${value.tagOne}, ${value.tagTwo}',
-                                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                      ),
-                                ),
-                                Text(
-                                  'Department        : ${value.department}',
-                                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                      ),
-                                ),
-                                Text(
-                                  'Main Category    : ${value.mainCategory}',
-                                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                      ),
-                                ),
-                                Text(
-                                  'Sub Category      : ${value.subCategory}',
-                                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                      ),
-                                ),
-                              ],
+                            Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: Column(
+                                spacing: 10,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ValueCard(
+                                    label: 'Product',
+                                    value: value.title,
+                                  ),
+                                  ValueCard(
+                                    label: 'ID',
+                                    value: value.id!,
+                                  ),
+                                  ValueCard(
+                                    label: 'Description',
+                                    value: value.description,
+                                  ),
+                                  ValueCard(
+                                    label: 'Tags',
+                                    value: '${value.tagOne}, ${value.tagTwo}',
+                                  ),
+                                  ValueCard(
+                                    label: 'Department',
+                                    value: value.department,
+                                  ),
+                                  ValueCard(
+                                    label: 'Main Category',
+                                    value: value.mainCategory,
+                                  ),
+                                  ValueCard(
+                                    label: 'Main Category',
+                                    value: value.mainCategory,
+                                  ),
+                                  ValueCard(
+                                    label: 'Sub Category',
+                                    value: value.subCategory,
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),

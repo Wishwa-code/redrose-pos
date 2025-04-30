@@ -1,8 +1,8 @@
-import 'package:example/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../features/inventory/screens/widgets/filter_chips.dart';
+import '../../../../router/routes.dart';
 import '../../../../utils/print_logger.dart';
 import '../../../inventory/providers/product_search_provider.dart';
 import './../../providers/filter_prodcut_state_providers.dart';
@@ -96,7 +96,7 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
                               isSinhala = value;
                             });
                           },
-                          activeColor: Colors.blue,
+                          activeColor: Theme.of(context).colorScheme.tertiary,
                         ),
                       ],
                     ),
@@ -187,31 +187,29 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
                       ),
                 ),
               ),
-              SizedBox(
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 16),
-                          child: SwitchListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(
-                              'Search in Description',
-                              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                    color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                  ),
-                            ),
-                            value: ref.watch(lookinDescriptionProvider),
-                            onChanged: (value) {
-                              ref.read(lookinDescriptionProvider.notifier).state = value;
-                            },
-                            activeColor: Colors.blue,
+                    Text(
+                      isSinhala ? 'විස්තරයේත් සොයන්න' : 'Search in Description',
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimaryFixed,
                           ),
-                        ),
-                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Switch(
+                      value: ref.watch(lookinDescriptionProvider),
+                      onChanged: (value) {
+                        ref.read(lookinDescriptionProvider.notifier).state = value;
+                      },
+                      activeColor: Theme.of(context).colorScheme.tertiary,
+                    ),
+                    const SizedBox(
+                      width: 16,
                     ),
                   ],
                 ),
@@ -369,13 +367,28 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
                                 onPressed: currentPage > 1
                                     ? () => ref.read(currentPageProvider.notifier).state--
                                     : null,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+                                  foregroundColor: Theme.of(context).colorScheme.onSecondaryFixed,
+                                ),
                                 child: const Text('Previous'),
                               ),
-                              if (!isLastPage)
-                                ElevatedButton(
-                                  onPressed: () => ref.read(currentPageProvider.notifier).state++,
-                                  child: const Text('Next'),
+                              Row(
+                                children: [
+                                  Text(currentPage.toString()),
+                                  if (isLastPage) const Text(' (last page)') else const SizedBox(),
+                                ],
+                              ),
+                              ElevatedButton(
+                                onPressed: !isLastPage
+                                    ? () => ref.read(currentPageProvider.notifier).state++
+                                    : null,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+                                  foregroundColor: Theme.of(context).colorScheme.onSecondaryFixed,
                                 ),
+                                child: const Text('Next'),
+                              ),
                             ],
                           ),
                         ),

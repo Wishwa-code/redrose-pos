@@ -1,11 +1,12 @@
 import 'dart:async';
 
-import 'package:example/features/auth/models/user_role.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:redrose_pos/features/auth/models/user_role.dart' show User;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '/features/auth/models/auth.dart';
+import '../../../features/auth/models/user_role.dart';
 
 part 'auth_controller.g.dart';
 

@@ -9,6 +9,7 @@ import '../features/inventory/models/product.dart';
 import '../features/inventory/models/supplier.dart';
 import '../features/inventory/models/variance.dart';
 import './product_tree.dart';
+import 'api_client_exception.dart';
 
 Logger logger = Logger(
   printer: PrettyPrinter(),
@@ -64,6 +65,7 @@ class ApiClient {
         );
   static final BaseOptions _defaultOptions = BaseOptions(
     baseUrl: 'http://localhost:8080',
+    // baseUrl: 'https://redrose-go-web-server.onrender.com',
   );
 
   final Dio _httpClient;
@@ -79,129 +81,192 @@ class ApiClient {
 //! ============================================================================ //
 
   Future<List<Product>> fetchProducts() async {
-    final response = await _httpClient.get<Map<String, dynamic>>('/products');
+    try {
+      final response = await _httpClient.get<Map<String, dynamic>>('/products');
 
-    final data = response.data;
+      if (response.statusCode != 200) {
+        throw Exception('Failed: $response');
+      }
 
-    if (data == null || data['products'] == null) {
-      logger.d('got a null value for fetch prodcuts: $data');
+      final data = response.data;
 
-      return []; // or handle the null case however you'd like
+      if (data == null || data['products'] == null) {
+        logger.d('got a null value for fetch prodcuts: $data');
+
+        return []; // or handle the null case however you'd like
+      }
+
+      return (data['products'] as List).cast<_ResponseData>().map(Product.fromJson).toList();
+    } on DioException catch (e) {
+      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
+      final details = e.responseDetails ?? '';
+
+      logger.e('API Error: $message\nDetails: $details');
+
+      // Optionally rethrow with custom message
+      throw Exception('Error: $message\nDetails: $details');
     }
-
-    return (data['products'] as List).cast<_ResponseData>().map(Product.fromJson).toList();
   }
 
   Future<Product> fetchLastProduct() async {
-    final response = await _httpClient.get('/last-product');
+    try {
+      final response = await _httpClient.get('/products/last-product');
 
-    // logger.d('Last added product: $response');
+      // logger.d('Last added product: $response');
 
-    // Assuming the API response contains a 'product' key with a single product object
-    final productData = response.data['product'] as Map<String, dynamic>;
+      // Assuming the API response contains a 'product' key with a single product object
+      final productData = response.data['product'] as Map<String, dynamic>;
 
-    // Return the product parsed using Product.fromJson
-    return Product.fromJson(productData);
+      // Return the product parsed using Product.fromJson
+      return Product.fromJson(productData);
+    } on DioException catch (e) {
+      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
+      final details = e.responseDetails ?? '';
+
+      logger.e('API Error: $message\nDetails: $details');
+
+      // Optionally rethrow with custom message
+      throw Exception('Error: $message\nDetails: $details');
+    }
   }
 
   Future<Product> addProduct(Product product, File imageFile) async {
-    final fileName = imageFile.path.split(r'\').last;
+    try {
+      final fileName = imageFile.path.split(r'\').last;
 
-    final formData = FormData.fromMap({
-      'file': await MultipartFile.fromFile(
-        imageFile.path,
-        filename: fileName,
-        contentType: MediaType('image', 'jpeg'),
-      ),
-    });
+      final formData = FormData.fromMap({
+        'file': await MultipartFile.fromFile(
+          imageFile.path,
+          filename: fileName,
+          contentType: MediaType('image', 'jpeg'),
+        ),
+      });
 
-    final imgresponse = await _httpClient.post(
-      'https://yqewezudxihyadvmfovd.supabase.co/functions/v1/storage-upload',
-      data: formData,
-      options: Options(
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      ),
-    );
-    final imgData = imgresponse.data['data'];
-    final rawPath = imgData['path'] as String;
-    final encodedPath = Uri.encodeComponent(rawPath); // encodes spaces + other special chars
+      final imgresponse = await _httpClient.post(
+        'https://yqewezudxihyadvmfovd.supabase.co/functions/v1/storage-upload',
+        data: formData,
+        options: Options(
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        ),
+      );
+      final imgData = imgresponse.data['data'];
+      final rawPath = imgData['path'] as String;
+      final encodedPath = Uri.encodeComponent(rawPath); // encodes spaces + other special chars
 
-    final publicUrl =
-        'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/public/product_images/$encodedPath';
+      final publicUrl =
+          'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/public/product_images/$encodedPath';
 
-    final updatedProduct = product.copyWith(imageUrl: publicUrl);
+      final updatedProduct = product.copyWith(imageUrl: publicUrl);
 
-    final response = await _httpClient.post(
-      '/products/insert',
-      data: updatedProduct.toJson(), // Assuming your Product model has a `toJson()` method
-    );
+      final response = await _httpClient.post(
+        '/products/insert',
+        data: updatedProduct.toJson(), // Assuming your Product model has a `toJson()` method
+      );
 
-    logger.d('add product response: $response');
+      if (response.statusCode != 200) {
+        throw DioException(
+          requestOptions: RequestOptions(path: '/products/insert'),
+          response: response,
+          type: DioExceptionType.badResponse,
+          error: 'Failed to add product: ${response.statusCode}',
+        );
+      }
 
-    // Parse the response JSON
-    final productData = response.data['product'] as Map<String, dynamic>;
+      logger.d('add product response: $response');
 
-    return Product.fromJson(productData);
+      // Parse the response JSON
+      final productData = response.data['product'] as Map<String, dynamic>;
+
+      return Product.fromJson(productData);
+    } on DioException catch (e) {
+      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
+      final details = e.responseDetails ?? '';
+
+      logger.e('API Error: $message\nDetails: $details');
+
+      // Optionally rethrow with custom message
+      throw Exception('Error: $message\nDetails: $details');
+    }
   }
 
   Future<Product> updateProduct(Product product, File imageFile) async {
-    final fileName = imageFile.path.split(r'\').last;
+    try {
+      final fileName = imageFile.path.split(r'\').last;
 
-    final formData = FormData.fromMap({
-      'file': await MultipartFile.fromFile(
-        imageFile.path,
-        filename: fileName,
-        contentType: MediaType('image', 'jpeg'),
-      ),
-    });
+      final formData = FormData.fromMap({
+        'file': await MultipartFile.fromFile(
+          imageFile.path,
+          filename: fileName,
+          contentType: MediaType('image', 'jpeg'),
+        ),
+      });
 
-    final imgresponse = await _httpClient.post(
-      'https://yqewezudxihyadvmfovd.supabase.co/functions/v1/storage-upload',
-      data: formData,
-      options: Options(
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      ),
-    );
+      final imgresponse = await _httpClient.post(
+        'https://yqewezudxihyadvmfovd.supabase.co/functions/v1/storage-upload',
+        data: formData,
+        options: Options(
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        ),
+      );
 
-    final imgData = imgresponse.data['data'];
-    final rawPath = imgData['path'] as String;
-    final encodedPath = Uri.encodeComponent(rawPath); // encodes spaces + other special chars
+      final imgData = imgresponse.data['data'];
+      final rawPath = imgData['path'] as String;
+      final encodedPath = Uri.encodeComponent(rawPath); // encodes spaces + other special chars
 
-    final publicUrl =
-        'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/public/product_images/$encodedPath';
+      final publicUrl =
+          'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/public/product_images/$encodedPath';
 
-    final updatedProduct = product.copyWith(imageUrl: publicUrl);
+      final updatedProduct = product.copyWith(imageUrl: publicUrl);
 
-    logger.d('Shape of the updated product: $updatedProduct');
+      logger.d('Shape of the updated product: $updatedProduct');
 
-    final response = await _httpClient.put(
-      '/products/update',
-      data:
-          updatedProduct.toJson(), // Assuming `product.toJson()` matches your backend expectations
-    );
+      final response = await _httpClient.put(
+        '/products/update',
+        data: updatedProduct
+            .toJson(), // Assuming `product.toJson()` matches your backend expectations
+      );
 
-    logger.d('Update product response: $response');
+      logger.d('Update product response: $response');
 
-    final productData = response.data['product'] as Map<String, dynamic>;
+      final productData = response.data['product'] as Map<String, dynamic>;
 
-    return Product.fromJson(productData);
+      return Product.fromJson(productData);
+    } on DioException catch (e) {
+      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
+      final details = e.responseDetails ?? '';
+
+      logger.e('API Error: $message\nDetails: $details');
+
+      // Optionally rethrow with custom message
+      throw Exception('Error: $message\nDetails: $details');
+    }
   }
 
   Future<Product> fetchProductById(String id) async {
-    final response = await _httpClient.get<Map<String, dynamic>>('/products/get-product/$id');
+    try {
+      final response = await _httpClient.get<Map<String, dynamic>>('/products/get-product/$id');
 
-    final data = response.data;
+      final data = response.data;
 
-    if (data == null || data['product'] == null) {
-      logger.d('No product found for id $id: $data');
-      throw Exception('Product not found');
+      if (data == null || data['product'] == null) {
+        logger.d('No product found for id $id: $data');
+        throw Exception('Product not found');
+      }
+
+      return Product.fromJson(data['product'] as Map<String, dynamic>);
+    } on DioException catch (e) {
+      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
+      final details = e.responseDetails ?? '';
+
+      logger.e('API Error: $message\nDetails: $details');
+
+      // Optionally rethrow with custom message
+      throw Exception('Error: $message\nDetails: $details');
     }
-
-    return Product.fromJson(data['product'] as Map<String, dynamic>);
   }
 
   Future<List<Product>> productSearch({
@@ -212,48 +277,58 @@ class ApiClient {
     required bool lookinDescription,
     required int page,
   }) async {
-    final queryParams = <String, String>{
-      'sort': 'title',
-      'order': 'asc',
-      'page': page.toString(),
-      'pagesize': '10',
-    };
+    try {
+      final queryParams = <String, String>{
+        'sort': 'title',
+        'order': 'asc',
+        'page': page.toString(),
+        'pagesize': '10',
+      };
 
-    if (search.isNotEmpty) {
-      queryParams['title'] = search;
+      if (search.isNotEmpty) {
+        queryParams['title'] = search;
+      }
+
+      if (selectedDepartments.isNotEmpty) {
+        queryParams['department'] = selectedDepartments.join(',');
+      }
+
+      if (selectedCategories.isNotEmpty) {
+        queryParams['main_catogory'] = selectedCategories.join(',');
+      }
+
+      if (selectedSubCategories.isNotEmpty) {
+        queryParams['sub_catogory'] = selectedSubCategories.join(',');
+      }
+
+      if (lookinDescription) {
+        queryParams['lookinDescription'] = 'true';
+      }
+
+      final response = await _httpClient.get('/products/search', queryParameters: queryParams);
+
+      if (response.statusCode != 200) {
+        throw Exception('Failed to fetch data: ${response.statusCode}');
+      }
+
+      final data = response.data;
+      final products = data['products'];
+
+      if (products == null || products is! List) {
+        logger.d('❗ Unexpected or missing "products" key: $data');
+        return [];
+      }
+
+      return (data['products'] as List).cast<_ResponseData>().map(Product.fromJson).toList();
+    } on DioException catch (e) {
+      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
+      final details = e.responseDetails ?? '';
+
+      logger.e('API Error: $message\nDetails: $details');
+
+      // Optionally rethrow with custom message
+      throw Exception('Error: $message\nDetails: $details');
     }
-
-    if (selectedDepartments.isNotEmpty) {
-      queryParams['department'] = selectedDepartments.join(',');
-    }
-
-    if (selectedCategories.isNotEmpty) {
-      queryParams['main_catogory'] = selectedCategories.join(',');
-    }
-
-    if (selectedSubCategories.isNotEmpty) {
-      queryParams['sub_catogory'] = selectedSubCategories.join(',');
-    }
-
-    if (lookinDescription) {
-      queryParams['lookinDescription'] = 'true';
-    }
-
-    final response = await _httpClient.get('/products/search', queryParameters: queryParams);
-
-    if (response.statusCode != 200) {
-      throw Exception('Failed to fetch data: ${response.statusCode}');
-    }
-
-    final data = response.data;
-    final products = data['products'];
-
-    if (products == null || products is! List) {
-      logger.d('❗ Unexpected or missing "products" key: $data');
-      return [];
-    }
-
-    return (data['products'] as List).cast<_ResponseData>().map(Product.fromJson).toList();
   }
 
   //! ============================================================================ //
@@ -270,42 +345,57 @@ class ApiClient {
       final updatedTree = updateTreeLevels(items);
 
       return updatedTree;
-    } catch (e) {
-      logger.f('building tree failed: $e');
-      rethrow;
+    } on DioException catch (e) {
+      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
+      final details = e.responseDetails ?? '';
+
+      logger.e('API Error: $message\nDetails: $details');
+
+      // Optionally rethrow with custom message
+      throw Exception('Error: $message\nDetails: $details');
     }
   }
 
   Map<String, TreeNode> updateTreeLevels(Map<String, TreeNode> originalTree) {
-    final updatedTree = <String, TreeNode>{};
+    try {
+      final updatedTree = <String, TreeNode>{};
 
-    void traverse(String nodeId, int currentLevel) {
-      final node = originalTree[nodeId];
-      if (node == null) return;
+      void traverse(String nodeId, int currentLevel) {
+        final node = originalTree[nodeId];
+        if (node == null) return;
 
-      // Create a new node with the updated level
-      final updatedNode = TreeNode(
-        index: node.index,
-        available: node.available,
-        isFolder: node.isFolder,
-        children: node.children,
-        data: node.data,
-        level: currentLevel,
-        image: node.image,
-        sinhalaName: node.sinhalaName,
-      );
+        // Create a new node with the updated level
+        final updatedNode = TreeNode(
+          index: node.index,
+          available: node.available,
+          isFolder: node.isFolder,
+          children: node.children,
+          data: node.data,
+          level: currentLevel,
+          image: node.image,
+          sinhalaName: node.sinhalaName,
+        );
 
-      updatedTree[nodeId] = updatedNode;
+        updatedTree[nodeId] = updatedNode;
 
-      for (final childId in node.children) {
-        traverse(childId, currentLevel + 1);
+        for (final childId in node.children) {
+          traverse(childId, currentLevel + 1);
+        }
       }
+
+      // Start from root with level 0
+      traverse('root', 0);
+
+      return updatedTree;
+    } on DioException catch (e) {
+      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
+      final details = e.responseDetails ?? '';
+
+      logger.e('API Error: $message\nDetails: $details');
+
+      // Optionally rethrow with custom message
+      throw Exception('Error: $message\nDetails: $details');
     }
-
-    // Start from root with level 0
-    traverse('root', 0);
-
-    return updatedTree;
   }
 
 //! ============================================================================ //
@@ -313,13 +403,23 @@ class ApiClient {
 //! ============================================================================ //
 
   Future<Variance> fetchLastVariance() async {
-    final response = await _httpClient.get('/variance/last');
+    try {
+      final response = await _httpClient.get('/variance/last');
 
-    // logger.d('Last added variance: $response');
+      // logger.d('Last added variance: $response');
 
-    final varianceData = response.data['variance'] as Map<String, dynamic>;
+      final varianceData = response.data['variance'] as Map<String, dynamic>;
 
-    return Variance.fromJson(varianceData);
+      return Variance.fromJson(varianceData);
+    } on DioException catch (e) {
+      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
+      final details = e.responseDetails ?? '';
+
+      logger.e('API Error: $message\nDetails: $details');
+
+      // Optionally rethrow with custom message
+      throw Exception('Error: $message\nDetails: $details');
+    }
   }
 
   Future<Variance> addVariance(Variance product, File imageFile) async {
@@ -365,9 +465,14 @@ class ApiClient {
 
 // ✅ Convert to Variance model
       return Variance.fromJson(varianceMap);
-    } catch (e) {
-      logger.f('adding variance failed: $e');
-      rethrow;
+    } on DioException catch (e) {
+      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
+      final details = e.responseDetails ?? '';
+
+      logger.e('API Error: $message\nDetails: $details');
+
+      // Optionally rethrow with custom message
+      throw Exception('Error: $message\nDetails: $details');
     }
   }
 
@@ -380,28 +485,43 @@ class ApiClient {
       final data = response.data['variances'] as List<dynamic>;
 
       return data.map((json) => Variance.fromJson(json as Map<String, dynamic>)).toList();
-    } catch (e) {
-      logger.f('Error fetching variances for product $productId: $e');
-      rethrow;
+    } on DioException catch (e) {
+      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
+      final details = e.responseDetails ?? '';
+
+      logger.e('API Error: $message\nDetails: $details');
+
+      // Optionally rethrow with custom message
+      throw Exception('Error: $message\nDetails: $details');
     }
   }
 
   Future<Variance> fetchVarianceById(String id) async {
-    final response = await _httpClient.get<Map<String, dynamic>>('/variance/get-product/$id');
+    try {
+      final response = await _httpClient.get<Map<String, dynamic>>('/variance/get-product/$id');
 
-    final data = response.data;
+      final data = response.data;
 
-    if (data == null || data['product'] == null) {
-      logger.d('No product found for id $id: $data');
-      throw Exception('Product not found');
-    }
+      if (data == null || data['product'] == null) {
+        logger.d('No product found for id $id: $data');
+        throw Exception('Product not found');
+      }
 
-    final responseMap = data;
+      final responseMap = data;
 
-    final varianceMap = responseMap['product'] as Map<String, dynamic>;
+      final varianceMap = responseMap['product'] as Map<String, dynamic>;
 
 // ✅ Convert to Variance model
-    return Variance.fromJson(varianceMap);
+      return Variance.fromJson(varianceMap);
+    } on DioException catch (e) {
+      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
+      final details = e.responseDetails ?? '';
+
+      logger.e('API Error: $message\nDetails: $details');
+
+      // Optionally rethrow with custom message
+      throw Exception('Error: $message\nDetails: $details');
+    }
   }
 
 //! ============================================================================ //
@@ -415,9 +535,14 @@ class ApiClient {
       final suppliersJson = response.data['suppliers'] as List<dynamic>;
 
       return suppliersJson.map((json) => Supplier.fromJson(json as Map<String, dynamic>)).toList();
-    } catch (e) {
-      logger.f('Fetching all suppliers failed with this error: $e');
-      rethrow;
+    } on DioException catch (e) {
+      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
+      final details = e.responseDetails ?? '';
+
+      logger.e('API Error: $message\nDetails: $details');
+
+      // Optionally rethrow with custom message
+      throw Exception('Error: $message\nDetails: $details');
     }
   }
 
@@ -432,9 +557,14 @@ class ApiClient {
       final brandJson = response.data['brands'] as List<dynamic>;
 
       return brandJson.map((json) => Brand.fromJson(json as Map<String, dynamic>)).toList();
-    } catch (e) {
-      logger.f('Fetching all brands failed with this error: $e');
-      rethrow;
+    } on DioException catch (e) {
+      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
+      final details = e.responseDetails ?? '';
+
+      logger.e('API Error: $message\nDetails: $details');
+
+      // Optionally rethrow with custom message
+      throw Exception('Error: $message\nDetails: $details');
     }
   }
 

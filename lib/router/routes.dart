@@ -7,7 +7,6 @@
 
 import 'dart:async';
 
-import 'package:example/features/cute_rabbit/screens/details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -19,6 +18,7 @@ import '../features/auth/screens/home_page.dart';
 import '../features/auth/screens/login_page.dart';
 import '../features/auth/screens/user_page.dart';
 import '../features/customers/screens/customers_page.dart';
+import '../features/cute_rabbit/screens/details_page.dart';
 import '../features/inventory/screens/inventory_layout.dart';
 import '../features/inventory/screens/product_screens/product_variances_page.dart';
 import '../features/main/screens/main_page.dart';

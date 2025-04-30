@@ -59,4 +59,19 @@ final lightTheme = ThemeData(
       color: Color(0xFF3A0016),
     ),
   ),
+  snackBarTheme: const SnackBarThemeData(
+    behavior: SnackBarBehavior.fixed,
+    dismissDirection: DismissDirection.horizontal,
+    insetPadding: EdgeInsets.symmetric(vertical: 40),
+    showCloseIcon: true,
+    closeIconColor: Colors.white,
+    backgroundColor: Color(0xFFD92C30),
+    contentTextStyle: TextStyle(
+      color: Colors.white,
+      fontStyle: FontStyle.normal,
+      fontSize: 18,
+      fontFamily: 'IBM Plex Sans',
+      fontWeight: FontWeight.w700,
+    ),
+  ),
 );

@@ -1,7 +1,7 @@
-import 'package:example/features/inventory/screens/category_screens/category_manager.dart';
-import 'package:example/features/inventory/screens/product_screens/product_manager.dart';
 import 'package:flutter/material.dart';
 
+import '/features/inventory/screens/category_screens/category_manager.dart';
+import '/features/inventory/screens/product_screens/product_manager.dart';
 import 'filter_screens/filter_products_page.dart';
 
 class ProductsPage extends StatefulWidget {

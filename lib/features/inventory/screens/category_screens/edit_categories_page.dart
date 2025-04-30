@@ -11,6 +11,7 @@ import '../../models/product.dart';
 import '../../providers/last_entered_product_notifier.dart';
 import '../widgets/enum_drop_down.dart';
 import '../widgets/product_filter.dart';
+import '../widgets/value_card.dart';
 
 class EditProductsPage extends ConsumerStatefulWidget {
   const EditProductsPage({super.key});
@@ -33,6 +34,8 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
   final _mainCategoryController = TextEditingController();
   final _subCategoryController = TextEditingController();
   final _rootController = TextEditingController();
+
+  bool _isUpdating = false;
 
   File? _selectedImage;
   String? _selectedImageName;
@@ -78,12 +81,13 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
       );
 
       // Call the notifier to add product
-      await ref.read(lastProductProvider.notifier).updateProduct(updatedProduct, _selectedImage!);
+      _isUpdating = true;
 
-      // Show feedback
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Product submitted!')),
-      );
+      // Await the update call
+      await ref.read(lastProductProvider.notifier).updateProduct(
+            updatedProduct,
+            _selectedImage!,
+          );
     }
   }
 
@@ -98,22 +102,66 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
     _rootController.text = 'root';
     _subCategoryController.text = 'N/A';
 
+    // ref.listen<AsyncValue<Product?>>(
+    //   lastProductProvider,
+    //   (prev, next) {
+    //     next.whenData((product) {
+    //       if (product != null) {
+    //         // debugPrint('Fetched product: ${product.displayTitle}');
+    //         // Optionally update controllers with product data
+
+    //         _descriptionController.text = product.description;
+    //         _departmentController.text = product.department;
+    //         _mainCategoryController.text = product.mainCategory;
+    //         _subCategoryController.text = product.subCategory;
+
+    //         if (_isUpdating) {
+    //           ScaffoldMessenger.of(context).showSnackBar(
+    //             SnackBar(
+    //               content: const Text('Product updated successfully!'),
+    //               backgroundColor: Theme.of(context).colorScheme.primary,
+    //             ),
+    //           );
+    //           _isUpdating = false;
+    //         }
+    //       }
+
+    //     });
+    //   },
+    // );
+
     ref.listen<AsyncValue<Product?>>(
       lastProductProvider,
       (prev, next) {
-        next.whenData((product) {
-          if (product != null) {
-            // debugPrint('Fetched product: ${product.displayTitle}');
-            // Optionally update controllers with product data
+        next.when(
+          data: (product) {
+            if (product != null) {
+              _descriptionController.text = product.description;
+              _departmentController.text = product.department;
+              _mainCategoryController.text = product.mainCategory;
+              _subCategoryController.text = product.subCategory;
+              // Add other updates as needed
 
-            _descriptionController.text = product.description;
-            _departmentController.text = product.department;
-            _mainCategoryController.text = product.mainCategory;
-            _subCategoryController.text = product.subCategory;
-
-            // etc.
-          }
-        });
+              if (_isUpdating) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text('Product updated successfully!'),
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                  ),
+                );
+                _isUpdating = false;
+              }
+            }
+          },
+          loading: () {
+            // Optional: show loading indicator
+          },
+          error: (error, stack) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Failed to update product: $error')),
+            );
+          },
+        );
       },
     );
 
@@ -377,7 +425,6 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
               child: Padding(
                 padding: const EdgeInsets.all(22),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(bottom: 12),
@@ -389,73 +436,62 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                       ),
                     ),
                     switch (product) {
-                      AsyncData(:final value) => SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.network(
-                                  value.imageUrl,
-                                  width: 300,
-                                  height: 300,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) => const Icon(
-                                    color: Color.fromARGB(255, 119, 116, 116),
-                                    size: 100,
-                                    Icons.broken_image,
-                                  ),
+                      AsyncData(:final value) => Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.network(
+                                value.imageUrl,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) => const Icon(
+                                  color: Color.fromARGB(255, 119, 116, 116),
+                                  size: 250,
+                                  Icons.broken_image,
                                 ),
                               ),
-                              Column(
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: Column(
                                 spacing: 10,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    'Product               : ${value.title}',
-                                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                          color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                        ),
+                                  ValueCard(
+                                    label: 'Product',
+                                    value: value.title,
                                   ),
-                                  Text(
-                                    'ID                          : ${value.id}',
-                                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                          color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                        ),
+                                  ValueCard(
+                                    label: 'ID',
+                                    value: value.id!,
                                   ),
-                                  Text(
-                                    'Description         : ${value.description}',
-                                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                          color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                        ),
+                                  ValueCard(
+                                    label: 'Description',
+                                    value: value.description,
                                   ),
-                                  Text(
-                                    'Tags                      : ${value.tagOne}, ${value.tagTwo}',
-                                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                          color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                        ),
+                                  ValueCard(
+                                    label: 'Tags',
+                                    value: '${value.tagOne}, ${value.tagTwo}',
                                   ),
-                                  Text(
-                                    'Department        : ${value.department}',
-                                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                          color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                        ),
+                                  ValueCard(
+                                    label: 'Department',
+                                    value: value.department,
                                   ),
-                                  Text(
-                                    'Main Category    : ${value.mainCategory}',
-                                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                          color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                        ),
+                                  ValueCard(
+                                    label: 'Main Category',
+                                    value: value.mainCategory,
                                   ),
-                                  Text(
-                                    'Sub Category      : ${value.subCategory}',
-                                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                          color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                        ),
+                                  ValueCard(
+                                    label: 'Main Category',
+                                    value: value.mainCategory,
+                                  ),
+                                  ValueCard(
+                                    label: 'Sub Category',
+                                    value: value.subCategory,
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       AsyncError(:final error, :final stackTrace) => Text(
                           'Oops, something unexpected happened: $error',

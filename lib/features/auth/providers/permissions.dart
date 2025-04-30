@@ -1,6 +1,6 @@
-import 'package:example/features/auth/models/user_role.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../features/auth/models/user_role.dart';
 import '../providers/auth_controller.dart';
 
 part 'permissions.g.dart';

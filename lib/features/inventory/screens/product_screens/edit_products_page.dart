@@ -47,6 +47,8 @@ class _AddVariancesPageState extends ConsumerState<EditVariancesPage> {
 
   final _barcodeController = TextEditingController();
 
+  bool _isUpdating = false;
+
   File? _selectedImage;
   String? _selectedImageName;
 
@@ -99,15 +101,12 @@ class _AddVariancesPageState extends ConsumerState<EditVariancesPage> {
           barcode: _barcodeController.text,
         );
 
+        _isUpdating = true;
+
         // Call the notifier to add product
         await ref.read(lastVarianceProvider.notifier).addVariance(newProduct, _selectedImage!);
 
         // Show feedback
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Product submitted!')),
-          );
-        });
       }
     } catch (e) {
       logger.f('Variance form key current state is invalid:  $e ');
@@ -127,27 +126,46 @@ class _AddVariancesPageState extends ConsumerState<EditVariancesPage> {
     ref.listen<AsyncValue<Variance?>>(
       lastVarianceProvider,
       (prev, next) {
-        next.whenData((variance) {
-          if (variance != null) {
-            // debugPrint('Fetched product: ${product.displayTitle}');
-            // Optionally update controllers with product data
+        next.when(
+          data: (variance) {
+            if (variance != null) {
+              // debugPrint('Fetched product: ${product.displayTitle}');
+              // Optionally update controllers with product data
 
-            _displaytitleController.text = variance.displayTitle;
-            _variancedescriptionController.text = variance.varianceDescription;
-            _variancetitleController.text = variance.varianceTitle;
-            selectedBrandId = variance.brand;
-            selectedSupplier = variance.supplier;
-            // _supplierController.text = variance.supplier;
-            _originalPriceController.text = variance.originalPrice.toString();
-            _retailPriceController.text = variance.retailPrice.toString();
-            _wholesalePriceController.text = variance.wholesalePrice.toString();
-            _quantityController.text = variance.quantity.toString();
-            _unitMeasureController.text = variance.unitMeasure;
-            _leastSubUnitMeasureController.text = variance.leastSubUnitMeasure.toString();
+              _displaytitleController.text = variance.displayTitle;
+              _variancedescriptionController.text = variance.varianceDescription;
+              _variancetitleController.text = variance.varianceTitle;
+              selectedBrandId = variance.brand;
+              selectedSupplier = variance.supplier;
+              // _supplierController.text = variance.supplier;
+              _originalPriceController.text = variance.originalPrice.toString();
+              _retailPriceController.text = variance.retailPrice.toString();
+              _wholesalePriceController.text = variance.wholesalePrice.toString();
+              _quantityController.text = variance.quantity.toString();
+              _unitMeasureController.text = variance.unitMeasure;
+              _leastSubUnitMeasureController.text = variance.leastSubUnitMeasure.toString();
 
-            // etc.
-          }
-        });
+              if (_isUpdating) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text('Product updated successfully!'),
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                  ),
+                );
+                _isUpdating = false;
+              }
+              // etc.
+            }
+          },
+          loading: () {
+            // Optional: show loading indicator
+          },
+          error: (error, stack) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Failed to update product: $error')),
+            );
+          },
+        );
       },
     );
 
