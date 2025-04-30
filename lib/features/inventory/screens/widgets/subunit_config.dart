@@ -1,0 +1,22 @@
+const Map<String, (String subunit, double maxValue)> unitSubunitMap = {
+  'kg': ('g', 1000),
+  'yard': ('feet', 3),
+  'dozen': ('piece', 12),
+  'pound': ('ounce', 16),
+  'gallon': ('quart', 4),
+  'liter': ('milliliter', 1000),
+  'inch': ('cm', 2.54),
+  'mile': ('km', 1.60934),
+  'acre': ('hectare', 0.404686),
+  'ounce': ('gram', 28.3495),
+  'cup': ('fluid ounce', 8),
+  'quart': ('pint', 2),
+  'pint': ('fluid ounce', 16),
+  'fluid ounce': ('milliliter', 29.5735),
+  'milliliter': ('liter', 0.001),
+  'hectare': ('acre', 2.47105),
+  'cm': ('mm', 10),
+  'mm': ('cm', 0.1),
+  'feet': ('inch', 12),
+  // Add more mappings as needed
+};

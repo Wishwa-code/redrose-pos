@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '/features/inventory/screens/brand_screens/brand_manager.dart';
 import '/features/inventory/screens/category_screens/category_manager.dart';
 import '/features/inventory/screens/product_screens/product_manager.dart';
+import '/features/inventory/screens/supplier_screens/supplier_manager.dart';
 import 'filter_screens/filter_products_page.dart';
 
 class ProductsPage extends StatefulWidget {
@@ -18,8 +20,8 @@ class _ProductsPageState extends State<ProductsPage> {
     FilterProductsPage(),
     ProductManagerPage(),
     CategoryManagerPage(),
-    Center(child: Text('Manage Brands')),
-    Center(child: Text('Manage Suppliers')),
+    BrandManagerPage(),
+    SupplierManagerPage(),
   ];
 
   final List<String> _titles = [

@@ -11,8 +11,8 @@ class Supplier with _$Supplier {
     required String description,
     @JsonKey(name: 'logourl') required String logourl,
     @JsonKey(name: 'website') required String website,
-    @JsonKey(name: 'created_at') required String createdAt,
-    @JsonKey(name: 'country_of_origin') required String countryOfOrigin,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
+    @JsonKey(name: 'coutry_of_origin') required String countryOfOrigin,
     @JsonKey(name: 'social_media_links') required String socialMediaLinks,
     @JsonKey(name: 'contact_email') required String contactEmail,
     @JsonKey(name: 'phone_number') required String phoneNumber,
@@ -32,4 +32,3 @@ int? _idFromJson(dynamic id) {
   if (id is String) return int.tryParse(id);
   return null;
 }
-

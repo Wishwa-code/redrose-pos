@@ -10,13 +10,13 @@ class Brand with _$Brand {
     required String name,
     required String description,
     @JsonKey(name: 'logourl') required String logourl,
-    @JsonKey(name: 'created_at') required String createdAt,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
     @JsonKey(name: 'country_of_origin') required String countryOfOrigin,
     @JsonKey(name: 'social_media_links') required String socialMediaLinks,
     @JsonKey(name: 'contact_email') required String contactEmail,
     @JsonKey(name: 'phone_number') required String phoneNumber,
     @JsonKey(name: 'banner_url') required String bannerUrl,
-        @JsonKey(name: 'website') required String website,
+    @JsonKey(name: 'website') required String website,
   }) = _Brand;
 
   factory Brand.fromJson(Map<String, dynamic> json) => _$BrandFromJson(json);
@@ -27,4 +27,3 @@ int? _idFromJson(dynamic id) {
   if (id is String) return int.tryParse(id);
   return null;
 }
-

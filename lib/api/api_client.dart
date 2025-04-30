@@ -331,7 +331,7 @@ class ApiClient {
     }
   }
 
-  //! ============================================================================ //
+//! ============================================================================ //
 //? ======== ✈️ This is the section for menu tree related api calls ✈️ ========== //
 //! ============================================================================ //
 
@@ -546,6 +546,28 @@ class ApiClient {
     }
   }
 
+  Future<Supplier> addSupplier(Supplier supplier) async {
+    try {
+      final response = await _httpClient.post(
+        '/supplier/upsert',
+        data: supplier.toJson(), // Assuming your Product model has a `toJson()` method
+      );
+
+      // final brandsData = response.data['brands'] as Map<String, dynamic>;
+
+      final supplierJson = response.data['supplier'] as Map<String, dynamic>;
+      return Supplier.fromJson(supplierJson);
+    } on DioException catch (e) {
+      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
+      final details = e.responseDetails ?? '';
+
+      logger.f('API Error: $message\nDetails: $details');
+
+      // Optionally rethrow with custom message
+      throw Exception('Error: $message\nDetails: $details');
+    }
+  }
+
 //! ============================================================================ //
 //? ================= ✈️ BRAND RELATED API calls ✈️ ===================== //
 //! ============================================================================ //
@@ -557,6 +579,28 @@ class ApiClient {
       final brandJson = response.data['brands'] as List<dynamic>;
 
       return brandJson.map((json) => Brand.fromJson(json as Map<String, dynamic>)).toList();
+    } on DioException catch (e) {
+      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
+      final details = e.responseDetails ?? '';
+
+      logger.e('API Error: $message\nDetails: $details');
+
+      // Optionally rethrow with custom message
+      throw Exception('Error: $message\nDetails: $details');
+    }
+  }
+
+  Future<Brand> addBrand(Brand brand) async {
+    try {
+      final response = await _httpClient.post(
+        '/brand/upsert',
+        data: brand.toJson(), // Assuming your Product model has a `toJson()` method
+      );
+
+      // final brandsData = response.data['brands'] as Map<String, dynamic>;
+
+      final brandJson = response.data['brand'] as Map<String, dynamic>;
+      return Brand.fromJson(brandJson);
     } on DioException catch (e) {
       final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
       final details = e.responseDetails ?? '';

@@ -11,8 +11,8 @@ import '../../../../widgets/action_button.dart';
 import '../../models/variance.dart';
 import '../../providers/last_entered_variance_notifier.dart';
 import '../widgets/dropdown_of_provider.dart';
-import '../widgets/price_field.dart';
 import '../widgets/product_filter.dart';
+import '../widgets/upsert_product_form.dart';
 
 class AddVariancesPage extends ConsumerStatefulWidget {
   const AddVariancesPage({super.key});
@@ -156,7 +156,6 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
               Form(
                 key: _varianceformKey,
                 child: Column(
-                  spacing: 20,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Padding(
@@ -213,402 +212,71 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                         ],
                       ),
                     ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    AddProductsForm(
+                      productnameController: _productnameController,
+                      productidController: _productidController,
+                      focusNode: _focusNode,
+                      barcodeController: _barcodeController,
+                      displayTitlefNode: _displayTitlefNode,
+                      aboutThisProdcutfNode: _aboutThisProdcutfNode,
+                      displaytitleController: _displaytitleController,
+                      productNamefNode: _productNamefNode,
+                      variancedescriptionController: _variancedescriptionController,
+                      brandfNode: _brandfNode,
+                      variancetitleController: _variancetitleController,
+                      originalPricefNode: _originalPricefNode,
+                      retailPricefNode: _retailPricefNode,
+                      originalPriceController: _originalPriceController,
+                      wholesalelPricefNode: _wholesalelPricefNode,
+                      retailPriceController: _retailPriceController,
+                      unitmetricfNode: _unitmetricfNode,
+                      wholesalePriceController: _wholesalePriceController,
+                      quantityefNode: _quantityefNode,
+                      unitMeasureController: _unitMeasureController,
+                      leastsubunitfNode: _leastsubunitfNode,
+                      quantityController: _quantityController,
+                      leastSubUnitMeasureController: _leastSubUnitMeasureController,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Row(
-                      spacing: 20,
+                      spacing: 40,
                       children: [
                         Expanded(
-                          child: TextFormField(
-                            controller: _productnameController,
-                            style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                ),
-                            decoration: InputDecoration(
-                              labelText: 'Category of the new product | නව අයිතමයේ වර්ගය',
-                              labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                    color: Theme.of(context).colorScheme.primary,
-                                  ),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.outline.withAlpha(225),
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter product name';
-                              }
-                              return null;
+                          child: ProviderDropdownField(
+                            focusNode: _brandfNode,
+                            provider: brandNotifierProvider,
+                            selectedValue: selectedSupplier,
+                            labelText: 'Select brand | සන්නාමය',
+                            onChanged: (value) {
+                              setState(() {
+                                FocusScope.of(context).requestFocus(_supplierfNode);
+                                selectedSupplier = value;
+                              });
                             },
                           ),
                         ),
                         Expanded(
-                          child: TextFormField(
-                            controller: _productidController,
-                            style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                ),
-                            decoration: InputDecoration(
-                              labelText: 'Category ID | වර්ග අංකය',
-                              labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                    color: Theme.of(context).colorScheme.primary,
-                                  ),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.outline,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter product name';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: TextFormField(
-                            focusNode: _focusNode,
-                            controller: _barcodeController,
-                            textInputAction: TextInputAction.next,
-                            onFieldSubmitted: (_) {
-                              FocusScope.of(context).requestFocus(_displayTitlefNode);
-                            },
-                            style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                ),
-                            decoration: InputDecoration(
-                              labelText: 'Product Barcode | බාර්කෝඩ් අංකය',
-                              labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                    color: Theme.of(context).colorScheme.primary,
-                                  ),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.outline,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter product name';
-                              }
-                              return null;
+                          child: ProviderDropdownField(
+                            focusNode: _supplierfNode,
+                            provider: supplierNotifierProvider,
+                            selectedValue: selectedBrandId,
+                            labelText: 'Select supplier | සැපයුම්කරු',
+                            onChanged: (value) {
+                              setState(() {
+                                selectedBrandId = value;
+                              });
                             },
                           ),
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(),
-                      child: DottedBorder(
-                        dashPattern: const [6, 3], // dash length, gap
-                        color: Theme.of(context).colorScheme.outline, // line color
-                        padding: EdgeInsets.zero,
-                        customPath: (size) {
-                          return Path()
-                            ..moveTo(0, 0)
-                            ..lineTo(size.width, 0); // draw a horizontal line
-                        },
-                        child: const SizedBox(
-                          width: double.infinity,
-                          height: 1, // thickness of the line
-                        ),
-                      ),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 20,
-                              children: [
-                                TextFormField(
-                                  focusNode: _displayTitlefNode,
-                                  textInputAction: TextInputAction.next,
-                                  onFieldSubmitted: (_) {
-                                    FocusScope.of(context).requestFocus(_aboutThisProdcutfNode);
-                                  },
-                                  controller: _displaytitleController,
-                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                      ),
-                                  decoration: InputDecoration(
-                                    labelText: 'Display title | සිංහල නම',
-                                    labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                          color: Theme.of(context).colorScheme.primary,
-                                        ),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Theme.of(context).colorScheme.outline,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter display title';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                TextFormField(
-                                  focusNode: _aboutThisProdcutfNode,
-                                  textInputAction: TextInputAction.next,
-                                  onFieldSubmitted: (_) {
-                                    FocusScope.of(context).requestFocus(_productNamefNode);
-                                  },
-                                  controller: _variancedescriptionController,
-                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                      ),
-                                  decoration: InputDecoration(
-                                    labelText: 'About this product | අයිතමයේ විස්තරය',
-                                    labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                          color: Theme.of(context).colorScheme.primary,
-                                        ),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Theme.of(context).colorScheme.outline,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please complete about this product section';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                TextFormField(
-                                  focusNode: _productNamefNode,
-                                  textInputAction: TextInputAction.next,
-                                  onFieldSubmitted: (_) {
-                                    FocusScope.of(context).requestFocus(_brandfNode);
-                                  },
-                                  controller: _variancetitleController,
-                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                      ),
-                                  decoration: InputDecoration(
-                                    labelText: 'Product name | අයිතමයේ නම',
-                                    labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                          color: Theme.of(context).colorScheme.primary,
-                                        ),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Theme.of(context).colorScheme.outline,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter product name';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 4,
-                                    vertical: 16,
-                                  ),
-                                  child: DottedBorder(
-                                    dashPattern: const [6, 3], // dash length, gap
-                                    color: Theme.of(context).colorScheme.outline, // line color
-                                    padding: EdgeInsets.zero,
-                                    customPath: (size) {
-                                      return Path()
-                                        ..moveTo(0, 0)
-                                        ..lineTo(size.width, 0); // draw a horizontal line
-                                    },
-                                    child: const SizedBox(
-                                      width: double.infinity,
-                                      height: 1, // thickness of the line
-                                    ),
-                                  ),
-                                ),
-                                ProviderDropdownField(
-                                  focusNode: _brandfNode,
-                                  provider: brandNotifierProvider,
-                                  selectedValue: selectedSupplier,
-                                  labelText: 'Select brand | සන්නාමය',
-                                  onChanged: (value) {
-                                    setState(() {
-                                      FocusScope.of(context).requestFocus(_supplierfNode);
-                                      selectedSupplier = value;
-                                    });
-                                  },
-                                ),
-                                ProviderDropdownField(
-                                  focusNode: _supplierfNode,
-                                  provider: supplierNotifierProvider,
-                                  selectedValue: selectedBrandId,
-                                  labelText: 'Select supplier | සැපයුම්කරු',
-                                  onChanged: (value) {
-                                    setState(() {
-                                      FocusScope.of(context).requestFocus(_originalPricefNode);
-
-                                      selectedBrandId = value;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                              child: DottedBorder(
-                                dashPattern: const [6, 3], // Dash length and gap
-                                color: Theme.of(context).colorScheme.outline, // Line color
-                                padding: EdgeInsets.zero,
-                                customPath: (size) {
-                                  return Path()
-                                    ..moveTo(0, 0) // Starting point of the vertical line
-                                    ..lineTo(0, size.height); // Draw the line vertically
-                                },
-                                child: const SizedBox(
-                                  width: 1, // Set the thickness of the divider (horizontal size)
-                                  height: 337, // Set the height (vertical length) of the divider
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 34),
-                                  child: Row(
-                                    spacing: 20,
-                                    children: [
-                                      Expanded(
-                                        child: PriceFormField(
-                                          focusNode: _originalPricefNode,
-                                          onFieldSubmitted: (_) {
-                                            FocusScope.of(context).requestFocus(_retailPricefNode);
-                                          },
-                                          controller: _originalPriceController,
-                                          label: 'Original price | මුල් මිල',
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: PriceFormField(
-                                          focusNode: _retailPricefNode,
-                                          onFieldSubmitted: (_) {
-                                            FocusScope.of(context)
-                                                .requestFocus(_wholesalelPricefNode);
-                                          },
-                                          controller: _retailPriceController,
-                                          label: 'Retail price | සිල්ලර මිල',
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: PriceFormField(
-                                          focusNode: _wholesalelPricefNode,
-                                          onFieldSubmitted: (_) {
-                                            FocusScope.of(context).requestFocus(_unitmetricfNode);
-                                          },
-                                          controller: _wholesalePriceController,
-                                          label: 'Wholesale price | තොග මිල',
-                                          isRequired: false, // Optional field
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 4,
-                                  ),
-                                  child: DottedBorder(
-                                    dashPattern: const [6, 3], // dash length, gap
-                                    color: Theme.of(context).colorScheme.outline, // line color
-                                    padding: EdgeInsets.zero,
-                                    customPath: (size) {
-                                      return Path()
-                                        ..moveTo(0, 0)
-                                        ..lineTo(size.width, 0); // draw a horizontal line
-                                    },
-                                    child: const SizedBox(
-                                      width: double.infinity,
-                                      height: 1, // thickness of the line
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 34),
-                                TextFormField(
-                                  focusNode: _unitmetricfNode,
-                                  textInputAction: TextInputAction.next,
-                                  onFieldSubmitted: (_) {
-                                    FocusScope.of(context).requestFocus(_quantityefNode);
-                                  },
-                                  controller: _unitMeasureController,
-                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                        color: Theme.of(context).colorScheme.onPrimaryFixed,
-                                      ),
-                                  decoration: InputDecoration(
-                                    labelText: 'Unit metric | ඒකකය',
-                                    labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                          color: Theme.of(context).colorScheme.primary,
-                                        ),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Theme.of(context).colorScheme.outline,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter supplier';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                const SizedBox(height: 20),
-                                Row(
-                                  spacing: 20,
-                                  children: [
-                                    Expanded(
-                                      child: PriceFormField(
-                                        focusNode: _quantityefNode,
-                                        onFieldSubmitted: (_) {
-                                          FocusScope.of(context).requestFocus(_leastsubunitfNode);
-                                        },
-                                        controller: _quantityController,
-                                        label: 'Quantity | පරිමාණය',
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: PriceFormField(
-                                        focusNode: _leastsubunitfNode,
-                                        controller: _leastSubUnitMeasureController,
-                                        label:
-                                            'Min.sub unit as fracture of unit | විකුණන අවම පරිමාණය ඒ්කකයේ භාගයක් වශයෙන් 1 ට වඩා අඩු දශම සංඛ්‍යාවක් ලෙස',
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                    const SizedBox(
+                      height: 20,
                     ),
                     ElevatedButton.icon(
                       label: (_selectedImageName != null)
@@ -637,7 +305,7 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                             width: 1.5,
                           ),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                       ),
                       onPressed: () async {
                         final result = await FilePicker.platform.pickFiles(
@@ -651,6 +319,9 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                           });
                         }
                       },
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     ActionButton(
                       onPressed: addVariance,

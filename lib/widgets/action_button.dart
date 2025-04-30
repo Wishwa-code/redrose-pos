@@ -5,14 +5,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import '../hooks/use_side_effect.dart';
 import 'loading_spinner.dart';
 
-class ActionButton extends HookWidget {
+class ActionButton<T> extends HookWidget {
   const ActionButton({
     super.key,
     required this.onPressed,
     required this.label,
     required this.icon,
   });
-  final AsyncCallback onPressed;
+  final Future<T> Function() onPressed;
   final Widget label;
   final Widget icon;
 

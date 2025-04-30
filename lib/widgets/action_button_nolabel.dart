@@ -30,18 +30,15 @@ class ActionButton extends HookWidget {
       }
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24),
-      child: ElevatedButton(
-        onPressed: switch (snapshot) {
-          AsyncSnapshot(connectionState: ConnectionState.waiting) => null,
-          _ => pressButton,
-        },
-        child: switch (snapshot) {
-          AsyncSnapshot(connectionState: ConnectionState.waiting) => const LoadingSpinner(),
-          _ => icon,
-        },
-      ),
+    return ElevatedButton(
+      onPressed: switch (snapshot) {
+        AsyncSnapshot(connectionState: ConnectionState.waiting) => null,
+        _ => pressButton,
+      },
+      child: switch (snapshot) {
+        AsyncSnapshot(connectionState: ConnectionState.waiting) => const LoadingSpinner(),
+        _ => icon,
+      },
     );
   }
 }

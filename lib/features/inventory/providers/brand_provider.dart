@@ -21,6 +21,18 @@ class BrandNotifier extends _$BrandNotifier {
     return response;
   }
 
+  Future<Brand> addBrand(Brand brand) async {
+    //fetch last product from the api
+    final apiService = await ref.watch(apiServiceProvider.future);
+
+    final response = await apiService.addBrand(brand);
+    logger.d('🌿 Brand API call response $response');
+
+    // print(response);
+
+    return response;
+  }
+
   // Future<void> addSupplier(Product product, File imageFile) async {
   //   final apiService = await ref.watch(apiServiceProvider.future);
 

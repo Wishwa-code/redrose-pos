@@ -21,6 +21,9 @@ Desktop application
 -- replace verywhere with prooduct with categories and product varianes with prodcuts to avoid clutter in user interface
 
 
+--- make sure all the fields are cleared out when user press enter on forms
+--- remove all unused data and get ready for new data
+
 E-commerce application
 
 [currently we have live site on redrosehardware.website which is connected to staging database and dev version which is connected to new db strcutre is available at vercel dev server]
