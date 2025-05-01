@@ -7,10 +7,12 @@ class SupplierFormCard extends StatefulWidget {
     super.key,
     required this.newSupplier,
     required this.onSupplierChanged,
+    required this.parentButtonNode,
   });
 
   final Supplier newSupplier;
   final void Function(Supplier updatedSupplier) onSupplierChanged;
+  final FocusNode parentButtonNode;
 
   @override
   SupplierFormCardState createState() => SupplierFormCardState();
@@ -31,6 +33,21 @@ class SupplierFormCardState extends State<SupplierFormCard> {
   late final TextEditingController bankController;
   late final TextEditingController statusController;
   late final TextEditingController extraController;
+
+  final FocusNode nameFocus = FocusNode();
+  final FocusNode descFocus = FocusNode();
+  final FocusNode logoFocus = FocusNode();
+  final FocusNode websiteFocus = FocusNode();
+  final FocusNode originFocus = FocusNode();
+  final FocusNode socialFocus = FocusNode();
+  final FocusNode emailFocus = FocusNode();
+  final FocusNode phoneFocus = FocusNode();
+  final FocusNode bannerFocus = FocusNode();
+  final FocusNode cityFocus = FocusNode();
+  final FocusNode countryFocus = FocusNode();
+  final FocusNode bankFocus = FocusNode();
+  final FocusNode statusFocus = FocusNode();
+  final FocusNode extraFocus = FocusNode();
 
   @override
   void initState() {
@@ -67,6 +84,21 @@ class SupplierFormCardState extends State<SupplierFormCard> {
     bankController.dispose();
     statusController.dispose();
     extraController.dispose();
+
+    nameFocus.dispose();
+    descFocus.dispose();
+    logoFocus.dispose();
+    websiteFocus.dispose();
+    originFocus.dispose();
+    socialFocus.dispose();
+    emailFocus.dispose();
+    phoneFocus.dispose();
+    bannerFocus.dispose();
+    cityFocus.dispose();
+    countryFocus.dispose();
+    bankFocus.dispose();
+    statusFocus.dispose();
+    extraFocus.dispose();
     super.dispose();
   }
 
@@ -127,9 +159,8 @@ class SupplierFormCardState extends State<SupplierFormCard> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
-          onFieldSubmitted: (_) {
-            FocusScope.of(context).nextFocus(); // Move to next field
-          },
+          focusNode: nameFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(descFocus),
           textInputAction: TextInputAction.next,
           controller: nameController,
           onChanged: (_) => _update(),
@@ -137,9 +168,8 @@ class SupplierFormCardState extends State<SupplierFormCard> {
         ),
         const SizedBox(height: 12),
         TextFormField(
-          onFieldSubmitted: (_) {
-            FocusScope.of(context).nextFocus(); // Move to next field
-          },
+          focusNode: descFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(logoFocus),
           textInputAction: TextInputAction.next,
           controller: descController,
           maxLines: 3,
@@ -151,9 +181,8 @@ class SupplierFormCardState extends State<SupplierFormCard> {
           controller: logoController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Logo URL'),
-          onFieldSubmitted: (_) {
-            FocusScope.of(context).nextFocus(); // Move to next field
-          },
+          focusNode: logoFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(websiteFocus),
           textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
@@ -161,66 +190,99 @@ class SupplierFormCardState extends State<SupplierFormCard> {
           controller: websiteController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Website'),
+          focusNode: websiteFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(originFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
           controller: originController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Country of Origin'),
+          focusNode: originFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(socialFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
           controller: socialController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Social Media Links'),
+          focusNode: socialFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(emailFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
           controller: emailController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Contact Email'),
+          focusNode: emailFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(phoneFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
           controller: phoneController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Phone Number'),
+          focusNode: phoneFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(bannerFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
           controller: bannerController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Banner URL'),
+          focusNode: bannerFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(cityFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
           controller: cityController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('City'),
+          focusNode: cityFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(countryFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
           controller: countryController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Country'),
+          focusNode: countryFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(bankFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
           controller: bankController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Bank Details'),
+          focusNode: bankFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(statusFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
           controller: statusController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Status'),
+          focusNode: statusFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(extraFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
           controller: extraController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Extra Data'),
+          focusNode: extraFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(widget.parentButtonNode),
+          textInputAction: TextInputAction.done,
         ),
       ],
     );

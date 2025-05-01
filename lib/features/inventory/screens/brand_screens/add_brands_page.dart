@@ -140,6 +140,7 @@ class AddBrandPage extends ConsumerStatefulWidget {
 
 class _AddBrandPageState extends ConsumerState<AddBrandPage> {
   bool _isAdding = false;
+  final FocusNode buttonnode = FocusNode();
 
   // ✅ Added GlobalKey to access clearFields()
   final GlobalKey<BrandFormCardState> brandFormKey = GlobalKey<BrandFormCardState>();
@@ -163,12 +164,12 @@ class _AddBrandPageState extends ConsumerState<AddBrandPage> {
 
     try {
       await ref.read(brandNotifierProvider.notifier).addBrand(newbrand);
+      ref.invalidate(brandNotifierProvider);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error adding product: $e')),
       );
     } finally {
-      ref.invalidate(brandNotifierProvider);
       setState(() {
         _isAdding = false;
       });
@@ -215,6 +216,7 @@ class _AddBrandPageState extends ConsumerState<AddBrandPage> {
                   width: screenwidth / 2.9,
                   child: BrandFormCard(
                     key: brandFormKey,
+                    parentButtonNode: buttonnode,
                     newBrand: _brand,
                     onBrandChanged: (updated) {
                       setState(() {
@@ -227,6 +229,7 @@ class _AddBrandPageState extends ConsumerState<AddBrandPage> {
 
                 // ✅ ActionButton clears form after adding
                 ActionButton(
+                  focusNode: buttonnode,
                   onPressed: () async {
                     await _addProduct(_brand);
                   },

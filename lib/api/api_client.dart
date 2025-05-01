@@ -98,13 +98,9 @@ class ApiClient {
 
       return (data['products'] as List).cast<_ResponseData>().map(Product.fromJson).toList();
     } on DioException catch (e) {
-      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
-      final details = e.responseDetails ?? '';
-
-      logger.e('API Error: $message\nDetails: $details');
-
-      // Optionally rethrow with custom message
-      throw Exception('Error: $message\nDetails: $details');
+      logger.e(e.debugDump);
+      // rethrow;
+      throw Exception(e.formattedMessage);
     }
   }
 
@@ -120,13 +116,9 @@ class ApiClient {
       // Return the product parsed using Product.fromJson
       return Product.fromJson(productData);
     } on DioException catch (e) {
-      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
-      final details = e.responseDetails ?? '';
-
-      logger.e('API Error: $message\nDetails: $details');
-
-      // Optionally rethrow with custom message
-      throw Exception('Error: $message\nDetails: $details');
+      logger.e(e.debugDump);
+      // rethrow;
+      throw Exception(e.formattedMessage);
     }
   }
 
@@ -181,19 +173,7 @@ class ApiClient {
 
       return Product.fromJson(productData);
     } on DioException catch (e) {
-      // final details = e.responseDetails ?? '';
-
-      // logger.e('API Error: ${e.message}\nDetails: $details\nStatusCode: ${e.response?.statusCode}');
-
-      // // Optionally rethrow with custom message
-      // // throw Exception(
-      // //   'Dio Exception type: ${e.type} \nCode: ${e.response?.statusCode}  \nDio error message: ${e.message} \nServer Error Message: $details',
-      // // );
-      // throw Exception(e.formattedMessage);
-      logger.e(e.formattedMessage);
-
-      // OR, for devs:
-      logger.d(e.debugDump);
+      logger.e(e.debugDump);
       // rethrow;
       throw Exception(e.formattedMessage);
     }
@@ -244,13 +224,9 @@ class ApiClient {
 
       return Product.fromJson(productData);
     } on DioException catch (e) {
-      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
-      final details = e.responseDetails ?? '';
-
-      logger.e('API Error: $message\nDetails: $details');
-
-      // Optionally rethrow with custom message
-      throw Exception('Error: $message\nDetails: $details');
+      logger.e(e.debugDump);
+      // rethrow;
+      throw Exception(e.formattedMessage);
     }
   }
 
@@ -267,13 +243,9 @@ class ApiClient {
 
       return Product.fromJson(data['product'] as Map<String, dynamic>);
     } on DioException catch (e) {
-      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
-      final details = e.responseDetails ?? '';
-
-      logger.e('API Error: $message\nDetails: $details');
-
-      // Optionally rethrow with custom message
-      throw Exception('Error: $message\nDetails: $details');
+      logger.e(e.debugDump);
+      // rethrow;
+      throw Exception(e.formattedMessage);
     }
   }
 
@@ -329,13 +301,9 @@ class ApiClient {
 
       return (data['products'] as List).cast<_ResponseData>().map(Product.fromJson).toList();
     } on DioException catch (e) {
-      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
-      final details = e.responseDetails ?? '';
-
-      logger.e('API Error: $message\nDetails: $details');
-
-      // Optionally rethrow with custom message
-      throw Exception('Error: $message\nDetails: $details');
+      logger.e(e.debugDump);
+      // rethrow;
+      throw Exception(e.formattedMessage);
     }
   }
 
@@ -354,13 +322,9 @@ class ApiClient {
 
       return updatedTree;
     } on DioException catch (e) {
-      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
-      final details = e.responseDetails ?? '';
-
-      logger.e('API Error: $message\nDetails: $details');
-
-      // Optionally rethrow with custom message
-      throw Exception('Error: $message\nDetails: $details');
+      logger.e(e.debugDump);
+      // rethrow;
+      throw Exception(e.formattedMessage);
     }
   }
 
@@ -396,13 +360,9 @@ class ApiClient {
 
       return updatedTree;
     } on DioException catch (e) {
-      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
-      final details = e.responseDetails ?? '';
-
-      logger.e('API Error: $message\nDetails: $details');
-
-      // Optionally rethrow with custom message
-      throw Exception('Error: $message\nDetails: $details');
+      logger.e(e.debugDump);
+      // rethrow;
+      throw Exception(e.formattedMessage);
     }
   }
 
@@ -420,13 +380,9 @@ class ApiClient {
 
       return Variance.fromJson(varianceData);
     } on DioException catch (e) {
-      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
-      final details = e.responseDetails ?? '';
-
-      logger.e('API Error: $message\nDetails: $details');
-
-      // Optionally rethrow with custom message
-      throw Exception('Error: $message\nDetails: $details');
+      logger.e(e.debugDump);
+      // rethrow;
+      throw Exception(e.formattedMessage);
     }
   }
 
@@ -474,13 +430,9 @@ class ApiClient {
 // ✅ Convert to Variance model
       return Variance.fromJson(varianceMap);
     } on DioException catch (e) {
-      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
-      final details = e.responseDetails ?? '';
-
-      logger.e('API Error: $message\nDetails: $details');
-
-      // Optionally rethrow with custom message
-      throw Exception('Error: $message\nDetails: $details');
+      logger.e(e.debugDump);
+      // rethrow;
+      throw Exception(e.formattedMessage);
     }
   }
 
@@ -494,13 +446,9 @@ class ApiClient {
 
       return data.map((json) => Variance.fromJson(json as Map<String, dynamic>)).toList();
     } on DioException catch (e) {
-      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
-      final details = e.responseDetails ?? '';
-
-      logger.e('API Error: $message\nDetails: $details');
-
-      // Optionally rethrow with custom message
-      throw Exception('Error: $message\nDetails: $details');
+      logger.e(e.debugDump);
+      // rethrow;
+      throw Exception(e.formattedMessage);
     }
   }
 
@@ -522,13 +470,9 @@ class ApiClient {
 // ✅ Convert to Variance model
       return Variance.fromJson(varianceMap);
     } on DioException catch (e) {
-      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
-      final details = e.responseDetails ?? '';
-
-      logger.e('API Error: $message\nDetails: $details');
-
-      // Optionally rethrow with custom message
-      throw Exception('Error: $message\nDetails: $details');
+      logger.e(e.debugDump);
+      // rethrow;
+      throw Exception(e.formattedMessage);
     }
   }
 
@@ -544,13 +488,9 @@ class ApiClient {
 
       return suppliersJson.map((json) => Supplier.fromJson(json as Map<String, dynamic>)).toList();
     } on DioException catch (e) {
-      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
-      final details = e.responseDetails ?? '';
-
-      logger.e('API Error: $message\nDetails: $details');
-
-      // Optionally rethrow with custom message
-      throw Exception('Error: $message\nDetails: $details');
+      logger.e(e.debugDump);
+      // rethrow;
+      throw Exception(e.formattedMessage);
     }
   }
 
@@ -566,13 +506,9 @@ class ApiClient {
       final supplierJson = response.data['supplier'] as Map<String, dynamic>;
       return Supplier.fromJson(supplierJson);
     } on DioException catch (e) {
-      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
-      final details = e.responseDetails ?? '';
-
-      logger.f('API Error: $message\nDetails: $details');
-
-      // Optionally rethrow with custom message
-      throw Exception('Error: $message\nDetails: $details');
+      logger.e(e.debugDump);
+      // rethrow;
+      throw Exception(e.formattedMessage);
     }
   }
 
@@ -588,13 +524,9 @@ class ApiClient {
 
       return brandJson.map((json) => Brand.fromJson(json as Map<String, dynamic>)).toList();
     } on DioException catch (e) {
-      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
-      final details = e.responseDetails ?? '';
-
-      logger.e('API Error: $message\nDetails: $details');
-
-      // Optionally rethrow with custom message
-      throw Exception('Error: $message\nDetails: $details');
+      logger.e(e.debugDump);
+      // rethrow;
+      throw Exception(e.formattedMessage);
     }
   }
 
@@ -610,13 +542,9 @@ class ApiClient {
       final brandJson = response.data['brand'] as Map<String, dynamic>;
       return Brand.fromJson(brandJson);
     } on DioException catch (e) {
-      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
-      final details = e.responseDetails ?? '';
-
-      logger.e('API Error: $message\nDetails: $details');
-
-      // Optionally rethrow with custom message
-      throw Exception('Error: $message\nDetails: $details');
+      logger.e(e.debugDump);
+      // rethrow;
+      throw Exception(e.formattedMessage);
     }
   }
 

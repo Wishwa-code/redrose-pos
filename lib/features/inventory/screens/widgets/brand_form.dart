@@ -9,10 +9,12 @@ class BrandFormCard extends ConsumerStatefulWidget {
     super.key,
     required this.newBrand,
     required this.onBrandChanged,
+    required this.parentButtonNode,
   });
 
   final Brand newBrand;
   final void Function(Brand updatedBrand) onBrandChanged;
+  final FocusNode parentButtonNode;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => BrandFormCardState();
@@ -253,7 +255,8 @@ class BrandFormCardState extends ConsumerState<BrandFormCard> {
           onChanged: (_) => _update(),
           decoration: inputDecoration('Website'),
           focusNode: websiteFocus,
-          textInputAction: TextInputAction.done,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(widget.parentButtonNode),
+          textInputAction: TextInputAction.next,
         ),
       ],
     );

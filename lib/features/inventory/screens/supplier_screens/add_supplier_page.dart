@@ -16,6 +16,7 @@ class AddSupplierPage extends ConsumerStatefulWidget {
 class _AddSupplierPageState extends ConsumerState<AddSupplierPage> {
   bool _isAdding = false;
   final GlobalKey<SupplierFormCardState> supplierFormKey = GlobalKey<SupplierFormCardState>();
+  final FocusNode buttonnode = FocusNode();
 
   Supplier _supplier = Supplier(
     name: '',
@@ -92,6 +93,7 @@ class _AddSupplierPageState extends ConsumerState<AddSupplierPage> {
                 SizedBox(
                   width: screenwidth / 2.9,
                   child: SupplierFormCard(
+                    parentButtonNode: buttonnode,
                     key: supplierFormKey,
                     newSupplier: _supplier,
                     onSupplierChanged: (updated) {
@@ -103,6 +105,7 @@ class _AddSupplierPageState extends ConsumerState<AddSupplierPage> {
                 ),
                 const SizedBox(height: 10),
                 ActionButton(
+                  focusNode: buttonnode,
                   onPressed: () => _addSupplier(_supplier),
                   icon: const SizedBox.shrink(),
                   label: Text(

@@ -10,10 +10,12 @@ class ActionButton<T> extends HookWidget {
     required this.onPressed,
     required this.label,
     required this.icon,
+    this.focusNode,
   });
   final Future<T> Function() onPressed;
   final Widget label;
   final Widget icon;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class ActionButton<T> extends HookWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 24),
       child: ElevatedButton.icon(
+        focusNode: focusNode,
         onPressed: switch (snapshot) {
           AsyncSnapshot(connectionState: ConnectionState.waiting) => null,
           _ => pressButton,
