@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/brand.dart';
+import '../../providers/brand_provider.dart';
 
-class BrandFormCard extends StatefulWidget {
+class BrandFormCard extends ConsumerStatefulWidget {
   const BrandFormCard({
     super.key,
     required this.newBrand,
@@ -13,10 +15,10 @@ class BrandFormCard extends StatefulWidget {
   final void Function(Brand updatedBrand) onBrandChanged;
 
   @override
-  State<BrandFormCard> createState() => BrandFormCardState();
+  ConsumerState<ConsumerStatefulWidget> createState() => BrandFormCardState();
 }
 
-class BrandFormCardState extends State<BrandFormCard> {
+class BrandFormCardState extends ConsumerState<BrandFormCard> {
   late final TextEditingController nameController;
   late final TextEditingController descController;
   late final TextEditingController logoController;
@@ -26,6 +28,18 @@ class BrandFormCardState extends State<BrandFormCard> {
   late final TextEditingController phoneController;
   late final TextEditingController bannerController;
   late final TextEditingController websiteController;
+
+  final FocusNode nameFocus = FocusNode();
+  final FocusNode descFocus = FocusNode();
+  final FocusNode logoFocus = FocusNode();
+  final FocusNode originFocus = FocusNode();
+  final FocusNode socialFocus = FocusNode();
+  final FocusNode emailFocus = FocusNode();
+  final FocusNode phoneFocus = FocusNode();
+  final FocusNode bannerFocus = FocusNode();
+  final FocusNode websiteFocus = FocusNode();
+
+  bool _isUpdating = false;
 
   @override
   void initState() {
@@ -52,10 +66,21 @@ class BrandFormCardState extends State<BrandFormCard> {
     phoneController.dispose();
     bannerController.dispose();
     websiteController.dispose();
+
+    nameFocus.dispose();
+    descFocus.dispose();
+    logoFocus.dispose();
+    originFocus.dispose();
+    socialFocus.dispose();
+    emailFocus.dispose();
+    phoneFocus.dispose();
+    bannerFocus.dispose();
+    websiteFocus.dispose();
     super.dispose();
   }
 
   void _update() {
+    _isUpdating = true;
     widget.onBrandChanged(
       widget.newBrand.copyWith(
         name: nameController.text,
@@ -86,6 +111,56 @@ class BrandFormCardState extends State<BrandFormCard> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<AsyncValue<List<Brand?>>>(
+      brandNotifierProvider,
+      (prev, next) {
+        next.when(
+          data: (brands) {
+            final nonNullBrands = brands
+                .where((b) => b != null && b.createdAt != null)
+                .map((b) => b!) // Cast Brand? to Brand
+                .toList();
+
+            if (nonNullBrands.isNotEmpty) {
+              nonNullBrands.sort(
+                (a, b) => b.createdAt!.compareTo(a.createdAt!),
+              );
+              final lastEnteredBrand = nonNullBrands.first;
+
+              nameController.text = lastEnteredBrand.name;
+              descController.text = lastEnteredBrand.description;
+              logoController.text = lastEnteredBrand.logourl;
+              originController.text = lastEnteredBrand.countryOfOrigin;
+              socialController.text = lastEnteredBrand.socialMediaLinks;
+              emailController.text = lastEnteredBrand.contactEmail;
+              phoneController.text = lastEnteredBrand.phoneNumber;
+              bannerController.text = lastEnteredBrand.bannerUrl;
+              websiteController.text = lastEnteredBrand.website;
+              // Do something with lastEnteredBrand here
+            }
+
+            if (_isUpdating) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text('Product updated successfully!'),
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                ),
+              );
+              _isUpdating = false;
+            }
+          },
+          loading: () {
+            // Optional: show loading indicator
+          },
+          error: (error, stack) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Oops theres a problem: $error')),
+            );
+          },
+        );
+      },
+    );
+
     final theme = Theme.of(context);
     InputDecoration inputDecoration(String label) => InputDecoration(
           labelText: label,
@@ -104,6 +179,9 @@ class BrandFormCardState extends State<BrandFormCard> {
           controller: nameController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Brand Name'),
+          focusNode: nameFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(descFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
@@ -111,48 +189,71 @@ class BrandFormCardState extends State<BrandFormCard> {
           maxLines: 3,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Description'),
+          focusNode: descFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(logoFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
           controller: logoController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Logo URL'),
+          focusNode: logoFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(originFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
           controller: originController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Country of Origin'),
+          focusNode: originFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(socialFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
           controller: socialController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Social Media Links'),
+          focusNode: socialFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(emailFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
           controller: emailController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Contact Email'),
+          focusNode: emailFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(phoneFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
           controller: phoneController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Phone Number'),
+          focusNode: phoneFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(bannerFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
           controller: bannerController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Banner URL'),
+          focusNode: bannerFocus,
+          onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(websiteFocus),
+          textInputAction: TextInputAction.next,
         ),
         const SizedBox(height: 12),
         TextFormField(
           controller: websiteController,
           onChanged: (_) => _update(),
           decoration: inputDecoration('Website'),
+          focusNode: websiteFocus,
+          textInputAction: TextInputAction.done,
         ),
       ],
     );

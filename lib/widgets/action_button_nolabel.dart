@@ -25,7 +25,7 @@ class ActionButton extends HookWidget {
       } catch (exception) {
         if (!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Something went wrong $exception')),
+          SnackBar(content: Text('$exception')),
         );
       }
     }

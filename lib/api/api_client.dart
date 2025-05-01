@@ -39,9 +39,9 @@ typedef ApiClientResponse<T> = Response<T>;
 typedef ApiClientRequestOptions = RequestOptions;
 typedef _ResponseData = Map<String, Object?>;
 
-extension ApiClientExceptionX on ApiClientException {
-  String? get responseMessage => response?.data?['message'] as String?;
-}
+// extension ApiClientExceptionX on ApiClientException {
+//   String? get responseMessage => response?.data?['message'] as String?;
+// }
 
 ///? An API client that makes network requests.
 ///
@@ -181,13 +181,21 @@ class ApiClient {
 
       return Product.fromJson(productData);
     } on DioException catch (e) {
-      final message = ApiClientExceptionX(e).responseMessage ?? 'Unknown error occurred';
-      final details = e.responseDetails ?? '';
+      // final details = e.responseDetails ?? '';
 
-      logger.e('API Error: $message\nDetails: $details');
+      // logger.e('API Error: ${e.message}\nDetails: $details\nStatusCode: ${e.response?.statusCode}');
 
-      // Optionally rethrow with custom message
-      throw Exception('Error: $message\nDetails: $details');
+      // // Optionally rethrow with custom message
+      // // throw Exception(
+      // //   'Dio Exception type: ${e.type} \nCode: ${e.response?.statusCode}  \nDio error message: ${e.message} \nServer Error Message: $details',
+      // // );
+      // throw Exception(e.formattedMessage);
+      logger.e(e.formattedMessage);
+
+      // OR, for devs:
+      logger.d(e.debugDump);
+      // rethrow;
+      throw Exception(e.formattedMessage);
     }
   }
 

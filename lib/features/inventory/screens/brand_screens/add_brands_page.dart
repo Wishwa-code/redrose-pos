@@ -163,12 +163,12 @@ class _AddBrandPageState extends ConsumerState<AddBrandPage> {
 
     try {
       await ref.read(brandNotifierProvider.notifier).addBrand(newbrand);
-      ref.invalidate(brandNotifierProvider);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error adding product: $e')),
       );
     } finally {
+      ref.invalidate(brandNotifierProvider);
       setState(() {
         _isAdding = false;
       });
