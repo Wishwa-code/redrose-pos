@@ -260,95 +260,104 @@ class _ProductFilterState extends ConsumerState<ProductFilter> {
                           ),
                         const SizedBox(height: 4),
                         Expanded(
-                          child: ListView.builder(
+                          child: GridView.builder(
                             itemCount: products.length,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4, // 4 cards per row
+                              childAspectRatio: 0.75, // Adjust to your content ratio
+                            ),
                             itemBuilder: (context, index) {
                               final product = products[index];
 
-                              return Card(
-                                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                                elevation: 3,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: InkWell(
-                                  onTap: () async {
-                                    logger.d('product.id--> $product');
+                              return Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Card(
+                                  margin: const EdgeInsets.symmetric(),
+                                  elevation: 3,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      logger.d('product.id--> $product');
 
-                                    _productTitleController.text = product.title;
+                                      _productTitleController.text = product.title;
 
-                                    _idController.text = product.id?.toString() ?? '';
-                                    // ref.read(searchFieldProvider.notifier).state = product.title;
+                                      _idController.text = product.id?.toString() ?? '';
+                                      // ref.read(searchFieldProvider.notifier).state = product.title;
 
-                                    widget.onProductSelected?.call(product.id!);
+                                      widget.onProductSelected?.call(product.id!);
 
-                                    if (_shouldGoOnClick) {
-                                      final loadVariances = await ProductVariancesRoute(product.id!)
-                                          .push<bool>(context);
-                                    }
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        // Image
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(8),
-                                          child: Image.network(
-                                            product.imageUrl,
-                                            width: 100,
-                                            height: 100,
-                                            fit: BoxFit.cover,
-                                            errorBuilder: (context, error, stackTrace) =>
-                                                const Icon(
-                                              color: Color.fromARGB(255, 119, 116, 116),
-                                              size: 100,
-                                              Icons.broken_image,
-                                            ),
-                                            cacheHeight: 213,
-                                            cacheWidth: 392,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 16),
-
-                                        // Info
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                product.title,
-                                                style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
+                                      if (_shouldGoOnClick) {
+                                        final loadVariances =
+                                            await ProductVariancesRoute(product.id!)
+                                                .push<bool>(context);
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          // Image
+                                          Expanded(
+                                            child: Center(
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(8),
+                                                child: Image.network(
+                                                  product.imageUrl ?? 'no image',
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (context, error, stackTrace) =>
+                                                      const Icon(
+                                                    Icons.broken_image,
+                                                    size: 50,
+                                                    color: Color.fromARGB(255, 119, 116, 116),
+                                                  ),
                                                 ),
                                               ),
-                                              const SizedBox(height: 4),
-                                              Text(product.description),
-                                              const SizedBox(height: 8),
-                                              Wrap(
-                                                spacing: 8,
-                                                runSpacing: 4,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 16),
+
+                                          // Info
+                                          Expanded(
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                horizontal: 8,
+                                                vertical: 4,
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  _buildtag('Department', product.department),
-                                                  _buildtag(
-                                                    'Main Category',
-                                                    product.mainCategory,
+                                                  Text(
+                                                    product.title,
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
                                                   ),
-                                                  _buildtag(
-                                                    'Sub Category',
-                                                    product.subCategory,
+                                                  const SizedBox(height: 4),
+                                                  const Divider(height: 1),
+                                                  const SizedBox(height: 4),
+                                                  Expanded(
+                                                    child: Text(
+                                                      product.description,
+                                                      maxLines: 4,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight: FontWeight.w400,
+                                                      ),
+                                                    ),
                                                   ),
-                                                  _buildtag('Tag 1', product.tagOne),
-                                                  _buildtag('Tag 2', product.tagTwo),
-                                                  _buildtag('id', product.id.toString()),
                                                 ],
                                               ),
-                                            ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

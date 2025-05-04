@@ -173,6 +173,7 @@ class _AddBrandPageState extends ConsumerState<AddBrandPage> {
       setState(() {
         _isAdding = false;
       });
+
       brandFormKey.currentState?.clearFields();
     }
   }
@@ -230,9 +231,7 @@ class _AddBrandPageState extends ConsumerState<AddBrandPage> {
                 // ✅ ActionButton clears form after adding
                 ActionButton(
                   focusNode: buttonnode,
-                  onPressed: () async {
-                    await _addProduct(_brand);
-                  },
+                  onPressed: () => _addProduct(_brand),
                   icon: const SizedBox.shrink(),
                   label: Text(
                     'Add Brand',

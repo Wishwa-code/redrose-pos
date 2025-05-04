@@ -11,7 +11,7 @@ class Product with _$Product {
     required String description,
     @JsonKey(name: 'tag_one') required String tagOne,
     @JsonKey(name: 'tag_two') required String tagTwo,
-    @JsonKey(name: 'imageurl') required String imageUrl,
+    @JsonKey(name: 'imageurl') String? imageUrl,
     required String department,
     @JsonKey(name: 'main_catogory') required String mainCategory,
     @JsonKey(name: 'sub_catogory') required String subCategory,

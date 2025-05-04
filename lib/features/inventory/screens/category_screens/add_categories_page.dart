@@ -92,7 +92,6 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
   Widget build(BuildContext context) {
     final product = ref.watch(lastProductProvider);
     _rootController.text = 'root';
-    _subCategoryController.text = 'N/A';
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -295,7 +294,7 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(8),
                               child: Image.network(
-                                value.imageUrl,
+                                value.imageUrl ?? 'no image',
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) => const Icon(
                                   color: Color.fromARGB(255, 119, 116, 116),
@@ -315,16 +314,8 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                                     value: value.title,
                                   ),
                                   ValueCard(
-                                    label: 'ID',
-                                    value: value.id!,
-                                  ),
-                                  ValueCard(
                                     label: 'Description',
                                     value: value.description,
-                                  ),
-                                  ValueCard(
-                                    label: 'Tags',
-                                    value: '${value.tagOne}, ${value.tagTwo}',
                                   ),
                                   ValueCard(
                                     label: 'Department',
@@ -335,12 +326,16 @@ class _AddProductsPageState extends ConsumerState<AddProductsPage> {
                                     value: value.mainCategory,
                                   ),
                                   ValueCard(
-                                    label: 'Main Category',
-                                    value: value.mainCategory,
-                                  ),
-                                  ValueCard(
                                     label: 'Sub Category',
                                     value: value.subCategory,
+                                  ),
+                                  ValueCard(
+                                    label: 'Tags',
+                                    value: '${value.tagOne}, ${value.tagTwo}',
+                                  ),
+                                  ValueCard(
+                                    label: 'ID',
+                                    value: value.id!,
                                   ),
                                 ],
                               ),

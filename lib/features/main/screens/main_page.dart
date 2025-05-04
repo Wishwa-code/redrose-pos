@@ -269,7 +269,7 @@ class DashBoardPage extends ConsumerWidget {
                                             ClipRRect(
                                               borderRadius: BorderRadius.circular(8),
                                               child: Image.network(
-                                                product.imageUrl,
+                                                product.imageUrl ?? 'no image',
                                                 width: 100,
                                                 height: 100,
                                                 fit: BoxFit.cover,

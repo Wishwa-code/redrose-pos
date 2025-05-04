@@ -64,8 +64,8 @@ class ApiClient {
           _defaultOptions.copyWith()..headers['Authorization'] = 'Bearer $token',
         );
   static final BaseOptions _defaultOptions = BaseOptions(
-    baseUrl: 'http://localhost:8080',
-    // baseUrl: 'https://redrose-go-web-server.onrender.com',
+    // baseUrl: 'http://localhost:8080',
+    baseUrl: 'https://redrose-go-web-server.onrender.com',
   );
 
   final Dio _httpClient;
@@ -179,38 +179,53 @@ class ApiClient {
     }
   }
 
-  Future<Product> updateProduct(Product product, File imageFile) async {
+  Future<Product> updateProduct(Product product, File? imageFile) async {
     try {
-      final fileName = imageFile.path.split(r'\').last;
-
-      final formData = FormData.fromMap({
-        'file': await MultipartFile.fromFile(
-          imageFile.path,
-          filename: fileName,
-          contentType: MediaType('image', 'jpeg'),
-        ),
-      });
-
-      final imgresponse = await _httpClient.post(
-        'https://yqewezudxihyadvmfovd.supabase.co/functions/v1/storage-upload',
-        data: formData,
-        options: Options(
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        ),
+      var updatedProduct = product.copyWith(
+        id: product.id,
+        title: product.title,
+        description: product.description,
+        tagOne: product.tagOne,
+        tagTwo: product.tagTwo,
+        imageUrl: product.imageUrl,
+        department: product.department,
+        mainCategory: product.mainCategory,
+        subCategory: product.subCategory,
       );
 
-      final imgData = imgresponse.data['data'];
-      final rawPath = imgData['path'] as String;
-      final encodedPath = Uri.encodeComponent(rawPath); // encodes spaces + other special chars
+      if (imageFile != null) {
+        print('iamgefile $imageFile');
+        final fileName = imageFile.path.split(r'\').last;
 
-      final publicUrl =
-          'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/public/product_images/$encodedPath';
+        final formData = FormData.fromMap({
+          'file': await MultipartFile.fromFile(
+            imageFile.path,
+            filename: fileName,
+            contentType: MediaType('image', 'jpeg'),
+          ),
+        });
 
-      final updatedProduct = product.copyWith(imageUrl: publicUrl);
+        final imgresponse = await _httpClient.post(
+          'https://yqewezudxihyadvmfovd.supabase.co/functions/v1/storage-upload',
+          data: formData,
+          options: Options(
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          ),
+        );
 
-      logger.d('Shape of the updated product: $updatedProduct');
+        final imgData = imgresponse.data['data'];
+        final rawPath = imgData['path'] as String;
+        final encodedPath = Uri.encodeComponent(rawPath); // encodes spaces + other special chars
+
+        final publicUrl =
+            'https://yqewezudxihyadvmfovd.supabase.co/storage/v1/object/public/product_images/$encodedPath';
+
+        updatedProduct = product.copyWith(imageUrl: publicUrl);
+
+        logger.d('Shape of the updated product: $updatedProduct');
+      }
 
       final response = await _httpClient.put(
         '/products/update',
@@ -262,7 +277,7 @@ class ApiClient {
         'sort': 'title',
         'order': 'asc',
         'page': page.toString(),
-        'pagesize': '10',
+        'pagesize': '12',
       };
 
       if (search.isNotEmpty) {

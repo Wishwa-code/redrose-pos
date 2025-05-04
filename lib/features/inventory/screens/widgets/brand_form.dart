@@ -129,15 +129,15 @@ class BrandFormCardState extends ConsumerState<BrandFormCard> {
               );
               final lastEnteredBrand = nonNullBrands.first;
 
-              nameController.text = lastEnteredBrand.name;
-              descController.text = lastEnteredBrand.description;
-              logoController.text = lastEnteredBrand.logourl;
-              originController.text = lastEnteredBrand.countryOfOrigin;
-              socialController.text = lastEnteredBrand.socialMediaLinks;
-              emailController.text = lastEnteredBrand.contactEmail;
-              phoneController.text = lastEnteredBrand.phoneNumber;
-              bannerController.text = lastEnteredBrand.bannerUrl;
-              websiteController.text = lastEnteredBrand.website;
+              // nameController.text = lastEnteredBrand.name;
+              // descController.text = lastEnteredBrand.description;
+              // logoController.text = lastEnteredBrand.logourl;
+              // originController.text = lastEnteredBrand.countryOfOrigin;
+              // socialController.text = lastEnteredBrand.socialMediaLinks;
+              // emailController.text = lastEnteredBrand.contactEmail;
+              // phoneController.text = lastEnteredBrand.phoneNumber;
+              // bannerController.text = lastEnteredBrand.bannerUrl;
+              // websiteController.text = lastEnteredBrand.website;
               // Do something with lastEnteredBrand here
             }
 
@@ -149,6 +149,7 @@ class BrandFormCardState extends ConsumerState<BrandFormCard> {
                 ),
               );
               _isUpdating = false;
+              clearFields();
             }
           },
           loading: () {

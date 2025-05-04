@@ -34,6 +34,7 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
   final _mainCategoryController = TextEditingController();
   final _subCategoryController = TextEditingController();
   final _rootController = TextEditingController();
+  final _previousImageController = TextEditingController();
 
   bool _isUpdating = false;
 
@@ -53,42 +54,37 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
   }
 
   Future<void> addProduct() async {
-    if (_formKey.currentState!.validate()) {
-      final imageFile = File('C:/1wishmi/cw1/dev/v3/assets/rebel.jpg');
-      print('manual image path ${imageFile.path} ');
-      print('attached image path ${_selectedImage!.path}');
+    // if (_formKey.currentState!.validate()) {
 
-      if (_selectedImage == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please select an image.')),
+    // final uploadResponse =
+    //     await ref.read(lastProductProvider.notifier).uploadImage(imageFile);
+
+    // Create dummy product
+    final updatedProduct = Product(
+      id: _productidController.text,
+      title: _titleController.text,
+      description: _descriptionController.text,
+      tagOne: _tagOneController.text,
+      tagTwo: _tagTwoController.text,
+      imageUrl: _previousImageController.text,
+      department: _departmentController.text,
+      mainCategory: _mainCategoryController.text,
+      subCategory: _subCategoryController.text,
+    );
+
+    // Call the notifier to add product
+    _isUpdating = true;
+
+    // Await the update call
+    await ref.read(lastProductProvider.notifier).updateProduct(
+          updatedProduct,
+          _selectedImage,
         );
-        return;
-      }
-      // final uploadResponse =
-      //     await ref.read(lastProductProvider.notifier).uploadImage(imageFile);
+    ref.invalidate(lastProductProvider);
 
-      // Create dummy product
-      final updatedProduct = Product(
-        id: _productidController.text,
-        title: _titleController.text,
-        description: _descriptionController.text,
-        tagOne: _tagOneController.text,
-        tagTwo: _tagTwoController.text,
-        imageUrl: 'will be updated after uploding image to cloud storage',
-        department: _departmentController.text,
-        mainCategory: _mainCategoryController.text,
-        subCategory: _subCategoryController.text,
-      );
-
-      // Call the notifier to add product
-      _isUpdating = true;
-
-      // Await the update call
-      await ref.read(lastProductProvider.notifier).updateProduct(
-            updatedProduct,
-            _selectedImage!,
-          );
-    }
+    _selectedImage = null;
+    _selectedImageName = null;
+    // }
   }
 
   void _stateRebuild() {
@@ -100,35 +96,6 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
   Widget build(BuildContext context) {
     final product = ref.watch(lastProductProvider);
     _rootController.text = 'root';
-    _subCategoryController.text = 'N/A';
-
-    // ref.listen<AsyncValue<Product?>>(
-    //   lastProductProvider,
-    //   (prev, next) {
-    //     next.whenData((product) {
-    //       if (product != null) {
-    //         // debugPrint('Fetched product: ${product.displayTitle}');
-    //         // Optionally update controllers with product data
-
-    //         _descriptionController.text = product.description;
-    //         _departmentController.text = product.department;
-    //         _mainCategoryController.text = product.mainCategory;
-    //         _subCategoryController.text = product.subCategory;
-
-    //         if (_isUpdating) {
-    //           ScaffoldMessenger.of(context).showSnackBar(
-    //             SnackBar(
-    //               content: const Text('Product updated successfully!'),
-    //               backgroundColor: Theme.of(context).colorScheme.primary,
-    //             ),
-    //           );
-    //           _isUpdating = false;
-    //         }
-    //       }
-
-    //     });
-    //   },
-    // );
 
     ref.listen<AsyncValue<Product?>>(
       lastProductProvider,
@@ -140,6 +107,10 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
               _departmentController.text = product.department;
               _mainCategoryController.text = product.mainCategory;
               _subCategoryController.text = product.subCategory;
+              _tagOneController.text = product.tagOne;
+              _tagTwoController.text = product.tagTwo;
+              _previousImageController.text = product.imageUrl ?? 'no image';
+
               // Add other updates as needed
 
               if (_isUpdating) {
@@ -356,7 +327,7 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                           color: Theme.of(context).colorScheme.onPrimary,
                         ),
                         label: Text(
-                          'Choose Image',
+                          (_selectedImage != null) ? _selectedImage.toString() : 'Choose Image',
                           style: Theme.of(context).textTheme.titleMedium!.copyWith(
                                 color: Theme.of(context).colorScheme.onPrimary,
                               ),
@@ -391,10 +362,6 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                           }
                         },
                       ),
-                      if (_selectedImageName != null) ...[
-                        const SizedBox(height: 8),
-                        Text('Selected image: $_selectedImageName'),
-                      ],
                       ActionButton(
                         onPressed: addProduct,
                         icon: const SizedBox.shrink(),
@@ -441,8 +408,9 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(8),
                               child: Image.network(
-                                value.imageUrl,
-                                fit: BoxFit.cover,
+                                value.imageUrl ?? ' no image',
+                                height: 500,
+                                fit: BoxFit.scaleDown,
                                 errorBuilder: (context, error, stackTrace) => const Icon(
                                   color: Color.fromARGB(255, 119, 116, 116),
                                   size: 250,
@@ -461,16 +429,8 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                                     value: value.title,
                                   ),
                                   ValueCard(
-                                    label: 'ID',
-                                    value: value.id!,
-                                  ),
-                                  ValueCard(
                                     label: 'Description',
                                     value: value.description,
-                                  ),
-                                  ValueCard(
-                                    label: 'Tags',
-                                    value: '${value.tagOne}, ${value.tagTwo}',
                                   ),
                                   ValueCard(
                                     label: 'Department',
@@ -481,12 +441,16 @@ class _AddProductsPageState extends ConsumerState<EditProductsPage> {
                                     value: value.mainCategory,
                                   ),
                                   ValueCard(
-                                    label: 'Main Category',
-                                    value: value.mainCategory,
-                                  ),
-                                  ValueCard(
                                     label: 'Sub Category',
                                     value: value.subCategory,
+                                  ),
+                                  ValueCard(
+                                    label: 'Tags',
+                                    value: '${value.tagOne}, ${value.tagTwo}',
+                                  ),
+                                  ValueCard(
+                                    label: 'ID',
+                                    value: value.id!,
                                   ),
                                 ],
                               ),

@@ -42,7 +42,7 @@ class LastProduct extends _$LastProduct {
     }
   }
 
-  Future<void> updateProduct(Product product, File imageFile) async {
+  Future<void> updateProduct(Product product, File? imageFile) async {
     state = const AsyncLoading();
     try {
       final apiService = await ref.watch(apiServiceProvider.future);

@@ -59,6 +59,9 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
   final FocusNode _unitmetricfNode = FocusNode();
   final FocusNode _quantityefNode = FocusNode();
   final FocusNode _leastsubunitfNode = FocusNode();
+  final FocusNode _loadImageNode = FocusNode();
+
+  final FocusNode _saveImageNode = FocusNode();
 
   File? _selectedImage;
   String? _selectedImageName;
@@ -287,7 +290,7 @@ class _AddVariancesPageState extends ConsumerState<AddVariancesPage> {
                                   ),
                             )
                           : Text(
-                              'Choose Image',
+                              'Set up automate ---------------------------------------------------------',
                               style: Theme.of(context).textTheme.titleMedium!.copyWith(
                                     color: Theme.of(context).colorScheme.onPrimary,
                                   ),

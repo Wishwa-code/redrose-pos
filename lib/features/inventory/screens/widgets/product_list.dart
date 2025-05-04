@@ -35,7 +35,7 @@ class _ProductListState extends ConsumerState<ProductList> {
                             Text('Department: ${product.department}'),
                             Text('Main Category: ${product.mainCategory}'),
                             Text('Sub Category: ${product.subCategory}'),
-                            Image.network(product.imageUrl),
+                            Image.network(product.imageUrl ?? 'no image'),
                           ],
                         ),
                         const Divider(
